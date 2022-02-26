@@ -2,6 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query } from "firebase/firestore";
 
 
+const firebaseConfig = {
+    apiKey: import.meta.env.VITE_ENV_apiKey,
+    authDomain: import.meta.env.VITE_ENV_authDomain,
+    projectId: import.meta.env.VITE_ENV_projectId,
+    storageBucket: import.meta.env.VITE_ENV_storageBucket,
+    messagingSenderId: import.meta.env.VITE_ENV_messagingSenderId,
+    appId: import.meta.env.VITE_ENV_appId
+  };
 
   const app = initializeApp(firebaseConfig);
 
@@ -10,11 +18,11 @@ import { getFirestore, collection, getDocs, query } from "firebase/firestore";
 
         const querySnapshot = await getDocs(collection(db, "spellingwords"));
 
-        console.log(querySnapshot);
+        const docsArray = [];
 
-        return querySnapshot;
+        querySnapshot.forEach((doc) => {
+            docsArray.push(doc.data());
+        });
+
+        return docsArray;
   }
-
-// export function something(){
-//     return "Hello";
-// }
