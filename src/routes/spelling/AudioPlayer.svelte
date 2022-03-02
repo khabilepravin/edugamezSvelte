@@ -1,16 +1,7 @@
-<!-- <script context="module">
-    const players = new Set()
-  
-    export function stopAll() {
-      players.forEach(p => p.pause())
-    }
-  </script> -->
-  
   <script>
     import { onMount } from 'svelte'
   
-    export let src
-    
+    export let src    
     let player
   
     onMount(() => {      
@@ -19,10 +10,14 @@
   </script>
   
   <div>
+    {#if (src === null)}
+      <h6>Not available</h6>
+    {:else}    
       <audio
           bind:this={player}
           {src}
           controls>
           <!-- <track kind="captions" /> -->
       </audio>
+    {/if}
   </div>

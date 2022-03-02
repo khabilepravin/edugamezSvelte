@@ -12,28 +12,22 @@
     let spelledAnswer = null;
     let results = [];
 
-	const handleNext = () => {
-        
-        let currentWordData = spellingData[currentIndex];
-
-        // log user answer
-        results = [...results, getUserAnswer(currentWordData, spelledAnswer)];
-
-       // console.log(results);
-       currentIndex = currentIndex + 1;
+	const handleNext = () => {        
+       let currentWordData = spellingData[currentIndex];        
+       results = [...results, getUserAnswer(currentWordData, spelledAnswer)];       
        
-       if(currentIndex === 9){
+       if(currentIndex === 9){           
          goto('/spelling/result');
        }
-       else{
-        // Move to next        
+       else{           
+        // Move to next
+        currentIndex = currentIndex + 1;
         currentWordData = spellingData[currentIndex];
 		wordAudioUrl = currentWordData.wordAudioUrl;
 		definitonAudioUrl = currentWordData.defintionAudioUrl;
 		exampleAudioUrl = currentWordData.exampleAudioUrl;
         spelledAnswer = null;
-       }
-        
+       }        
 	};
 
     const getUserAnswer = (originalWord, userAnswer) => {

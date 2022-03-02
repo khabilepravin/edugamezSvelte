@@ -13,10 +13,7 @@ export const get = async ({ locals }) => {
 
 const getRandomWords = (numberOfRandomWords, allWords) => {    
     let records = [];
-    // for (let i = 0; i < numberOfRandomWords; i++) {
-    //   recordIndexes.push(getRandomInt((allWords.length-1)));
-    // }
-  
+
     for(let i=0; i< numberOfRandomWords; i++){
         let randomIndex = getRandomInt((allWords.length-1));
         records.push(allWords[randomIndex]);
@@ -24,7 +21,6 @@ const getRandomWords = (numberOfRandomWords, allWords) => {
 
     return records;
 }
-
  
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
