@@ -2,6 +2,7 @@
     import { onMount } from 'svelte'
   
     export let src    
+    export let autoPlay
     let player
   
     onMount(() => {      
@@ -16,7 +17,8 @@
       <audio
           bind:this={player}
           {src}
-          controls>
+          controls
+          autoplay={autoPlay}>
           <!-- <track kind="captions" /> -->
       </audio>
     {/if}

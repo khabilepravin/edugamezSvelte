@@ -1,1 +1,20 @@
-<h1>Spelling result goes here</h1>
+<script>
+	import { spellingUserAnswers } from '../../../lib/store';
+</script>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">Actual Spelling</th>
+			<th scope="col">You Spelled</th>
+		</tr>
+	</thead>
+	<tbody>
+		{#each $spellingUserAnswers as result}
+			<tr>
+				<td><h4 class="text-primary">{result.actualWord}</h4></td>
+				<td><h4 class={result.isCorrect ? "text-success" : "text-danger"}>{result.userAnswer}</h4></td>
+			</tr>
+		{/each}
+	</tbody>
+</table>

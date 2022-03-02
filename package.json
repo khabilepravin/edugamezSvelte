@@ -24,7 +24,9 @@
   "dependencies": {
     "@fontsource/fira-mono": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
+    "@ultimate/vault": "^0.0.2",
     "cookie": "^0.4.1",
-    "firebase": "^9.6.7"
+    "firebase": "^9.6.7",
+    "svelte-icons-pack": "^1.4.6"
   }
 }
