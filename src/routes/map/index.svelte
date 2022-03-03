@@ -1,8 +1,14 @@
 <script>
 	import { GoogleCharts } from 'google-charts';
-	import { onMount } from 'svelte';
+    import { onMount } from 'svelte';
+    import { GetRandomCountries } from './data';
+    import { fade } from 'svelte/transition';
+
 
 	onMount(() => {
+
+        //debugger;
+        let singleCountry = GetRandomCountries(1);
 		GoogleCharts.load(drawGeoChart, {
 			packages: ['geochart'],
 			mapsApiKey: import.meta.env.VITE_ENV_mapAPIKey
@@ -10,7 +16,7 @@
 
 		function drawGeoChart() {
 			/* Geo Chart */
-			const geo_1_data = GoogleCharts.api.visualization.arrayToDataTable([['Country'], ['India']]);
+			const geo_1_data = GoogleCharts.api.visualization.arrayToDataTable([['Country'], [singleCountry[0].countryName]]);
 			const geo_1_options = {
 				domain: 'IN',
 				defaultColor: '#0000FF',
@@ -24,4 +30,4 @@
 	});
 </script>
 
-<div id="geoChart" />
+<div id="geoChart" transition:fade/>
