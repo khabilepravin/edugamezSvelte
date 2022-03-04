@@ -1,27 +1,24 @@
 import { getSpellingWords } from './_api';
+import { getRandomInt } from '../../lib/random';
 
 export const get = async ({ locals }) => {
-    const spellingWords = await getSpellingWords();
-    
-    let randomWordsForTest = getRandomWords(10, spellingWords);
-    return {
-        body:{
-            spellingData: randomWordsForTest
-        }
-    };
-}
+	const spellingWords = await getSpellingWords();
 
-const getRandomWords = (numberOfRandomWords, allWords) => {    
-    let records = [];
+	let randomWordsForTest = getRandomWords(10, spellingWords);
+	return {
+		body: {
+			spellingData: randomWordsForTest
+		}
+	};
+};
 
-    for(let i=0; i< numberOfRandomWords; i++){
-        let randomIndex = getRandomInt((allWords.length-1));
-        records.push(allWords[randomIndex]);
-    }
+const getRandomWords = (numberOfRandomWords, allWords) => {
+	let records = [];
 
-    return records;
-}
- 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
+	for (let i = 0; i < numberOfRandomWords; i++) {
+		let randomIndex = getRandomInt(allWords.length - 1);
+		records.push(allWords[randomIndex]);
+	}
+
+	return records;
+};

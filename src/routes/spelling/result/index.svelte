@@ -1,8 +1,9 @@
 <script>
 	import { spellingUserAnswers } from '../../../lib/store';
+	import { fade } from 'svelte/transition';
 </script>
 
-<table class="table">
+<table class="table" transition:fade>
 	<thead>
 		<tr>
 			<th scope="col">Actual Spelling</th>

@@ -1,0 +1,30 @@
+<script>
+	import { GoogleCharts } from 'google-charts';
+    import { onMount } from 'svelte';    
+    import { fade } from 'svelte/transition';
+
+    export let selectedCountry = '';
+	onMount(() => {
+        console.log('hey loaded man');
+        GoogleCharts.load(drawGeoChart, {
+			packages: ['geochart'],
+			mapsApiKey: import.meta.env.VITE_ENV_mapAPIKey
+		});
+
+		function drawGeoChart() {
+			/* Geo Chart */
+			const geo_1_data = GoogleCharts.api.visualization.arrayToDataTable([['Country'], [selectedCountry]]);
+			const geo_1_options = {
+				domain: 'IN',
+				defaultColor: '#0000FF',
+				enableRegionInteractivity: false
+			};
+			const geoChart = new GoogleCharts.api.visualization.GeoChart(
+				document.getElementById('geoChart')
+			);
+			geoChart.draw(geo_1_data, geo_1_options);
+		}
+	});
+</script>
+
+<div id="geoChart" transition:fade/>

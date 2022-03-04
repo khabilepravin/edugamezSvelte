@@ -1,33 +1,45 @@
 <script>
-	import { GoogleCharts } from 'google-charts';
-    import { onMount } from 'svelte';
-    import { GetRandomCountries } from './data';
-    import { fade } from 'svelte/transition';
+	import { GetRandomCountries } from './data';
+	import { shuffle } from '../../lib/random';
+	import Map from './Map.svelte';
+	import Options from './Options.svelte';
 
+	let randomCountries = GetRandomCountries(10);
+	let currentIndex = 0;
 
-	onMount(() => {
+	let optionsToChooseFrom = [randomCountries[currentIndex]];
+	let countryOptionsForAnswerSelection = GetRandomCountries(100);
 
-        //debugger;
-        let singleCountry = GetRandomCountries(1);
-		GoogleCharts.load(drawGeoChart, {
-			packages: ['geochart'],
-			mapsApiKey: import.meta.env.VITE_ENV_mapAPIKey
-		});
+    // remove the current country so that it doesn't appear twice in the list
+    countryOptionsForAnswerSelection = countryOptionsForAnswerSelection.filter(country => country.countryName !== randomCountries[currentIndex].countryName);
+    
+	for (let i = 0; i < 3; i++) {
+		optionsToChooseFrom.push(countryOptionsForAnswerSelection[i]);		
+	}
 
-		function drawGeoChart() {
-			/* Geo Chart */
-			const geo_1_data = GoogleCharts.api.visualization.arrayToDataTable([['Country'], [singleCountry[0].countryName]]);
-			const geo_1_options = {
-				domain: 'IN',
-				defaultColor: '#0000FF',
-				enableRegionInteractivity: false
-			};
-			const geoChart = new GoogleCharts.api.visualization.GeoChart(
-				document.getElementById('geoChart')
-			);
-			geoChart.draw(geo_1_data, geo_1_options);
-		}
-	});
+	optionsToChooseFrom = shuffle(optionsToChooseFrom);
+
+	$: currentlySelectedCountryName = randomCountries[currentIndex].countryName;
+
+    const answerSelected = (e) => {
+        console.log(e.detail);
+        currentIndex++;
+        currentlySelectedCountryName = randomCountries[currentIndex].countryName;
+    }
 </script>
 
-<div id="geoChart" transition:fade/>
+<svelte:head>
+	<title>Map Game</title>
+</svelte:head>
+<div class="container">
+	<div class="row">
+		<div class="col-sm">
+			<Map selectedCountry={currentlySelectedCountryName} />
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm mt-3">
+			<Options {optionsToChooseFrom} on:optionSelected={answerSelected} />
+		</div>
+	</div>
+</div>
