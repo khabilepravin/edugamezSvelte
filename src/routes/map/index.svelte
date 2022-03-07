@@ -4,6 +4,7 @@
 	import Map from './Map.svelte';
 	import Options from './Options.svelte';
 
+    let reloadMapChart;
 	let randomCountries = GetRandomCountries(10);
 	let currentIndex = 0;
 
@@ -25,6 +26,7 @@
         console.log(e.detail);
         currentIndex++;
         currentlySelectedCountryName = randomCountries[currentIndex].countryName;
+        reloadMapChart(currentlySelectedCountryName);
     }
 </script>
 
@@ -34,7 +36,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm">
-			<Map selectedCountry={currentlySelectedCountryName} />
+			<Map selectedCountry={currentlySelectedCountryName} bind:initilizeChartWithCountry={reloadMapChart} />
 		</div>
 	</div>
 	<div class="row">

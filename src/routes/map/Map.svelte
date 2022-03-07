@@ -13,7 +13,12 @@
 
 		function drawGeoChart() {
 			/* Geo Chart */
-			const geo_1_data = GoogleCharts.api.visualization.arrayToDataTable([['Country'], [selectedCountry]]);
+            initilizeChartWithCountry(selectedCountry);			
+		}
+	});
+
+    export const initilizeChartWithCountry = (countryToSelect) => {
+        const geo_1_data = GoogleCharts.api.visualization.arrayToDataTable([['Country'], [countryToSelect]]);
 			const geo_1_options = {
 				domain: 'IN',
 				defaultColor: '#0000FF',
@@ -23,8 +28,7 @@
 				document.getElementById('geoChart')
 			);
 			geoChart.draw(geo_1_data, geo_1_options);
-		}
-	});
+    }
 </script>
 
 <div id="geoChart" transition:fade/>
