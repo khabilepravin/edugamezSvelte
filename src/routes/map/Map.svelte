@@ -5,7 +5,6 @@
 
     export let selectedCountry = '';
 	onMount(() => {
-        console.log('hey loaded man');
         GoogleCharts.load(drawGeoChart, {
 			packages: ['geochart'],
 			mapsApiKey: import.meta.env.VITE_ENV_mapAPIKey
@@ -31,4 +30,4 @@
     }
 </script>
 
-<div id="geoChart" transition:fade/>
+<div id="geoChart"/>

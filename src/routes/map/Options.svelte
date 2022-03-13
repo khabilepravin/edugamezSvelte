@@ -1,5 +1,6 @@
 <script>
     import { createEventDispatcher } from 'svelte';
+	import { fade } from 'svelte/transition';
 	export let optionsToChooseFrom = [];
 
     const dispatch = createEventDispatcher();
@@ -8,13 +9,17 @@
 			selectedOption: e.target.id
 		});
     }
+
+	export function resetOptionSelection() {
+		document.querySelector('input[name=countryOptions]:checked').checked = false;
+	}
 </script>
 
 <div class="container">
 	<div class="radio-tile-group">
 		{#each optionsToChooseFrom as o, i}
-			<div class="input-container">
-				<input id={o.countryName} class="radio-button" type="radio" name="radio" on:input={onOptionSelectionChanged}/>
+			<div class="input-container" transition:fade>
+				<input id={o.countryName} class="radio-button" type="radio" name="countryOptions" on:input={onOptionSelectionChanged}/>
 				<div class="radio-tile">					
 					<label for="walk" class="radio-tile-label">{o.countryName}</label>
 				</div>
