@@ -17,7 +17,7 @@
 
 <div class="container">
 	<div class="radio-tile-group">
-		{#each optionsToChooseFrom as o, i}
+		{#each optionsToChooseFrom as o}
 			<div class="input-container" transition:fade>
 				<input id={o.countryName} class="radio-button" type="radio" name="countryOptions" on:input={onOptionSelectionChanged}/>
 				<div class="radio-tile">					

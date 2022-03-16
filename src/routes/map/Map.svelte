@@ -1,7 +1,6 @@
 <script>
 	import { GoogleCharts } from 'google-charts';
-    import { onMount } from 'svelte';    
-    import { fade } from 'svelte/transition';
+    import { onMount } from 'svelte';        
 
     export let selectedCountry = '';
 	onMount(() => {

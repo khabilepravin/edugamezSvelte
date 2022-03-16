@@ -13,13 +13,13 @@
 	let exampleAudioUrl = spellingData[currentIndex].exampleAudioUrl;
 
 	let spelledAnswer = null;
-	//let results = [];
 
 	const handleNext = () => {
 		let currentWordData = spellingData[currentIndex];
 		$spellingUserAnswers = [...$spellingUserAnswers, getUserAnswer(currentWordData, spelledAnswer)];
 
 		if (currentIndex === 9) {
+			$spellingUserAnswers = [];
 			goto('/spelling/result');
 		} else {
 			// Move to next

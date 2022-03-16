@@ -1,44 +1,68 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { GetRandomCountries } from './data';
 	import { shuffle } from '../../lib/random';
 	import Map from './Map.svelte';
 	import Options from './Options.svelte';
+	import { mapUserAnswers } from '../../lib/store';
 
-    let optionsChild;
-    let reloadMapChart;
+	let optionsChild;
+	let reloadMapChart;
 	let randomCountries = GetRandomCountries(10);
 	let currentIndex = 0;
 
 	let optionsToChooseFrom = [];
-    let countryOptionsForAnswerSelection = null;
-    
-    const loadOptionsToChooseFrom = () => {
-        optionsToChooseFrom = [];
-        optionsToChooseFrom = [randomCountries[currentIndex]];
-        countryOptionsForAnswerSelection = GetRandomCountries(100);
+	let countryOptionsForAnswerSelection = null;
 
-        // remove the current country so that it doesn't appear twice in the list
-        countryOptionsForAnswerSelection = countryOptionsForAnswerSelection.filter(country => country.countryName !== randomCountries[currentIndex].countryName);
+	const loadOptionsToChooseFrom = () => {
+		optionsToChooseFrom = [];
+		optionsToChooseFrom = [randomCountries[currentIndex]];
+		countryOptionsForAnswerSelection = GetRandomCountries(100);
 
-        for (let i = 0; i < 3; i++) {
-            optionsToChooseFrom.push(countryOptionsForAnswerSelection[i]);		
-        }
+		// remove the current country so that it doesn't appear twice in the list
+		countryOptionsForAnswerSelection = countryOptionsForAnswerSelection.filter(
+			(country) => country.countryName !== randomCountries[currentIndex].countryName
+		);
 
-        optionsToChooseFrom = shuffle(optionsToChooseFrom);
-    };	
+		for (let i = 0; i < 3; i++) {
+			optionsToChooseFrom.push(countryOptionsForAnswerSelection[i]);
+		}
 
-    loadOptionsToChooseFrom();
+		optionsToChooseFrom = shuffle(optionsToChooseFrom);
+	};
 
-	let currentlySelectedCountryName = randomCountries[currentIndex].countryName;
+	loadOptionsToChooseFrom();
 
-    const answerSelected = (e) => {
-        console.log(e.detail);
-        currentIndex++;
-        currentlySelectedCountryName = randomCountries[currentIndex].countryName;
-        reloadMapChart(currentlySelectedCountryName);
-        loadOptionsToChooseFrom();
-        optionsChild.resetOptionSelection();
-    }
+	let currentlyShownCountryName = randomCountries[currentIndex].countryName;
+
+	const answerSelected = (e) => {
+		let answerRecord = getAnswerRecord(e.detail.selectedOption);
+		$mapUserAnswers = [...$mapUserAnswers, answerRecord];
+		moveToNext();
+	};
+
+	const getAnswerRecord = (selectedAnswer) => {
+		let isCorrect =
+			selectedAnswer.trim().toLowerCase() === currentlyShownCountryName.trim().toLowerCase();
+
+		return {
+			actualCountry: currentlyShownCountryName,
+			userAnswer: selectedAnswer,
+			isCorrect: isCorrect
+		};
+	};
+
+	const moveToNext = () => {        
+		if (currentIndex === 9) {
+			goto('/map/result');
+		} else {
+			currentIndex++;
+			currentlyShownCountryName = randomCountries[currentIndex].countryName;
+			reloadMapChart(currentlyShownCountryName);
+			loadOptionsToChooseFrom();
+			optionsChild.resetOptionSelection();
+		}
+	};
 </script>
 
 <svelte:head>
@@ -47,12 +71,15 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm">
-			<Map selectedCountry={currentlySelectedCountryName} bind:initilizeChartWithCountry={reloadMapChart} />
+			<Map
+				selectedCountry={currentlyShownCountryName}
+				bind:initilizeChartWithCountry={reloadMapChart}
+			/>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm mt-3">
-			<Options {optionsToChooseFrom} on:optionSelected={answerSelected} bind:this={optionsChild}/>
+			<Options {optionsToChooseFrom} on:optionSelected={answerSelected} bind:this={optionsChild} />
 		</div>
 	</div>
 </div>
