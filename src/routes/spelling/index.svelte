@@ -2,8 +2,9 @@
 	import AudioPlayer from './AudioPlayer.svelte';
 	import { goto } from '$app/navigation';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
-	import HiOutlineChevronDoubleRight from "svelte-icons-pack/hi/HiOutlineChevronDoubleRight";
-	import { spellingUserAnswers } from "../../lib/store";
+	import HiOutlineChevronDoubleRight from 'svelte-icons-pack/hi/HiOutlineChevronDoubleRight';
+	import BsPenFill from 'svelte-icons-pack/bs/BsPenFill';
+	import { spellingUserAnswers } from '../../lib/store';
 
 	export let spellingData;
 
@@ -46,32 +47,42 @@
 <svelte:head>
 	<title>Spelling Game</title>
 </svelte:head>
-<div class="text-center">
-	<h6>Word</h6>
+<header>
+	<Icon src={BsPenFill} size="28" />
+</header>
+<main>
+	<div class="text-center">
+		<h6>Word</h6>
 
-	<AudioPlayer src={wordAudioUrl} autoPlay="true"/>
-	<h6>Definition</h6>
-	<AudioPlayer src={definitonAudioUrl} />
-	<h6>Example</h6>
-	<AudioPlayer src={exampleAudioUrl} />
+		<AudioPlayer src={wordAudioUrl} autoPlay="true" />
+		<h6>Definition</h6>
+		<AudioPlayer src={definitonAudioUrl} />
+		<h6>Example</h6>
+		<AudioPlayer src={exampleAudioUrl} />
 
-	<div class="container">
-		<div class="row">
-			<div class="col-sm">
-				<input type="text" class="form-control" placeholder="Spelling" bind:value={spelledAnswer} />
+		<div class="container">
+			<div class="row">
+				<div class="col-sm">
+					<input
+						type="text"
+						class="form-control"
+						placeholder="Spelling"
+						bind:value={spelledAnswer}
+					/>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm">
-				<button
-					on:click={handleNext}
-					disabled={spelledAnswer === null}
-					value="Next"
-					class="btn btn-primary mt-3">Next
-					<Icon src={HiOutlineChevronDoubleRight}/>
-					 </button
-				>
+			<div class="row">
+				<div class="col-sm">
+					<button
+						on:click={handleNext}
+						disabled={spelledAnswer === null}
+						value="Next"
+						class="btn btn-primary mt-3"
+						>Next
+						<Icon src={HiOutlineChevronDoubleRight} />
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</main>
