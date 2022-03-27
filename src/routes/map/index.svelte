@@ -5,6 +5,8 @@
 	import Map from './Map.svelte';
 	import Options from './Options.svelte';
 	import { mapUserAnswers } from '../../lib/store';
+	import Icon from 'svelte-icons-pack/Icon.svelte';
+	import HiOutlineGlobe from "svelte-icons-pack/hi/HiOutlineGlobe";
 
 	let optionsChild;
 	let reloadMapChart;
@@ -52,7 +54,7 @@
 		};
 	};
 
-	const moveToNext = () => {        
+	const moveToNext = () => {
 		if (currentIndex === 9) {
 			goto('/map/result');
 		} else {
@@ -68,18 +70,30 @@
 <svelte:head>
 	<title>Map Game</title>
 </svelte:head>
-<div class="container">
-	<div class="row">
-		<div class="col-sm">
-			<Map
-				selectedCountry={currentlyShownCountryName}
-				bind:initilizeChartWithCountry={reloadMapChart}
-			/>
+
+<header>
+	<div>
+		<Icon src={HiOutlineGlobe} size="36" />
+	</div>
+</header>
+<main>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm">
+				<Map
+					selectedCountry={currentlyShownCountryName}
+					bind:initilizeChartWithCountry={reloadMapChart}
+				/>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm mt-3">
+				<Options
+					{optionsToChooseFrom}
+					on:optionSelected={answerSelected}
+					bind:this={optionsChild}
+				/>
+			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-sm mt-3">
-			<Options {optionsToChooseFrom} on:optionSelected={answerSelected} bind:this={optionsChild} />
-		</div>
-	</div>
-</div>
+</main>
