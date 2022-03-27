@@ -5,16 +5,17 @@ const CountriesData = JSON.parse(
 );
 
 export const GetRandomCountries = (numberRandomRecords) => {
-	const countriesFiltered = CountriesData.filter((country) => country.isVisibleOnMap === true);
+	const countriesVisibleOnMap = CountriesData.filter((country) => country.isVisibleOnMap === true);
 
 	const randomCountriesArray = [];
-	for (let i = 0; i < numberRandomRecords; i++) {
-		let newRandomIndex = getRandomInt(countriesFiltered.length);
+	for (let i = 0; i < numberRandomRecords;) {
+		let newRandomIndex = getRandomInt(countriesVisibleOnMap.length);
 		const countryExists = randomCountriesArray.find(
-			(country) => country.countryName === countriesFiltered[newRandomIndex].countryName
+			(country) => country.countryName === countriesVisibleOnMap[newRandomIndex].countryName
 		);
 		if (!countryExists) {
-			randomCountriesArray.push(countriesFiltered[newRandomIndex]);
+			randomCountriesArray.push(countriesVisibleOnMap[newRandomIndex]);
+			i++;
 		}
 	}
 
