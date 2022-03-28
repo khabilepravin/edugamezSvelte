@@ -12,9 +12,9 @@
 
 		function drawGeoChart() {
 			/* Geo Chart */
-            const chartData = [['Country', 'Guessed']];
+			const chartData = [['Country', 'Guessed']];
 
-            $mapUserAnswers.map(r => chartData.push([r.actualCountry, r.isCorrect? 1 : 0]));
+			$mapUserAnswers.map((r) => chartData.push([r.actualCountry, r.isCorrect ? 1 : 0]));
 
 			initilizeChartWithCountry(selectedCountry, chartData);
 		}
@@ -26,9 +26,15 @@
 			domain: 'IN',
 			defaultColor: '#0000FF',
 			enableRegionInteractivity: false,
-            defaultColor: "#0000FF",
-            colorAxis:{ colors: ["red", "green"] },
-            enableRegionInteractivity:true
+			defaultColor: '#0000FF',
+			colorAxis: { colors: ['red', 'green'] },
+			enableRegionInteractivity: true,
+			tooltip: {
+				textStyle: {
+					fontSize: 18,
+					bold: true
+				}
+			}
 		};
 		const geoChart = new GoogleCharts.api.visualization.GeoChart(
 			document.getElementById('resultMap')
@@ -37,5 +43,9 @@
 	};
 	console.log($mapUserAnswers);
 </script>
-
-<div id="resultMap"/>
+<header>
+	<h5>Result</h5>
+</header>
+<main>
+	<div id="resultMap" />
+</main>
