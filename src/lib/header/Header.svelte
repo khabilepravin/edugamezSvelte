@@ -19,10 +19,10 @@
 			<li class:active={$page.url.pathname === '/about'}>
 				<a sveltekit:prefetch href="/about">About</a>
 			</li>
-			<li class:active={$page.url.pathname === '/map'}>
+			<li class:active={$page.url.pathname === '/map' || $page.url.pathname === '/map/result'}>
 				<a sveltekit:prefetch href="/map">Map</a>
 			</li>
-			<li class:active={$page.url.pathname === '/spelling'}>
+			<li class:active={$page.url.pathname === '/spelling' || $page.url.pathname === '/spelling/result'}>
 				<a sveltekit:prefetch href="/spelling">Spelling</a>
 			</li>
 		</ul>
