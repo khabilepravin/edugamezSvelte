@@ -7,11 +7,15 @@
 	import { mapUserAnswers } from '../../lib/store';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import HiOutlineGlobe from "svelte-icons-pack/hi/HiOutlineGlobe";
+	import Progress from '$lib/Progress.svelte';
+	import { percentage } from '$lib/percent';
 
 	let optionsChild;
 	let reloadMapChart;
-	let randomCountries = GetRandomCountries(10);
+	let maxRecordsInATest = 10;
+	let randomCountries = GetRandomCountries(maxRecordsInATest);
 	let currentIndex = 0;
+	let percentComplete = 0;
 
 	let optionsToChooseFrom = [];
 	let countryOptionsForAnswerSelection = null;
@@ -56,6 +60,7 @@
 	};
 
 	const moveToNext = () => {
+		percentComplete = percentage((currentIndex + 1), maxRecordsInATest);		
 		if (currentIndex === 9) {
 			goto('/map/result');
 		} else {
@@ -78,6 +83,7 @@
 	</div>
 </header>
 <main>
+	<Progress currentProgress={percentComplete}/>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm">
