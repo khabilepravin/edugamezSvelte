@@ -15,6 +15,7 @@
 
 	let optionsToChooseFrom = [];
 	let countryOptionsForAnswerSelection = null;
+	$mapUserAnswers = [];
 
 	const loadOptionsToChooseFrom = () => {
 		optionsToChooseFrom = [];
