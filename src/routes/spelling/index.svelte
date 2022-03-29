@@ -5,6 +5,8 @@
 	import HiOutlineChevronDoubleRight from 'svelte-icons-pack/hi/HiOutlineChevronDoubleRight';
 	import BsPenFill from 'svelte-icons-pack/bs/BsPenFill';
 	import { spellingUserAnswers } from '../../lib/store';
+	import Progress from '$lib/Progress.svelte';
+	import { percentage } from '$lib/percent';
 
 	export let spellingData;
 
@@ -15,8 +17,11 @@
 
 	let spelledAnswer = null;
 	$spellingUserAnswers = [];
+	const maxRecordsInATest = 10;
+	let percentComplete = 0;
 
 	const handleNext = () => {
+		percentComplete = percentage((currentIndex + 1), maxRecordsInATest);	
 		let currentWordData = spellingData[currentIndex];
 		$spellingUserAnswers = [...$spellingUserAnswers, getUserAnswer(currentWordData, spelledAnswer)];
 
@@ -71,6 +76,7 @@
 					/>
 				</div>
 			</div>
+			<Progress currentProgress={percentComplete} currentItemNumber={currentIndex+1} totalItems={maxRecordsInATest}/>
 			<div class="row">
 				<div class="col-sm">
 					<button
