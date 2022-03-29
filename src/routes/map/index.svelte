@@ -82,8 +82,7 @@
 		<Icon src={HiOutlineGlobe} size="36" />
 	</div>
 </header>
-<main>
-	<Progress currentProgress={percentComplete}/>
+<main>	
 	<div class="container">
 		<div class="row">
 			<div class="col-sm">
@@ -93,6 +92,7 @@
 				/>
 			</div>
 		</div>
+		<Progress currentProgress={percentComplete} currentItemNumber={currentIndex+1} totalItems={maxRecordsInATest}/>
 		<div class="row">
 			<div class="col-sm mt-3">
 				<Options
