@@ -7,7 +7,7 @@
 	import { mapUserAnswers } from '../../lib/store';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import HiOutlineGlobe from "svelte-icons-pack/hi/HiOutlineGlobe";
-	import Progress from '$lib/Progress.svelte';
+	import Progress from '$lib/progress.svelte';
 	import { percentage } from '$lib/percent';
 
 	let optionsChild;
