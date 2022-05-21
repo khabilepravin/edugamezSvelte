@@ -5,7 +5,7 @@
 	import HiOutlineChevronDoubleRight from 'svelte-icons-pack/hi/HiOutlineChevronDoubleRight';
 	import BsPenFill from 'svelte-icons-pack/bs/BsPenFill';
 	import { spellingUserAnswers } from '../../lib/store';
-	import Progress from '$lib/Progress.svelte';
+	import Progress from '$lib/progress.svelte';
 	import { percentage } from '$lib/percent';
 
 	export let spellingData;
