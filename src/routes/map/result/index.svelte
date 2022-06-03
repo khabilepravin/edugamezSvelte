@@ -25,8 +25,6 @@
 		const geo_1_options = {
 			domain: 'IN',
 			defaultColor: '#0000FF',
-			enableRegionInteractivity: false,
-			defaultColor: '#0000FF',
 			colorAxis: { colors: ['red', 'green'] },
 			enableRegionInteractivity: true,
 			tooltip: {
