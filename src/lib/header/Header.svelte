@@ -3,125 +3,45 @@
 	import logo from './svelte-logo.svg';
 </script>
 
-<header>
-	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light">
+	<div class="container">
+		<a class="navbar-brand logo-image" href="index.html"
+			><img src="images/logo.svg" alt="alternative" /></a
+		>
+		<button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+			<span class="navbar-toggler-icon" />
+		</button>
+		<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link page-scroll" href="index.html#header"
+						>Home <span class="sr-only">(current)</span></a
+					>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link page-scroll" href="#pricing">Pricing</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link page-scroll" href="#contact">Contact</a>
+				</li>
+			</ul>
+			<span class="nav-item">
+				<a class="btn-outline-sm" href="log-in.html">Log In</a>
+			</span>
+		</div>
 	</div>
-
-	<nav>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
-		<ul>
-			<li class:active={$page.url.pathname === '/'}><a sveltekit:prefetch href="/">Home</a></li>
-			<li class:active={$page.url.pathname === '/about'}>
-				<a sveltekit:prefetch href="/about">About</a>
-			</li>
-			<li class:active={$page.url.pathname === '/map' || $page.url.pathname === '/map/result'}>
-				<a sveltekit:prefetch href="/map">Map</a>
-			</li>
-			<li class:active={$page.url.pathname === '/spelling' || $page.url.pathname === '/spelling/result'}>
-				<a sveltekit:prefetch href="/spelling">Spelling</a>
-			</li>
-		</ul>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
-	</nav>
-
-	<div class="corner">
-		<!-- TODO put something else here? github link? -->
-	</div>
-</header>
-
-<style>
-	header {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.corner {
-		width: 3em;
-		height: 3em;
-	}
-
-	.corner a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
-
-	.corner img {
-		width: 2em;
-		height: 2em;
-		object-fit: contain;
-	}
-
-	nav {
-		display: flex;
-		justify-content: center;
-		--background: rgba(255, 255, 255, 0.7);
-	}
-
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
-	}
-
-	path {
-		fill: var(--background);
-	}
-
-	ul {
-		position: relative;
-		padding: 0;
-		margin: 0;
-		height: 3em;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		list-style: none;
-		background: var(--background);
-		background-size: contain;
-	}
-
-	li {
-		position: relative;
-		height: 100%;
-	}
-
-	li.active::before {
-		--size: 6px;
-		content: '';
-		width: 0;
-		height: 0;
-		position: absolute;
-		top: 0;
-		left: calc(50% - var(--size));
-		border: var(--size) solid transparent;
-		border-top: var(--size) solid var(--accent-color);
-	}
-
-	nav a {
-		display: flex;
-		height: 100%;
-		align-items: center;
-		padding: 0 1em;
-		color: var(--heading-color);
-		font-weight: 700;
-		font-size: 0.8rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		text-decoration: none;
-		transition: color 0.2s linear;
-	}
-
-	a:hover {
-		color: var(--accent-color);
-	}
-</style>
+</nav>
+<!--<header id="header" class="header">
+	 <div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="text-container">
+					<h1 class="h1-large">Play to Enhance Your Knowledge</h1>
+					<p class="p-large p-heading"></p>
+					<a class="btn-solid-lg page-scroll" href="#games">Discover</a>
+				</div> 
+			</div> 
+		</div> 
+	</div>  
+	
+</header>-->

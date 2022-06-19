@@ -2,58 +2,72 @@
 	export const prerender = true;
 </script>
 
-<script>
-	import Counter from '$lib/counter.svelte';
-</script>
-
 <svelte:head>
 	<title>Home</title>
 </svelte:head>
 
-<section>
-	<h1>
-		<div class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
+<div id="games">
+	<!-- Features -->
+	<div class="cards-1 bg-gray">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2 class="h2-heading">Webly's <span class="blue">Games</span></h2>
+				</div>
+				<!-- end of col -->
+			</div>
+			<!-- end of row -->
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="cards-container">
+						<!-- Card -->
+						<div class="card">
+							<span class="fa-stack">
+								<i class="fas fa-circle fa-stack-2x" />
+								<i class="fas fa-school fa-stack-1x" />
+							</span>
+							<div class="card-body">
+								<h5 class="card-title">
+									<a href="/spelling" class="link-no-decoration">Spelling</a>
+								</h5>
+								<p>Practice spelling almost like you are participating in an actual competition</p>
+							</div>
+						</div>
+						<!-- end of card -->
+
+						<!-- Card -->
+						<div class="card">
+							<span class="fa-stack">
+								<i class="fas fa-circle fa-stack-2x" />
+								<i class="fas fa-map fa-stack-1x" />
+							</span>
+							<div class="card-body">
+								<h5 class="card-title"><a href="/map" class="link-no-decoration">Map</a></h5>
+								<p>Get better at geography, with a fun map game</p>
+							</div>
+						</div>
+						<!-- end of card -->
+
+						<!-- Card -->
+						<div class="card">
+							<span class="fa-stack">
+								<i class="fas fa-circle fa-stack-2x" />
+								<i class="fas fa-flag fa-stack-1x" />
+							</span>
+							<div class="card-body">
+								<h5 class="card-title">Flags</h5>
+								<p>Extend your Knowledge about any country</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
+	</div>
+</div>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 1;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
+	.link-no-decoration {
+		text-decoration: none;
 	}
 </style>
