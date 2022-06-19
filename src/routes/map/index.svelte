@@ -6,7 +6,7 @@
 	import Options from './Options.svelte';
 	import { mapUserAnswers } from '../../lib/store';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
-	import HiOutlineGlobe from "svelte-icons-pack/hi/HiOutlineGlobe";
+	import HiOutlineGlobe from 'svelte-icons-pack/hi/HiOutlineGlobe';
 	import Progress from '$lib/progress.svelte';
 	import { percentage } from '$lib/percent';
 
@@ -60,7 +60,7 @@
 	};
 
 	const moveToNext = () => {
-		percentComplete = percentage((currentIndex + 1), maxRecordsInATest);		
+		percentComplete = percentage(currentIndex + 1, maxRecordsInATest);
 		if (currentIndex === 9) {
 			goto('/map/result');
 		} else {
@@ -76,13 +76,7 @@
 <svelte:head>
 	<title>Map Game</title>
 </svelte:head>
-
-<header>
-	<div>
-		<Icon src={HiOutlineGlobe} size="36" />
-	</div>
-</header>
-<main>	
+<main>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm">
@@ -92,7 +86,11 @@
 				/>
 			</div>
 		</div>
-		<Progress currentProgress={percentComplete} currentItemNumber={currentIndex+1} totalItems={maxRecordsInATest}/>
+		<Progress
+			currentProgress={percentComplete}
+			currentItemNumber={currentIndex + 1}
+			totalItems={maxRecordsInATest}
+		/>
 		<div class="row">
 			<div class="col-sm mt-3">
 				<Options

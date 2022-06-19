@@ -21,7 +21,7 @@
 	let percentComplete = 0;
 
 	const handleNext = () => {
-		percentComplete = percentage((currentIndex + 1), maxRecordsInATest);	
+		percentComplete = percentage(currentIndex + 1, maxRecordsInATest);
 		let currentWordData = spellingData[currentIndex];
 		$spellingUserAnswers = [...$spellingUserAnswers, getUserAnswer(currentWordData, spelledAnswer)];
 
@@ -52,9 +52,9 @@
 <svelte:head>
 	<title>Spelling Game</title>
 </svelte:head>
-<header>
+<!-- <header>
 	<Icon src={BsPenFill} size="28" />
-</header>
+</header> -->
 <main>
 	<div class="text-center">
 		<h6>Word</h6>
@@ -76,7 +76,11 @@
 					/>
 				</div>
 			</div>
-			<Progress currentProgress={percentComplete} currentItemNumber={currentIndex+1} totalItems={maxRecordsInATest}/>
+			<Progress
+				currentProgress={percentComplete}
+				currentItemNumber={currentIndex + 1}
+				totalItems={maxRecordsInATest}
+			/>
 			<div class="row">
 				<div class="col-sm">
 					<button

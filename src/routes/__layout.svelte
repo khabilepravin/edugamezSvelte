@@ -1,8 +1,8 @@
 <script>
 	import Header from '$lib/header/Header.svelte';
 	import Footer from '$lib/footer/Footer.svelte';
-	import '../app.css';
-	import '../theme.css';
+	// import '../app.css';
+	// import '../theme.css';
 </script>
 
 <Header />
@@ -16,11 +16,8 @@
 </footer>
 
 <style>
-	footer {
-		position: absolute;
-		bottom: 0;
-		width: 100%;
-		height: 60px;
-		background: #6cf;
+	main {
+		padding-top: 4%;
+		height: 50%;
 	}
 </style>

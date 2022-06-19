@@ -5,9 +5,7 @@
 
 <nav class="navbar navbar-expand-lg fixed-top navbar-light">
 	<div class="container">
-		<a class="navbar-brand logo-image" href="index.html"
-			><img src="images/logo.svg" alt="alternative" /></a
-		>
+		<a class="navbar-brand logo-image" href="/"><img src="images/logo.svg" alt="alternative" /></a>
 		<button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
 			<span class="navbar-toggler-icon" />
 		</button>
