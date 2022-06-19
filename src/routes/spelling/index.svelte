@@ -19,6 +19,7 @@
 	$spellingUserAnswers = [];
 	const maxRecordsInATest = 10;
 	let percentComplete = 0;
+	let timer;
 
 	const handleNext = () => {
 		percentComplete = percentage(currentIndex + 1, maxRecordsInATest);
@@ -47,6 +48,13 @@
 			isCorrect: isCorrect
 		};
 	};
+
+	const debounce = (v) => {
+		clearTimeout(timer);
+		timer = setTimeout(() => {
+			spelledAnswer = v;
+		}, 750);
+	};
 </script>
 
 <svelte:head>
@@ -72,6 +80,8 @@
 						type="text"
 						class="form-control"
 						placeholder="Spelling"
+						spellcheck="false"
+						on:keyup={({ target: { value } }) => debounce(value)}
 						bind:value={spelledAnswer}
 					/>
 				</div>
