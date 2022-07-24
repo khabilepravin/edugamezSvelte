@@ -9,20 +9,35 @@ const firebaseConfig = {
     storageBucket: import.meta.env.VITE_ENV_storageBucket,
     messagingSenderId: import.meta.env.VITE_ENV_messagingSenderId,
     appId: import.meta.env.VITE_ENV_appId
-  };
+};
 
-  const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-  export async function getSpellingWords(){
-        const db = getFirestore();
+export async function getSpellingWords() {
+    const db = getFirestore();
 
-        const querySnapshot = await getDocs(collection(db, "spellingwords"));
+    const querySnapshot = await getDocs(collection(db, "spellingwords"));
 
-        const docsArray = [];
+    const docsArray = [];
 
-        querySnapshot.forEach((doc) => {
-            docsArray.push(doc.data());
-        });
+    querySnapshot.forEach((doc) => {
+        docsArray.push(doc.data());
+    });
 
-        return docsArray;
-  }
+    return docsArray;
+}
+
+
+export async function getSpellingWordsV2() {
+    const db = getFirestore();
+
+    const querySnapshot = await getDocs(collection(db, "spellingwordsv2"));
+
+    const docsArray = [];
+
+    querySnapshot.forEach((doc) => {
+        docsArray.push(doc.data());
+    });
+
+    return docsArray;
+}

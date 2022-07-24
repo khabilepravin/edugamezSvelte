@@ -5,12 +5,28 @@
 	import HiOutlineChevronDoubleRight from 'svelte-icons-pack/hi/HiOutlineChevronDoubleRight';
 	import BsPenFill from 'svelte-icons-pack/bs/BsPenFill';
 	import { spellingUserAnswers } from '../../lib/store';
+	import { getUrlByRegion } from './utility';
 	import Progress from '$lib/progress.svelte';
 	import { percentage } from '$lib/percent';
 
 	export let spellingData;
+	export let spellingDataV2;
+
+	const currentRegion = 'en-US';
 
 	let currentIndex = 0;
+	debugger;
+	let wordAudioUrlv2 = getUrlByRegion(spellingDataV2[currentIndex].WordAudios, currentRegion);
+	let definitonAudioUrlv2 = getUrlByRegion(
+		spellingDataV2[currentIndex].DefinitionAudios,
+		currentRegion
+	);
+	let exampleAudioUrlv2 = getUrlByRegion(spellingDataV2[currentIndex].ExampleAudios, currentRegion);
+
+	// let wordAudioUrl = wordAudioUrlv2.Url;
+	// let definitonAudioUrl = definitonAudioUrlv2.Url;
+	// let exampleAudioUrl = exampleAudioUrlv2.Url;
+
 	let wordAudioUrl = spellingData[currentIndex].wordAudioUrl;
 	let definitonAudioUrl = spellingData[currentIndex].defintionAudioUrl;
 	let exampleAudioUrl = spellingData[currentIndex].exampleAudioUrl;
