@@ -5,7 +5,7 @@ export const getUrlByRegion = (arrayOfElements, region) => {
         });
 
         if (results) {
-            return results[0];
+            return results[0].Url;
         }
     }
 };

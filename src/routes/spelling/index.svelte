@@ -9,13 +9,12 @@
 	import Progress from '$lib/progress.svelte';
 	import { percentage } from '$lib/percent';
 
-	export let spellingData;
+	//export let spellingData;
 	export let spellingDataV2;
 
-	const currentRegion = 'en-US';
+	const currentRegion = 'en-GB';
 
 	let currentIndex = 0;
-	debugger;
 	let wordAudioUrlv2 = getUrlByRegion(spellingDataV2[currentIndex].WordAudios, currentRegion);
 	let definitonAudioUrlv2 = getUrlByRegion(
 		spellingDataV2[currentIndex].DefinitionAudios,
@@ -23,13 +22,13 @@
 	);
 	let exampleAudioUrlv2 = getUrlByRegion(spellingDataV2[currentIndex].ExampleAudios, currentRegion);
 
-	// let wordAudioUrl = wordAudioUrlv2.Url;
-	// let definitonAudioUrl = definitonAudioUrlv2.Url;
-	// let exampleAudioUrl = exampleAudioUrlv2.Url;
+	let wordAudioUrl = wordAudioUrlv2;
+	let definitonAudioUrl = definitonAudioUrlv2;
+	let exampleAudioUrl = exampleAudioUrlv2;
 
-	let wordAudioUrl = spellingData[currentIndex].wordAudioUrl;
-	let definitonAudioUrl = spellingData[currentIndex].defintionAudioUrl;
-	let exampleAudioUrl = spellingData[currentIndex].exampleAudioUrl;
+	// let wordAudioUrl = spellingData[currentIndex].wordAudioUrl;
+	// let definitonAudioUrl = spellingData[currentIndex].defintionAudioUrl;
+	// let exampleAudioUrl = spellingData[currentIndex].exampleAudioUrl;
 
 	let spelledAnswer = null;
 	$spellingUserAnswers = [];
@@ -39,7 +38,9 @@
 
 	const handleNext = () => {
 		percentComplete = percentage(currentIndex + 1, maxRecordsInATest);
-		let currentWordData = spellingData[currentIndex];
+		//		let currentWordData = spellingData[currentIndex];
+		let currentWordData = spellingDataV2[currentIndex];
+
 		$spellingUserAnswers = [...$spellingUserAnswers, getUserAnswer(currentWordData, spelledAnswer)];
 
 		if (currentIndex === 9) {
@@ -47,19 +48,19 @@
 		} else {
 			// Move to next
 			currentIndex = currentIndex + 1;
-			currentWordData = spellingData[currentIndex];
-			wordAudioUrl = currentWordData.wordAudioUrl;
-			definitonAudioUrl = currentWordData.defintionAudioUrl;
-			exampleAudioUrl = currentWordData.exampleAudioUrl;
+			currentWordData = spellingDataV2[currentIndex];
+			wordAudioUrl = getUrlByRegion(currentWordData.WordAudios, currentRegion);
+			definitonAudioUrl = getUrlByRegion(currentWordData.DefinitionAudios, currentRegion);
+			exampleAudioUrl = getUrlByRegion(currentWordData.ExampleAudios, currentRegion);
 			spelledAnswer = null;
 		}
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
-		let isCorrect = originalWord.word.trim().toLowerCase() === userAnswer.trim().toLowerCase();
+		let isCorrect = originalWord.Word.trim().toLowerCase() === userAnswer.trim().toLowerCase();
 
 		return {
-			actualWord: originalWord.word,
+			actualWord: originalWord.Word,
 			userAnswer: userAnswer,
 			isCorrect: isCorrect
 		};
