@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query } from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 
 const firebaseConfig = {
