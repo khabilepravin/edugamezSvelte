@@ -1,6 +1,6 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	let selectedRegion = 'en-US';
+	export let selectedRegion;
 
 	const dispatch = createEventDispatcher();
 </script>

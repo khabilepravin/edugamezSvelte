@@ -1,21 +1,23 @@
 <script>
-	import AudioPlayer from './AudioPlayer.svelte';
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import HiOutlineChevronDoubleRight from 'svelte-icons-pack/hi/HiOutlineChevronDoubleRight';
 	import BsPenFill from 'svelte-icons-pack/bs/BsPenFill';
+
+	// local imports
+	import AudioPlayer from './AudioPlayer.svelte';
 	import { spellingUserAnswers } from '../../lib/store';
 	import { getUrlByRegion } from './utility';
 	import Progress from '$lib/progress.svelte';
 	import { percentage } from '$lib/percent';
 	import RegionSelector from '$lib/regionselector.svelte';
-	import { onMount } from 'svelte';
 
 	// public props
 	export let spellingDataV2;
 
 	// local props
-	let currentRegion = 'en-GB';
+	let currentRegion = 'en-AU';
 	let currentIndex = 0;
 	let wordAudioUrl;
 	let definitonAudioUrl;
@@ -89,7 +91,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm">
-					<RegionSelector on:regionChanged={handleRegionChange} />
+					<RegionSelector on:regionChanged={handleRegionChange} selectedRegion={currentRegion} />
 				</div>
 			</div>
 		</div>
