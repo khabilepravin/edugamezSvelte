@@ -8,37 +8,38 @@
 	import { getUrlByRegion } from './utility';
 	import Progress from '$lib/progress.svelte';
 	import { percentage } from '$lib/percent';
+	import RegionSelector from '$lib/regionselector.svelte';
+	import { onMount } from 'svelte';
 
-	//export let spellingData;
+	// public props
 	export let spellingDataV2;
 
-	const currentRegion = 'en-GB';
-
+	// local props
+	let currentRegion = 'en-GB';
 	let currentIndex = 0;
-	let wordAudioUrlv2 = getUrlByRegion(spellingDataV2[currentIndex].WordAudios, currentRegion);
-	let definitonAudioUrlv2 = getUrlByRegion(
-		spellingDataV2[currentIndex].DefinitionAudios,
-		currentRegion
-	);
-	let exampleAudioUrlv2 = getUrlByRegion(spellingDataV2[currentIndex].ExampleAudios, currentRegion);
-
-	let wordAudioUrl = wordAudioUrlv2;
-	let definitonAudioUrl = definitonAudioUrlv2;
-	let exampleAudioUrl = exampleAudioUrlv2;
-
-	// let wordAudioUrl = spellingData[currentIndex].wordAudioUrl;
-	// let definitonAudioUrl = spellingData[currentIndex].defintionAudioUrl;
-	// let exampleAudioUrl = spellingData[currentIndex].exampleAudioUrl;
-
+	let wordAudioUrl;
+	let definitonAudioUrl;
+	let exampleAudioUrl;
 	let spelledAnswer = null;
 	$spellingUserAnswers = [];
 	const maxRecordsInATest = 10;
 	let percentComplete = 0;
 	let timer;
 
+	// lifecycle hooks
+	onMount(async () => {
+		setComponentData(spellingDataV2[currentIndex]);
+	});
+
+	// private functions
+	const setComponentData = (currentWordInstance) => {
+		wordAudioUrl = getUrlByRegion(currentWordInstance.WordAudios, currentRegion);
+		definitonAudioUrl = getUrlByRegion(currentWordInstance.DefinitionAudios, currentRegion);
+		exampleAudioUrl = getUrlByRegion(currentWordInstance.ExampleAudios, currentRegion);
+	};
+
 	const handleNext = () => {
 		percentComplete = percentage(currentIndex + 1, maxRecordsInATest);
-		//		let currentWordData = spellingData[currentIndex];
 		let currentWordData = spellingDataV2[currentIndex];
 
 		$spellingUserAnswers = [...$spellingUserAnswers, getUserAnswer(currentWordData, spelledAnswer)];
@@ -49,9 +50,7 @@
 			// Move to next
 			currentIndex = currentIndex + 1;
 			currentWordData = spellingDataV2[currentIndex];
-			wordAudioUrl = getUrlByRegion(currentWordData.WordAudios, currentRegion);
-			definitonAudioUrl = getUrlByRegion(currentWordData.DefinitionAudios, currentRegion);
-			exampleAudioUrl = getUrlByRegion(currentWordData.ExampleAudios, currentRegion);
+			setComponentData(currentWordData);
 			spelledAnswer = null;
 		}
 	};
@@ -72,6 +71,11 @@
 			spelledAnswer = v;
 		}, 750);
 	};
+
+	const handleRegionChange = (event) => {
+		currentRegion = event.detail;
+		setComponentData(spellingDataV2[currentIndex]);
+	};
 </script>
 
 <svelte:head>
@@ -82,6 +86,13 @@
 </header> -->
 <main>
 	<div class="text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm">
+					<RegionSelector on:regionChanged={handleRegionChange} />
+				</div>
+			</div>
+		</div>
 		<h6>Word</h6>
 
 		<AudioPlayer src={wordAudioUrl} autoPlay="true" />
