@@ -3,7 +3,6 @@
 	import { goto } from '$app/navigation';
 	import Icon from 'svelte-icons-pack/Icon.svelte';
 	import HiOutlineChevronDoubleRight from 'svelte-icons-pack/hi/HiOutlineChevronDoubleRight';
-	import BsPenFill from 'svelte-icons-pack/bs/BsPenFill';
 
 	// local imports
 	import AudioPlayer from './AudioPlayer.svelte';
@@ -86,7 +85,7 @@
 <!-- <header>
 	<Icon src={BsPenFill} size="28" />
 </header> -->
-<main>
+<!-- <main> -->
 	<div class="text-center">
 		<div class="container">
 			<div class="row">
@@ -135,4 +134,4 @@
 			</div>
 		</div>
 	</div>
-</main>
+<!-- </main> -->

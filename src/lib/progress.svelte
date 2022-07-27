@@ -11,7 +11,7 @@
 	progress {
 		display: inline-block;
 		margin-right: 10px;
-		width: 400px;
+		width: 80%;
 		height: 30px;
         align-self: center;
 	}

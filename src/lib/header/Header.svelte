@@ -29,17 +29,3 @@
 		</div>
 	</div>
 </nav>
-<!--<header id="header" class="header">
-	 <div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="text-container">
-					<h1 class="h1-large">Play to Enhance Your Knowledge</h1>
-					<p class="p-large p-heading"></p>
-					<a class="btn-solid-lg page-scroll" href="#games">Discover</a>
-				</div> 
-			</div> 
-		</div> 
-	</div>  
-	
-</header>-->
