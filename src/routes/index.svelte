@@ -22,40 +22,35 @@
 					<div class="cards-container">
 						<!-- Card -->
 						<div class="card">
-							<span class="fa-stack">
+							<!-- <span class="fa-stack">
 								<i class="fas fa-circle fa-stack-2x" />
 								<i class="fas fa-school fa-stack-1x" />
-							</span>
+							</span> -->
+							<img src="images/spelling.PNG" alt="spelling" class="tile-image"/>
 							<div class="card-body">
-								<h5 class="card-title">
+								<h5 class="card-title text-center">
 									<a href="/spelling" class="link-no-decoration">Spelling</a>
 								</h5>
+								
 								<p>Practice spelling almost like you are participating in an actual competition</p>
 							</div>
 						</div>
 						<!-- end of card -->
 
 						<!-- Card -->
-						<div class="card">
-							<span class="fa-stack">
-								<i class="fas fa-circle fa-stack-2x" />
-								<i class="fas fa-map fa-stack-1x" />
-							</span>
+						<div class="card">							
+							<img src="images/map.PNG" alt="Map games" class="tile-image"/>
 							<div class="card-body">
-								<h5 class="card-title"><a href="/map" class="link-no-decoration">Map</a></h5>
+								<h5 class="card-title text-center"><a href="/map" class="link-no-decoration">Map</a></h5>
 								<p>Get better at geography, with a fun map game</p>
 							</div>
-						</div>
-						<!-- end of card -->
+						</div>						
 
-						<!-- Card -->
+						
 						<div class="card">
-							<span class="fa-stack">
-								<i class="fas fa-circle fa-stack-2x" />
-								<i class="fas fa-flag fa-stack-1x" />
-							</span>
+							<img src="images/flags.PNG" alt="Flag games" class="tile-image"/>
 							<div class="card-body">
-								<h5 class="card-title">Flags</h5>
+								<h5 class="card-title text-center">Flags</h5>
 								<p>Extend your Knowledge about any country</p>
 							</div>
 						</div>
@@ -69,5 +64,11 @@
 <style>
 	.link-no-decoration {
 		text-decoration: none;
+	}
+
+	.tile-image{
+		height: 200px;
+		width: 200px;
+		align-self: center;
 	}
 </style>
