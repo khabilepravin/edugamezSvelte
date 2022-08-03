@@ -29,6 +29,7 @@
 
 	// lifecycle hooks
 	onMount(async () => {
+		console.log(spellingDataV2[currentIndex]);
 		setComponentData(spellingDataV2[currentIndex]);
 	});
 

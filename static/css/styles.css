@@ -1427,9 +1427,10 @@ input[type='checkbox'] {
 /*     Footer     */
 /******************/
 .footer {
-	padding-top: 5.25rem;
-	padding-bottom: 1.5rem;
+	padding-top: 1.0rem;
+	padding-bottom: 1.0rem;
 	background-color: #455ed4;
+	height: 80px;
 }
 
 .footer a {
@@ -1437,7 +1438,7 @@ input[type='checkbox'] {
 }
 
 .footer .footer-col {
-	margin-bottom: 3rem;
+	margin-bottom: 1rem;
 }
 
 .footer h6 {
