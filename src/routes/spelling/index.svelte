@@ -21,20 +21,19 @@
 	let wordAudioUrl;
 	let definitonAudioUrl;
 	let exampleAudioUrl;
-	let partsOfTheSpeech = []; 
+	let partsOfTheSpeech = [];
 	let definitionAndExampleFor;
-	let spelledAnswer = null;	
+	let spelledAnswer = null;
 	let canMoveNext = false;
 	const maxRecordsInATest = 10;
 	let percentComplete = 0;
 	let timer;
 
 	// store variables
-	$spellingUserAnswers = []; 
+	$spellingUserAnswers = [];
 
 	// lifecycle hooks
 	onMount(async () => {
-		console.log(spellingDataV2[currentIndex]);
 		setComponentData(spellingDataV2[currentIndex]);
 	});
 
@@ -45,7 +44,7 @@
 		exampleAudioUrl = getUrlByRegion(currentWordInstance.ExampleAudios, currentRegion);
 		partsOfTheSpeech = currentWordInstance.PartsOfTheSpeech;
 		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
-	};	
+	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
 		let isCorrect = originalWord.Word.trim().toLowerCase() === userAnswer.trim().toLowerCase();
@@ -93,62 +92,68 @@
 <svelte:head>
 	<title>Spelling Game</title>
 </svelte:head>
-	<div class="text-center">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm">
-					<RegionSelector on:regionChanged={handleRegionChange} selectedRegion={currentRegion} />
-				</div>
-			</div>
-		</div>
-		<h6>Word</h6>
-
-		<AudioPlayer src={wordAudioUrl} autoPlay="true" />
-		<h6>Definition</h6>
-		<AudioPlayer src={definitonAudioUrl} autoPlay={null}/>
-		<h6>Example</h6>
-		<AudioPlayer src={exampleAudioUrl} autoPlay={null}/>
-
-		<div class="container">
-			<div class="row">
-				<div class="col-sm">
-					{#each partsOfTheSpeech as part}
-					  {#if part === definitionAndExampleFor}					  
-					 	<strong>{part} &nbsp;</strong>
-					  {:else}
-					  	{part} &nbsp;
-					  {/if}
-					{/each}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm">
-					<input
-						type="text"
-						class="form-control"
-						placeholder="Spelling"
-						spellcheck="false"
-						on:keyup={({ target: { value } }) => debounce(value)}
-						bind:value={spelledAnswer}
-					/>
-				</div>
-			</div>
-			<Progress
-				currentProgress={percentComplete}
-				currentItemNumber={currentIndex + 1}
-				totalItems={maxRecordsInATest}
-			/>
-			<div class="row">
-				<div class="col-sm">
-					<button
-						on:click={handleNext}
-						disabled={canMoveNext === false}
-						value="Next"
-						class="btn btn-primary mt-3"
-						>Next
-						<Icon src={HiOutlineChevronDoubleRight} />
-					</button>
-				</div>
+<div class="text-center">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm">
+				<RegionSelector on:regionChanged={handleRegionChange} selectedRegion={currentRegion} />
 			</div>
 		</div>
 	</div>
+	<h6>Word</h6>
+
+	<AudioPlayer src={wordAudioUrl} autoPlay="true" />
+	<h6>Definition</h6>
+	<AudioPlayer src={definitonAudioUrl} autoPlay={null} />
+	<h6>Example</h6>
+	<AudioPlayer src={exampleAudioUrl} autoPlay={null} />
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm">
+				{#each partsOfTheSpeech as part}
+					{#if part === definitionAndExampleFor}
+						<strong>{part} &nbsp;</strong>
+					{:else}
+						{part} &nbsp;
+					{/if}
+				{/each}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm">
+				<input
+					type="text"
+					class="form-control"
+					placeholder="Spelling"
+					spellcheck="false"
+					autocomplete="off"
+					autocorrect="off"
+					autocapitalize="none"
+					on:keyup={({ target: { value } }) => debounce(value)}
+					bind:value={spelledAnswer}
+				/>
+			</div>
+		</div>
+		<Progress
+			currentProgress={percentComplete}
+			currentItemNumber={currentIndex + 1}
+			totalItems={maxRecordsInATest}
+		/>
+	</div>
+</div>
+<button
+	on:click={handleNext}
+	disabled={canMoveNext === false}
+	value="Next"
+	class="btn btn-primary mt-3 float"
+	>Next	
+</button>
+
+<style>
+	.float {
+		position: fixed;
+		bottom: 40px;
+		right: 40px;		
+	}
+</style>
