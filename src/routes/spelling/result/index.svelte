@@ -3,28 +3,31 @@
 	import { fade } from 'svelte/transition';
 </script>
 
-<header>
-	<h5>Results</h5>
-</header>
 <main>
-	<table class="table" transition:fade>
-		<thead>
-			<tr>
-				<th scope="col">Actual Spelling</th>
-				<th scope="col">You Spelled</th>
-			</tr>
-		</thead>
-		<tbody>
-			{#each $spellingUserAnswers as result}
-				<tr>
-					<td><h4 class="text-primary">{result.actualWord}</h4></td>
-					<td
-						><h4 class={result.isCorrect ? 'text-success' : 'text-danger'}>
-							{result.userAnswer}
-						</h4></td
-					>
-				</tr>
-			{/each}
-		</tbody>
-	</table>
+	<div class="container text-center" transition:fade>
+		<div class="row row-cols-1">
+			<div class="col"><h5>Results</h5></div>
+		</div>
+		<div class="row row-cols-2">
+			<div class="col">Correct Spelling</div>
+			<div class="col">You Spelled</div>
+		</div>
+
+		{#each $spellingUserAnswers as result}
+			<div class="row row-cols-2">
+				<div class="col text-primary">{result.actualWord}</div>
+				<div
+					class={result.isCorrect ? 'col text-success' : 'col text-danger strikethrough-decoration'}
+				>
+					{result.userAnswer}
+				</div>
+			</div>
+		{/each}
+	</div>
 </main>
+
+<style>
+	.strikethrough-decoration {
+		text-decoration: line-through;
+	}
+</style>
