@@ -16,16 +16,21 @@
 	export let spellingDataV2;
 
 	// local props
-	let currentRegion = 'en-AU';
+	let currentRegion = 'en-AU'; //TODO: Interpret this from the browser locale
 	let currentIndex = 0;
 	let wordAudioUrl;
 	let definitonAudioUrl;
 	let exampleAudioUrl;
-	let spelledAnswer = null;
-	$spellingUserAnswers = [];
+	let partsOfTheSpeech = []; 
+	let definitionAndExampleFor;
+	let spelledAnswer = null;	
+	let canMoveNext = false;
 	const maxRecordsInATest = 10;
 	let percentComplete = 0;
 	let timer;
+
+	// store variables
+	$spellingUserAnswers = []; 
 
 	// lifecycle hooks
 	onMount(async () => {
@@ -38,8 +43,21 @@
 		wordAudioUrl = getUrlByRegion(currentWordInstance.WordAudios, currentRegion);
 		definitonAudioUrl = getUrlByRegion(currentWordInstance.DefinitionAudios, currentRegion);
 		exampleAudioUrl = getUrlByRegion(currentWordInstance.ExampleAudios, currentRegion);
+		partsOfTheSpeech = currentWordInstance.PartsOfTheSpeech;
+		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
+	};	
+
+	const getUserAnswer = (originalWord, userAnswer) => {
+		let isCorrect = originalWord.Word.trim().toLowerCase() === userAnswer.trim().toLowerCase();
+
+		return {
+			actualWord: originalWord.Word,
+			userAnswer: userAnswer,
+			isCorrect: isCorrect
+		};
 	};
 
+	// Event handlers
 	const handleNext = () => {
 		percentComplete = percentage(currentIndex + 1, maxRecordsInATest);
 		let currentWordData = spellingDataV2[currentIndex];
@@ -54,39 +72,27 @@
 			currentWordData = spellingDataV2[currentIndex];
 			setComponentData(currentWordData);
 			spelledAnswer = null;
+			canMoveNext = false;
 		}
-	};
-
-	const getUserAnswer = (originalWord, userAnswer) => {
-		let isCorrect = originalWord.Word.trim().toLowerCase() === userAnswer.trim().toLowerCase();
-
-		return {
-			actualWord: originalWord.Word,
-			userAnswer: userAnswer,
-			isCorrect: isCorrect
-		};
-	};
-
-	const debounce = (v) => {
-		clearTimeout(timer);
-		timer = setTimeout(() => {
-			spelledAnswer = v;
-		}, 750);
 	};
 
 	const handleRegionChange = (event) => {
 		currentRegion = event.detail;
 		setComponentData(spellingDataV2[currentIndex]);
 	};
+
+	const debounce = (v) => {
+		clearTimeout(timer);
+		timer = setTimeout(() => {
+			spelledAnswer = v;
+			canMoveNext = true;
+		}, 800);
+	};
 </script>
 
 <svelte:head>
 	<title>Spelling Game</title>
 </svelte:head>
-<!-- <header>
-	<Icon src={BsPenFill} size="28" />
-</header> -->
-<!-- <main> -->
 	<div class="text-center">
 		<div class="container">
 			<div class="row">
@@ -99,11 +105,22 @@
 
 		<AudioPlayer src={wordAudioUrl} autoPlay="true" />
 		<h6>Definition</h6>
-		<AudioPlayer src={definitonAudioUrl} />
+		<AudioPlayer src={definitonAudioUrl} autoPlay={null}/>
 		<h6>Example</h6>
-		<AudioPlayer src={exampleAudioUrl} />
+		<AudioPlayer src={exampleAudioUrl} autoPlay={null}/>
 
 		<div class="container">
+			<div class="row">
+				<div class="col-sm">
+					{#each partsOfTheSpeech as part}
+					  {#if part === definitionAndExampleFor}					  
+					 	<strong>{part} &nbsp;</strong>
+					  {:else}
+					  	{part} &nbsp;
+					  {/if}
+					{/each}
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-sm">
 					<input
@@ -125,7 +142,7 @@
 				<div class="col-sm">
 					<button
 						on:click={handleNext}
-						disabled={spelledAnswer === null}
+						disabled={canMoveNext === false}
 						value="Next"
 						class="btn btn-primary mt-3"
 						>Next
@@ -135,4 +152,3 @@
 			</div>
 		</div>
 	</div>
-<!-- </main> -->
