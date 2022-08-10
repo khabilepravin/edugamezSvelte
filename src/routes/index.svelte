@@ -50,7 +50,7 @@
 						<div class="card">
 							<img src="images/flags.PNG" alt="Flag games" class="tile-image"/>
 							<div class="card-body">
-								<h5 class="card-title text-center">Flags</h5>
+								<h5 class="card-title text-center"><a href="/flags" class="link-no-decoration">Flags</a></h5>
 								<p>Extend your Knowledge about any country</p>
 							</div>
 						</div>
