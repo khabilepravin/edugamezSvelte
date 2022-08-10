@@ -147,13 +147,13 @@
 	disabled={canMoveNext === false}
 	value="Next"
 	class="btn btn-primary mt-3 float"
-	>Next	
+	>Next
 </button>
 
 <style>
 	.float {
 		position: fixed;
 		bottom: 40px;
-		right: 40px;		
+		right: 40px;
 	}
 </style>
