@@ -78,7 +78,13 @@
 </svelte:head>
 
 <div class="text-center">
+
 	<div class="container">
+		<div class="row">
+			<div class="col-sm">
+			<img src="images/map-icon.PNG" class="iconImageSize" alt="Maps icon"/><h6>Maps Game</h6>
+			</div>	
+		</div>
 		<div class="row">
 			<div class="col-sm">
 				<Map

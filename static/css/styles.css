@@ -2181,3 +2181,8 @@ a:hover.back-to-top {
 	/* end of extra pages */
 }
 /* end of min-width 1200px */
+
+.iconImageSize{
+	width:22px;
+	height: 22px;
+}

@@ -92,8 +92,13 @@
 <svelte:head>
 	<title>Spelling Game</title>
 </svelte:head>
-<div class="text-center">
+<div class="text-center">	
 	<div class="container">
+		<div class="row">
+			<div class="col-sm">
+			<img src="images/spelling-icon.PNG" class="iconImageSize" alt="Spelling icon"/><h6>Spelling Game</h6>
+			</div>	
+		</div>
 		<div class="row">
 			<div class="col-sm">
 				<RegionSelector on:regionChanged={handleRegionChange} selectedRegion={currentRegion} />
