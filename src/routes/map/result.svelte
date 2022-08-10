@@ -1,5 +1,5 @@
 <script>
-	import { mapUserAnswers } from '../../../lib/store';
+	import { mapUserAnswers } from '../../lib/store';
 	import { GoogleCharts } from 'google-charts';
 	import { onMount } from 'svelte';
 

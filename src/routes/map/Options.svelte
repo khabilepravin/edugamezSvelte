@@ -1,44 +1,41 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
 	export let optionsToChooseFrom = [];
 
-    const dispatch = createEventDispatcher();
-    const onOptionSelectionChanged = (e) => {        
-        dispatch('optionSelected', {
+	const dispatch = createEventDispatcher();
+	const onOptionSelectionChanged = (e) => {
+		dispatch('optionSelected', {
 			selectedOption: e.target.id
 		});
-    }
+	};
 
 	export function resetOptionSelection() {
 		document.querySelector('input[name=countryOptions]:checked').checked = false;
 	}
 </script>
 
-<div class="container">
-	<div class="radio-tile-group">
-		{#each optionsToChooseFrom as o}
-			<div class="input-container" transition:fade>
-				<input id={o.countryName} class="radio-button" type="radio" name="countryOptions" on:input={onOptionSelectionChanged}/>
-				<div class="radio-tile">					
-					<label for="walk" class="radio-tile-label">{o.countryName}</label>
-				</div>
+<div class="radio-tile-group">
+	{#each optionsToChooseFrom as o}
+		<div class="input-container" transition:fade>
+			<input
+				id={o.countryName}
+				class="radio-button"
+				type="radio"
+				name="countryOptions"
+				on:input={onOptionSelectionChanged}
+			/>
+			<div class="radio-tile">
+				<label for="walk" class="radio-tile-label">{o.countryName}</label>
 			</div>
-		{/each}
-	</div>
+		</div>
+	{/each}
 </div>
 
 <style>
 	* {
 		box-sizing: border-box;
 		font-family: 'Helvetica Neue', sans-serif;
-	}
-
-	.container {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 20vh;
 	}
 
 	.radio-tile-group {
@@ -48,8 +45,8 @@
 	}
 	.radio-tile-group .input-container {
 		position: relative;
-		height: 7rem;
-		width: 7rem;
+		height: 5rem;
+		width: 5rem;
 		margin: 0.5rem;
 	}
 	.radio-tile-group .input-container .radio-button {
@@ -76,7 +73,7 @@
 	}
 	.radio-tile-group .input-container .radio-tile-label {
 		text-align: center;
-		font-size: 0.75rem;
+		font-size: 0.58rem;
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 1px;

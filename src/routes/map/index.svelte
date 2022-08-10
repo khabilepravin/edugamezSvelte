@@ -76,29 +76,20 @@
 <svelte:head>
 	<title>Map Game</title>
 </svelte:head>
-<main>
-	<div class="container">
-		<div class="row">
-			<div class="col-sm">
-				<Map
-					selectedCountry={currentlyShownCountryName}
-					bind:initilizeChartWithCountry={reloadMapChart}
-				/>
-			</div>
-		</div>
-		<Progress
-			currentProgress={percentComplete}
-			currentItemNumber={currentIndex + 1}
-			totalItems={maxRecordsInATest}
-		/>
-		<div class="row">
-			<div class="col-sm mt-3">
-				<Options
-					{optionsToChooseFrom}
-					on:optionSelected={answerSelected}
-					bind:this={optionsChild}
-				/>
-			</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm">
+			<Map
+				selectedCountry={currentlyShownCountryName}
+				bind:initilizeChartWithCountry={reloadMapChart}
+			/>
 		</div>
 	</div>
-</main>
+	<Progress
+		currentProgress={percentComplete}
+		currentItemNumber={currentIndex + 1}
+		totalItems={maxRecordsInATest}
+	/>
+	<Options {optionsToChooseFrom} on:optionSelected={answerSelected} bind:this={optionsChild} />
+</div>
