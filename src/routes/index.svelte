@@ -26,7 +26,7 @@
 								<i class="fas fa-circle fa-stack-2x" />
 								<i class="fas fa-school fa-stack-1x" />
 							</span> -->
-							<img src="images/spelling.PNG" alt="spelling" class="tile-image"/>
+							<img src="images/spelling.webp" alt="spelling" class="tile-image"/>
 							<div class="card-body">
 								<h5 class="card-title text-center">
 									<a href="/spelling" class="link-no-decoration">Spelling</a>
@@ -39,7 +39,7 @@
 
 						<!-- Card -->
 						<div class="card">							
-							<img src="images/map.PNG" alt="Map games" class="tile-image"/>
+							<img src="images/map.webp" alt="Map games" class="tile-image"/>
 							<div class="card-body">
 								<h5 class="card-title text-center"><a href="/map" class="link-no-decoration">Map</a></h5>
 								<p>Get better at geography, with a fun map game</p>
@@ -48,7 +48,7 @@
 
 						
 						<div class="card">
-							<img src="images/flags.PNG" alt="Flag games" class="tile-image"/>
+							<img src="images/flags.webp" alt="Flag games" class="tile-image"/>
 							<div class="card-body">
 								<h5 class="card-title text-center"><a href="/flags" class="link-no-decoration">Flags</a></h5>
 								<p>Extend your Knowledge about any country</p>
