@@ -1,8 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
-	import Icon from 'svelte-icons-pack/Icon.svelte';
-	import HiOutlineChevronDoubleRight from 'svelte-icons-pack/hi/HiOutlineChevronDoubleRight';
+	import { goto } from '$app/navigation';	
 
 	// local imports
 	import AudioPlayer from './AudioPlayer.svelte';
@@ -23,8 +21,7 @@
 	let exampleAudioUrl;
 	let partsOfTheSpeech = [];
 	let definitionAndExampleFor;
-	let spelledAnswer = null;
-	let canMoveNext = false;
+	let spelledAnswer = '';
 	const maxRecordsInATest = 10;
 	let percentComplete = 0;
 	let timer;
@@ -70,22 +67,13 @@
 			currentIndex = currentIndex + 1;
 			currentWordData = spellingDataV2[currentIndex];
 			setComponentData(currentWordData);
-			spelledAnswer = null;
-			canMoveNext = false;
+			spelledAnswer = '';
 		}
 	};
 
 	const handleRegionChange = (event) => {
 		currentRegion = event.detail;
 		setComponentData(spellingDataV2[currentIndex]);
-	};
-
-	const debounce = (v) => {
-		clearTimeout(timer);
-		timer = setTimeout(() => {
-			spelledAnswer = v;
-			canMoveNext = true;
-		}, 800);
 	};
 </script>
 
@@ -134,8 +122,7 @@
 					spellcheck="false"
 					autocomplete="off"
 					autocorrect="off"
-					autocapitalize="none"
-					on:keyup={({ target: { value } }) => debounce(value)}
+					autocapitalize="none"					
 					bind:value={spelledAnswer}
 				/>
 			</div>
@@ -148,8 +135,7 @@
 	</div>
 </div>
 <button
-	on:click={handleNext}
-	disabled={canMoveNext === false}
+	on:click={handleNext}	
 	value="Next"
 	class="btn btn-primary mt-3 float"
 	>Next

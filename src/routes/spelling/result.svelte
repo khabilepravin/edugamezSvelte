@@ -19,7 +19,7 @@
 				<div
 					class={result.isCorrect ? 'col text-success' : 'col text-danger strikethrough-decoration'}
 				>
-					{result.userAnswer}
+					{result.userAnswer ? result.userAnswer : '--'}
 				</div>
 			</div>
 		{/each}
