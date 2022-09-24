@@ -84,7 +84,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm">
-			<img src="images/spelling-icon.PNG" class="iconImageSize" alt="Spelling icon"/><h6>Spelling Game</h6>
+			<img src="../images/spelling-icon.PNG" class="iconImageSize" alt="Spelling icon"/><h6>Spelling Game</h6>
 			</div>	
 		</div>
 		<div class="row">
