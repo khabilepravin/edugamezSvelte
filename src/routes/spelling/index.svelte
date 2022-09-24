@@ -11,20 +11,36 @@
 		</div>
 		<div class="row">
 			<div class="col-sm">
-				<nav>
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item">
-							<a class="nav-link" href="/spelling/game?difficulty=low">Low</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/spelling/game?difficulty=medium">Medium</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/spelling/game?difficulty=high">High</a>
-						</li>
-					</ul>
-				</nav>
+				<a
+					class="btn btn-success btn-sm btn-block link-no-decoration"
+					role="button"
+					href="/spelling/game?difficulty=low">Low</a
+				>				
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm">
+				<a
+					class="btn btn-info btn-sm btn-block link-no-decoration"
+					role="button"
+					href="/spelling/game?difficulty=medium">Medium</a
+				>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm">
+				<a
+					class="btn btn-warning btn-sm btn-block link-no-decoration"
+					role="button"
+					href="/spelling/game?difficulty=high">High</a
+				>
 			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+	.link-no-decoration {
+		text-decoration: none;
+	}
+</style>
