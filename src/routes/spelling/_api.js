@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
 
 
 const firebaseConfig = {
@@ -28,16 +28,23 @@ export async function getSpellingWords() {
 }
 
 
-export async function getSpellingWordsV2() {
-    const db = getFirestore();
+export async function getSpellingWordsV2(difficulty) {
+    try
+    {
+        const db = getFirestore();
+        
+        const q = query(collection(db, "spellingwordsv2"), where("Difficulty", "==", difficulty ? difficulty : "low"));
+        const querySnapshot = await getDocs(q);
 
-    const querySnapshot = await getDocs(collection(db, "spellingwordsv2"));
+        const docsArray = [];
 
-    const docsArray = [];
-
-    querySnapshot.forEach((doc) => {
-        docsArray.push(doc.data());
-    });
-
-    return docsArray;
+        querySnapshot.forEach((doc) => {
+            docsArray.push(doc.data());
+        });
+        console.log(`Number of records are: ${docsArray.length}`);
+        return docsArray;
+    }
+    catch(error){
+        console.error(error);
+    }
 }
