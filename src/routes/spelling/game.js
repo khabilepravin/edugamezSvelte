@@ -1,4 +1,4 @@
-import { getSpellingWords, getSpellingWordsMaxIndexValue, getSpellingWordsV2 } from './_api';
+import { getSpellingWords,  getSpellingWordsV2 } from './_api';
 import { getRandomInt } from '../../lib/random';
 
 export const get = async ({params, url}) => {
