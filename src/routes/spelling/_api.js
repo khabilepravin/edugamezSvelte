@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
+import { getFirestore, collection, getDocs, query, where, orderBy, limit } from "firebase/firestore";
 
 
 const firebaseConfig = {
@@ -32,8 +32,13 @@ export async function getSpellingWordsV2(difficulty) {
     try
     {
         const db = getFirestore();
+        const collectionRef = collection(db, "spellingwordsv2");
         
-        const q = query(collection(db, "spellingwordsv2"), where("Difficulty", "==", difficulty ? difficulty : "low"));
+        const maxVal = await getSpellingWordsMaxIndexValue(difficulty);
+        const rangeOfIndexes = getRandomNumbers(maxVal, 10);
+
+        const q = query(collectionRef, where("Difficulty", "==", difficulty ? difficulty : "low"), where("RecordIndex", "in", rangeOfIndexes));
+
         const querySnapshot = await getDocs(q);
 
         const docsArray = [];
@@ -41,10 +46,35 @@ export async function getSpellingWordsV2(difficulty) {
         querySnapshot.forEach((doc) => {
             docsArray.push(doc.data());
         });
-        console.log(`Number of records are: ${docsArray.length}`);
+
         return docsArray;
     }
     catch(error){
         console.error(error);
     }
+}
+
+async function getSpellingWordsMaxIndexValue(difficulty) {
+    try
+    {
+        const db = getFirestore();
+        
+        const q = query(collection(db, "spellingwordsv2"), where("Difficulty", "==", difficulty ? difficulty : "low"), orderBy("RecordIndex", "desc"), limit(1));
+        const querySnapshot = await getDocs(q);
+        return querySnapshot.docs[0].data().RecordIndex;
+    }
+    catch(error){
+        console.error(error);
+    }
+}
+
+
+function getRandomNumbers(max, numberOfRandomWords) {
+    let arr = [];
+    while(arr.length < numberOfRandomWords){
+        var r = Math.floor(Math.random() * max) + 1;
+        if(arr.indexOf(r) === -1) arr.push(r);
+    }
+
+    return arr;
 }

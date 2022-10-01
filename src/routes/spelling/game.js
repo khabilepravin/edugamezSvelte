@@ -1,12 +1,10 @@
-import { getSpellingWords, getSpellingWordsV2 } from './_api';
+import { getSpellingWords, getSpellingWordsMaxIndexValue, getSpellingWordsV2 } from './_api';
 import { getRandomInt } from '../../lib/random';
 
 export const get = async ({params, url}) => {
-	//const spellingWords = await getSpellingWords();
-	const difficulty = url.searchParams.get('difficulty');
-	console.log(`Difficulty from the query string: ${difficulty}`);
+	 const difficulty = url.searchParams.get('difficulty');	
 	const spellingWordsV2 = await getSpellingWordsV2(difficulty);
-	//let randomWordsForTest = getRandomWords(10, spellingWords);
+
 	return {
 		body: {
 			spellingDataV2: spellingWordsV2
