@@ -1,93 +1,30 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-	import { fade } from 'svelte/transition';
+	import { createEventDispatcher, onMount } from 'svelte';
+	import { RadioButtonGroup, RadioButton } from 'carbon-components-svelte';
+	import "carbon-components-svelte/css/white.css"; 
 	export let optionsToChooseFrom = [];
 
+	let selected = null;
+
 	const dispatch = createEventDispatcher();
-	const onOptionSelectionChanged = (e) => {
+	const onOptionSelectionChanged = (e) => {				
 		dispatch('optionSelected', {
-			selectedOption: e.target.id
+			selectedOption: e.detail
 		});
 	};
 
 	export function resetOptionSelection() {
-		document.querySelector('input[name=countryOptions]:checked').checked = false;
+		document.activeElement.blur();		
+		Array.from( document.querySelectorAll('input[type="radio"]:checked'), input => input.checked = false );
+		selected = null;
 	}
 </script>
 
-<div class="radio-tile-group">
+<div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+<RadioButtonGroup on:change={onOptionSelectionChanged} selected
+orientation="vertical">
 	{#each optionsToChooseFrom as o}
-		<div class="input-container" transition:fade>
-			<input
-				id={o.countryName}
-				class="radio-button"
-				type="radio"
-				name="countryOptions"
-				on:input={onOptionSelectionChanged}
-			/>
-			<div class="radio-tile">
-				<label for="walk" class="radio-tile-label">{o.countryName}</label>
-			</div>
-		</div>
+		<RadioButton labelText={o.countryName} value={o.countryName}/>			
 	{/each}
+</RadioButtonGroup>
 </div>
-
-<style>
-	* {
-		box-sizing: border-box;
-		font-family: 'Helvetica Neue', sans-serif;
-	}
-
-	.radio-tile-group {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-	.radio-tile-group .input-container {
-		position: relative;
-		height: 5rem;
-		width: 5rem;
-		margin: 0.5rem;
-	}
-	.radio-tile-group .input-container .radio-button {
-		opacity: 0;
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 100%;
-		width: 100%;
-		margin: 0;
-		cursor: pointer;
-	}
-	.radio-tile-group .input-container .radio-tile {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-		border: 2px solid #079ad9;
-		border-radius: 5px;
-		padding: 1rem;
-		transition: transform 300ms ease;
-	}
-	.radio-tile-group .input-container .radio-tile-label {
-		text-align: center;
-		font-size: 0.58rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 1px;
-		color: #079ad9;
-	}
-	.radio-tile-group .input-container .radio-button:checked + .radio-tile {
-		background-color: #079ad9;
-		border: 2px solid #079ad9;
-		color: white;
-		transform: scale(1.1, 1.1);
-	}
-
-	.radio-tile-group .input-container .radio-button:checked + .radio-tile .radio-tile-label {
-		color: white;
-		background-color: #079ad9;
-	}
-</style>

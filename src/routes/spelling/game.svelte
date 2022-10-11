@@ -7,8 +7,11 @@
 	import { spellingUserAnswers } from '../../lib/store';
 	import { getUrlByRegion } from './utility';
 	import Progress from '$lib/progress.svelte';
+	import { Tag } from 'carbon-components-svelte';
 	import { percentage } from '$lib/percent';
 	import RegionSelector from '$lib/regionselector.svelte';
+	import "carbon-components-svelte/css/white.css";
+
 
 	// public props
 	export let spellingDataV2;
@@ -102,17 +105,13 @@
 	<AudioPlayer src={exampleAudioUrl} autoPlay={null} />
 
 	<div class="container">
-		<div class="row">
-			<div class="col-sm">
 				{#each partsOfTheSpeech as part}
 					{#if part === definitionAndExampleFor}
-						<strong>{part} &nbsp;</strong>
+						<Tag type="green">{part}</Tag>
 					{:else}
-						{part} &nbsp;
+						<Tag type="outline">{part}</Tag>
 					{/if}
-				{/each}
-			</div>
-		</div>
+				{/each}		
 		<div class="row">
 			<div class="col-sm">
 				<input

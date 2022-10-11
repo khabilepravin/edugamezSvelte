@@ -14,7 +14,7 @@
 				<a
 					class="btn btn-success btn-sm btn-block link-no-decoration"
 					role="button"
-					href="/spelling/game?difficulty=low">Low</a
+					href="/spelling/game?difficulty=low">Easy</a
 				>				
 			</div>
 		</div>
@@ -23,7 +23,7 @@
 				<a
 					class="btn btn-info btn-sm btn-block link-no-decoration"
 					role="button"
-					href="/spelling/game?difficulty=medium">Medium</a
+					href="/spelling/game?difficulty=medium">Hard</a
 				>
 			</div>
 		</div>
@@ -32,7 +32,7 @@
 				<a
 					class="btn btn-warning btn-sm btn-block link-no-decoration"
 					role="button"
-					href="/spelling/game?difficulty=high">High</a
+					href="/spelling/game?difficulty=high">Challenging</a
 				>
 			</div>
 		</div>
