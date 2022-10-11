@@ -83,6 +83,7 @@
 <svelte:head>
 	<title>Spelling Game</title>
 </svelte:head>
+<form on:submit|preventDefault={handleNext}>
 <div class="text-center">	
 	<div class="container">
 		<div class="row">
@@ -133,13 +134,13 @@
 		/>
 	</div>
 </div>
-<button
-	on:click={handleNext}	
+<button	
 	value="Next"
+	type="submit"
 	class="btn btn-primary mt-3 float"
 	>Next
 </button>
-
+</form>
 <style>
 	.float {
 		position: fixed;
