@@ -74,7 +74,7 @@
 		}
 	};
 
-	const handleRegionChange = (event) => {
+	const handleRegionChange = (event) => {		
 		currentRegion = event.detail;
 		setComponentData(spellingDataV2[currentIndex]);
 	};

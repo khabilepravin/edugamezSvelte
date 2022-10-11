@@ -1,46 +1,26 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	export let selectedRegion;
+	import { RadioButtonGroup, RadioButton } from 'carbon-components-svelte';
+	import 'carbon-components-svelte/css/white.css';
 
 	const dispatch = createEventDispatcher();
+
+	export let selectedRegion;
+
+	function handleChange(event){
+		dispatch('regionChanged', event.detail);
+	}
 </script>
 
-<div class="form-check form-check-inline">
-	<input
-		class="form-check-input"
-		type="radio"
-		name="exampleRadios"
-		id="enUS"
-		value="en-US"
-		bind:group={selectedRegion}
-		on:change={() => dispatch('regionChanged', selectedRegion)}
-	/>
-	<label class="form-check-label" for="enUS"> en-US </label>
-</div>
-<div class="form-check form-check-inline">
-	<input
-		class="form-check-input"
-		type="radio"
-		name="exampleRadios"
-		id="enUS"
-		value="en-GB"
-		bind:group={selectedRegion}
-		on:change={() => dispatch('regionChanged', selectedRegion)}
-	/>
-	<label class="form-check-label" for="enGB"> en-GB </label>
-</div>
-<div class="form-check form-check-inline">
-	<input
-		class="form-check-input"
-		type="radio"
-		name="exampleRadios"
-		id="enUS"
-		value="en-AU"
-		bind:group={selectedRegion}
-		on:change={() => dispatch('regionChanged', selectedRegion)}
-	/>
-	<label class="form-check-label" for="enAU"> en-AU </label>
+<div class="d-flex flex-column justify-content-center align-items-center">
+	<RadioButtonGroup
+		on:change={handleChange}
+		selected={selectedRegion}
+	>
+		<RadioButton labelText="en-US" value="en-US" />
+		<RadioButton labelText="en-GB" value="en-GB" />
+		<RadioButton labelText="en-AU" value="en-AU" />
+	</RadioButtonGroup>
 </div>
 
-<style>
-</style>
+
