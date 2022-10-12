@@ -78,12 +78,12 @@
 </svelte:head>
 
 <div class="text-center">
-
 	<div class="container">
 		<div class="row">
-			<div class="col-sm">
-			<img src="images/map-icon.webp" class="iconImageSize" alt="Maps icon"/><h6>Maps Game</h6>
-			</div>	
+			<div class="col-sm pb-3">
+				<img src="images/map-icon.webp" class="iconImageSize" alt="Maps icon" />
+				<h6>Maps Game</h6>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm">
@@ -98,6 +98,14 @@
 			currentItemNumber={currentIndex + 1}
 			totalItems={maxRecordsInATest}
 		/>
-		<Options {optionsToChooseFrom} on:optionSelected={answerSelected} bind:this={optionsChild} />
+		<div class="row">
+			<div class="col-sm pt-3">
+				<Options
+					{optionsToChooseFrom}
+					on:optionSelected={answerSelected}
+					bind:this={optionsChild}
+				/>
+			</div>
+		</div>
 	</div>
 </div>

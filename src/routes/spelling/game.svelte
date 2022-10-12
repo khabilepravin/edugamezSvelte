@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';	
+	import { goto } from '$app/navigation';
 
 	// local imports
 	import AudioPlayer from './AudioPlayer.svelte';
@@ -10,8 +10,7 @@
 	import { Tag } from 'carbon-components-svelte';
 	import { percentage } from '$lib/percent';
 	import RegionSelector from '$lib/regionselector.svelte';
-	import "carbon-components-svelte/css/white.css";
-
+	import 'carbon-components-svelte/css/white.css';
 
 	// public props
 	export let spellingDataV2;
@@ -74,77 +73,97 @@
 		}
 	};
 
-	const handleRegionChange = (event) => {		
+	const handleRegionChange = (event) => {
 		currentRegion = event.detail;
 		setComponentData(spellingDataV2[currentIndex]);
 	};
 </script>
 
 <svelte:head>
-	<title>Spelling Game</title>
+	<title >Spelling Game</title>
 </svelte:head>
 <form on:submit|preventDefault={handleNext}>
-<div class="text-center">	
-	<div class="container">
-		<div class="row">
-			<div class="col-sm">
-			<img src="../images/spelling-icon.webp" class="iconImageSize" alt="Spelling icon"/><h6>Spelling Game</h6>
-			</div>	
-		</div>
-		<div class="row">
-			<div class="col-sm">
-				<RegionSelector on:regionChanged={handleRegionChange} selectedRegion={currentRegion} />
+	<div class="text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm pb-3">
+					<img src="../images/spelling-icon.webp" class="iconImageSize" alt="Spelling icon" />
+					<h6>Spelling Game</h6>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm pb-3">
+					<RegionSelector on:regionChanged={handleRegionChange} selectedRegion={currentRegion} />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm">
+					<h6>Word</h6>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm">
+					<AudioPlayer src={wordAudioUrl} autoPlay="true" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm">
+					<h6>Definition</h6>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm">
+					<AudioPlayer src={definitonAudioUrl} autoPlay={null} />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm">
+					<h6>Example</h6>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm">
+					<AudioPlayer src={exampleAudioUrl} autoPlay={null} />
+				</div>
 			</div>
 		</div>
-	</div>
-	<h6>Word</h6>
-
-	<AudioPlayer src={wordAudioUrl} autoPlay="true" />
-	<h6>Definition</h6>
-	<AudioPlayer src={definitonAudioUrl} autoPlay={null} />
-	<h6>Example</h6>
-	<AudioPlayer src={exampleAudioUrl} autoPlay={null} />
-
-	<div class="container">
-				{#each partsOfTheSpeech as part}
-					{#if part === definitionAndExampleFor}
-						<Tag type="green">{part}</Tag>
-					{:else}
-						<Tag type="outline">{part}</Tag>
-					{/if}
-				{/each}		
-		<div class="row">
-			<div class="col-sm">
-				<input
-					type="text"
-					class="form-control"
-					placeholder="Spelling"
-					spellcheck="false"
-					autocomplete="off"
-					autocorrect="off"
-					autocapitalize="none"					
-					bind:value={spelledAnswer}
-				/>
+		<div class="container">
+			{#each partsOfTheSpeech as part}
+				{#if part === definitionAndExampleFor}
+					<Tag type="green">{part}</Tag>
+				{:else}
+					<Tag type="outline">{part}</Tag>
+				{/if}
+			{/each}
+			<div class="row">
+				<div class="col-sm">
+					<input
+						type="text"
+						class="form-control"
+						placeholder="Spelling"
+						spellcheck="false"
+						autocomplete="off"
+						autocorrect="off"
+						autocapitalize="none"
+						bind:value={spelledAnswer}
+					/>
+				</div>
 			</div>
+			<Progress
+				currentProgress={percentComplete}
+				currentItemNumber={currentIndex + 1}
+				totalItems={maxRecordsInATest}
+			/>
 		</div>
-		<Progress
-			currentProgress={percentComplete}
-			currentItemNumber={currentIndex + 1}
-			totalItems={maxRecordsInATest}
-		/>
 	</div>
-</div>
-<button	
-	value="Next"
-	type="submit"
-	class="btn btn-primary mt-3 float"
-	>Next
-</button>
+	<button value="Next" type="submit" class="btn btn-primary mt-3 float">Next </button>
 </form>
+
 <style>
 	.float {
 		position: fixed;
 		bottom: 40px;
 		right: 40px;
-	}
+	}	
 </style>
