@@ -32,7 +32,7 @@
 									<a href="/spelling" class="link-no-decoration">Spelling</a>
 								</h5>
 								
-								<p>Practice spelling almost like you are participating in an actual competition</p>
+								<p>Guess by listening to the word pronunciation definition and example</p>
 							</div>
 						</div>
 						<!-- end of card -->

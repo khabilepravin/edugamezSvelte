@@ -143,7 +143,7 @@
 						class="form-control"
 						placeholder="Spelling"
 						spellcheck="false"
-						autocomplete="off"
+						autocomplete="new-password"
 						autocorrect="off"
 						autocapitalize="none"
 						bind:value={spelledAnswer}
