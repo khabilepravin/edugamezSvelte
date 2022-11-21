@@ -21,6 +21,7 @@
 				<div class="col-lg-12">
 					<div class="cards-container">
 						<!-- Card -->
+						<a href="/spelling" class="link-no-decoration">
 						<div class="card">
 							<!-- <span class="fa-stack">
 								<i class="fas fa-circle fa-stack-2x" />
@@ -34,10 +35,13 @@
 								
 								<p>Guess by listening to the word pronunciation definition and example</p>
 							</div>
+						
 						</div>
+					</a>
 						<!-- end of card -->
 
 						<!-- Card -->
+						<a href="/map" class="link-no-decoration">
 						<div class="card">							
 							<img src="images/map.webp" alt="Map games" class="tile-image"/>
 							<div class="card-body">
@@ -45,8 +49,9 @@
 								<p>Get better at geography, with a fun map game</p>
 							</div>
 						</div>						
-
+						</a>
 						
+						<a href="/flags" class="link-no-decoration">
 						<div class="card">
 							<img src="images/flags.webp" alt="Flag games" class="tile-image"/>
 							<div class="card-body">
@@ -54,6 +59,7 @@
 								<p>Extend your Knowledge about any country</p>
 							</div>
 						</div>
+					</a>
 					</div>
 				</div>
 			</div>
