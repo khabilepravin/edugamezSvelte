@@ -41,7 +41,7 @@
 		wordAudioUrl = getUrlByRegion(currentWordInstance.WordAudios, currentRegion);
 		definitonAudioUrl = getUrlByRegion(currentWordInstance.DefinitionAudios, currentRegion);
 		exampleAudioUrl = getUrlByRegion(currentWordInstance.ExampleAudios, currentRegion);
-		partsOfTheSpeech = currentWordInstance.PartsOfTheSpeech;
+		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
 		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
 	};
 
@@ -77,6 +77,12 @@
 		currentRegion = event.detail;
 		setComponentData(spellingDataV2[currentIndex]);
 	};
+
+	function deDuplicatePartsOfSpeechArray(inputArr) {
+		return inputArr.filter((value, index) => {
+			return inputArr.indexOf(value) === index;
+		});
+	}
 </script>
 
 <svelte:head>
