@@ -1,13 +1,13 @@
-import { getSpellingWords } from './_api';
+import { getSpellingWords,  getSpellingWordsV2 } from './_api';
 import { getRandomInt } from '../../lib/random';
 
-export const get = async ({ locals }) => {
-	const spellingWords = await getSpellingWords();
+export const get = async ({params, url}) => {
+	 const difficulty = url.searchParams.get('difficulty');	
+	const spellingWordsV2 = await getSpellingWordsV2(difficulty);
 
-	let randomWordsForTest = getRandomWords(10, spellingWords);
 	return {
 		body: {
-			spellingData: randomWordsForTest
+			spellingDataV2: spellingWordsV2
 		}
 	};
 };

@@ -16,9 +16,10 @@
 	--column-margin-top: 4rem;
 }
 
-body {
+html body {
 	min-height: 100vh;
 	margin: 0;
+	padding-top: 200px !important;
 	background-color: var(--primary-color);
 	background: linear-gradient(
 		180deg,

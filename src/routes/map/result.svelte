@@ -1,7 +1,8 @@
 <script>
-	import { mapUserAnswers } from '../../../lib/store';
+	import { mapUserAnswers } from '../../lib/store';
 	import { GoogleCharts } from 'google-charts';
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 
 	export let selectedCountry = '';
 	onMount(() => {
@@ -42,7 +43,11 @@
 	console.log($mapUserAnswers);
 </script>
 <header>
-	<h5>Result</h5>
+	<div class="container text-center" transition:fade>
+		<div class="row row-cols-1 pb-3">
+			<div class="col"><h5>Results</h5></div>
+		</div>
+	</div>
 </header>
 <main>
 	<div id="resultMap" />

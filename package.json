@@ -1,5 +1,5 @@
 {
-  "name": "my-todo-app",
+  "name": "EduGamez-App",
   "version": "0.0.1",
   "scripts": {
     "dev": "svelte-kit dev",
@@ -12,12 +12,13 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "^1.0.0-next.48",
     "@sveltejs/kit": "^1.0.0-next.345",
+    "carbon-components-svelte": "^0.70.10",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",
     "prettier": "^2.5.1",
     "prettier-plugin-svelte": "^2.5.0",
-    "svelte": "^3.48.0",
+    "svelte": "^3.50.1",
     "tailwindcss": "^3.0.23"
   },
   "type": "module",
