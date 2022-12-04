@@ -43,7 +43,7 @@
 						<!-- Card -->
 						<a href="/map" class="link-no-decoration">
 						<div class="card">							
-							<img src="images/map.webp" alt="Map games" class="tile-image"/>
+							<img src="images/arrangeit.png" alt="Map games" class="tile-image"/>
 							<div class="card-body">
 								<h5 class="card-title text-center"><a href="/map" class="link-no-decoration">Map</a></h5>
 								<p>Get better at geography, with a fun map game</p>
