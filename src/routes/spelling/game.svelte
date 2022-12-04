@@ -34,6 +34,8 @@
 	// lifecycle hooks
 	onMount(async () => {
 		setComponentData(spellingDataV2[currentIndex]);
+		// focus on textbox
+		document.getElementById('spellingTextbox').focus();
 	});
 
 	// private functions
@@ -70,6 +72,7 @@
 			currentWordData = spellingDataV2[currentIndex];
 			setComponentData(currentWordData);
 			spelledAnswer = '';
+			document.getElementById('spellingTextbox').focus();
 		}
 	};
 
@@ -145,6 +148,7 @@
 			<div class="row">
 				<div class="col-sm">
 					<input
+						id="spellingTextbox"
 						type="text"
 						class="form-control"
 						placeholder="Spelling"
