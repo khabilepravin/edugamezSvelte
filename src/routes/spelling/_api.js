@@ -13,21 +13,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-export async function getSpellingWords() {
-    const db = getFirestore();
-
-    const querySnapshot = await getDocs(collection(db, "spellingwords"));
-
-    const docsArray = [];
-
-    querySnapshot.forEach((doc) => {
-        docsArray.push(doc.data());
-    });
-
-    return docsArray;
-}
-
-
 export async function getSpellingWordsV2(difficulty) {
     try
     {

@@ -12,7 +12,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h2 class="h2-heading">Webly's <span class="blue">Games</span></h2>
+					<h2 class="h2-heading">Select a Level</h2>
 				</div>
 				<!-- end of col -->
 			</div>
@@ -21,19 +21,19 @@
 				<div class="col-lg-12">
 					<div class="cards-container">
 						<!-- Card -->
-						<a href="/spelling" class="link-no-decoration">
+						<a href="/spelling/game?difficulty=low" class="link-no-decoration">
 						<div class="card">
 							<!-- <span class="fa-stack">
 								<i class="fas fa-circle fa-stack-2x" />
 								<i class="fas fa-school fa-stack-1x" />
 							</span> -->
-							<img src="images/spelling.webp" alt="spelling" class="tile-image"/>
+							<img src="images/beginner.png" alt="spelling" class="tile-image"/>
 							<div class="card-body">
 								<h5 class="card-title text-center">
-									<a href="/spelling" class="link-no-decoration">Spelling</a>
+									<a href="/spelling/game?difficulty=low" class="link-no-decoration">Beginner</a>
 								</h5>
 								
-								<p>Guess by listening to the word pronunciation definition and example</p>
+								<p class="text-center">Baby Steps</p>
 							</div>
 						
 						</div>
@@ -41,22 +41,22 @@
 						<!-- end of card -->
 
 						<!-- Card -->
-						<a href="/map" class="link-no-decoration">
+						<a href="/spelling/game?difficulty=medium" class="link-no-decoration">
 						<div class="card">							
-							<img src="images/arrangeit.png" alt="Map games" class="tile-image"/>
+							<img src="images/inter.png" alt="Map games" class="tile-image"/>
 							<div class="card-body">
-								<h5 class="card-title text-center"><a href="/map" class="link-no-decoration">Map</a></h5>
-								<p>Get better at geography, with a fun map game</p>
+								<h5 class="card-title text-center"><a href="/spelling/game?difficulty=medium" class="link-no-decoration">Intermediate</a></h5>
+								<p class="text-center">Quite Proficient</p>
 							</div>
 						</div>						
 						</a>
 						
-						<a href="/flags" class="link-no-decoration">
+						<a href="/spelling/game?difficulty=high" class="link-no-decoration">
 						<div class="card">
-							<img src="images/flags.webp" alt="Flag games" class="tile-image"/>
+							<img src="images/advanced.png" alt="Flag games" class="tile-image"/>
 							<div class="card-body">
-								<h5 class="card-title text-center"><a href="/flags" class="link-no-decoration">Flags</a></h5>
-								<p>Extend your Knowledge about any country</p>
+								<h5 class="card-title text-center"><a href="/spelling/game?difficulty=high" class="link-no-decoration">Advanced</a></h5>
+								<p class="text-center">Pro At It</p>
 							</div>
 						</div>
 					</a>
