@@ -1,12 +1,17 @@
 <script>
 	import Header from '$lib/header/Header.svelte';
 	import Footer from '$lib/footer/Footer.svelte';
+	import { navigating } from '$app/stores'; 
 </script>
 
 <Header />
 
 <main>
-	<slot />
+	{#if $navigating}
+		<h2>Loading...</h2>
+	{:else}
+		<slot />
+	{/if}
 </main>
 
 <footer class="fixed-bottom">

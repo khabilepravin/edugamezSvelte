@@ -5,7 +5,7 @@
 	// local imports
 	import AudioPlayer from './AudioPlayer.svelte';
 	import { spellingUserAnswers } from '../../lib/store';
-	import { getUrlByRegion } from './utility';
+	import { getCountryCodeByTimezone, getUrlByRegion } from './utility';
 	import Progress from '$lib/progress.svelte';
 	import { Tag } from 'carbon-components-svelte';
 	import { percentage } from '$lib/percent';
@@ -16,7 +16,6 @@
 	export let spellingDataV2;
 
 	// local props
-	let currentRegion = 'en-AU'; //TODO: Interpret this from the browser locale
 	let currentIndex = 0;
 	let wordAudioUrl;
 	let definitonAudioUrl;
@@ -28,6 +27,7 @@
 	let percentComplete = 0;
 	let timer;
 
+	const currentRegion = getCountryCodeByTimezone();
 	// store variables
 	$spellingUserAnswers = [];
 

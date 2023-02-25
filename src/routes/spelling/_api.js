@@ -28,6 +28,10 @@ export async function getSpellingWordsV2(difficulty) {
 
         const docsArray = [];
 
+        // for(let i =0;i< 90000; i++){
+        //     console.log(i);
+        // }
+
         querySnapshot.forEach((doc) => {
             docsArray.push(doc.data());
         });
