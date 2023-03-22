@@ -27,12 +27,13 @@
 	let percentComplete = 0;
 	let timer;
 
-	const currentRegion = getCountryCodeByTimezone();
+	let currentRegion = 'en-US';
 	// store variables
 	$spellingUserAnswers = [];
 
 	// lifecycle hooks
 	onMount(async () => {
+
 		setComponentData(spellingDataV2[currentIndex]);
 		// focus on textbox
 		document.getElementById('spellingTextbox').focus();
@@ -45,6 +46,7 @@
 		exampleAudioUrl = getUrlByRegion(currentWordInstance.ExampleAudios, currentRegion);
 		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
 		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
+		currentRegion = getCountryCodeByTimezone();
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {

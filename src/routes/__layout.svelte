@@ -7,11 +7,12 @@
 <Header />
 
 <main>
-	{#if $navigating}
+	<!-- {#if $navigating}
 		<h2>Loading...</h2>
-	{:else}
+	{:else} -->
 		<slot />
-	{/if}
+	<!-- {/if} -->
+	<!-- <slot/> -->
 </main>
 
 <footer class="fixed-bottom">
