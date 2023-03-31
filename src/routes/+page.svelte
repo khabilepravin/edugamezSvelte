@@ -30,7 +30,7 @@
 							<img src="images/beginner.png" alt="spelling" class="tile-image"/>
 							<div class="card-body">
 								<h5 class="card-title text-center">
-									<a href="/spelling/game?difficulty=low" class="link-no-decoration">Beginner</a>
+									<a href="/spelling/low" class="link-no-decoration">Beginner</a>
 								</h5>
 								
 								<p class="text-center">Baby Steps</p>
@@ -41,21 +41,21 @@
 						<!-- end of card -->
 
 						<!-- Card -->
-						<a href="/spelling/game?difficulty=medium" class="link-no-decoration">
+						<a href="/spelling/medium" class="link-no-decoration">
 						<div class="card">							
 							<img src="images/inter.png" alt="Map games" class="tile-image"/>
 							<div class="card-body">
-								<h5 class="card-title text-center"><a href="/spelling/game?difficulty=medium" class="link-no-decoration">Intermediate</a></h5>
+								<h5 class="card-title text-center"><a href="/spelling/medium" class="link-no-decoration">Intermediate</a></h5>
 								<p class="text-center">Quite Proficient</p>
 							</div>
 						</div>						
 						</a>
 						
-						<a href="/spelling/game?difficulty=high" class="link-no-decoration">
+						<a href="/spelling/high" class="link-no-decoration">
 						<div class="card">
 							<img src="images/advanced.png" alt="Flag games" class="tile-image"/>
 							<div class="card-body">
-								<h5 class="card-title text-center"><a href="/spelling/game?difficulty=high" class="link-no-decoration">Advanced</a></h5>
+								<h5 class="card-title text-center"><a href="/spelling/high" class="link-no-decoration">Advanced</a></h5>
 								<p class="text-center">Pro At It</p>
 							</div>
 						</div>
