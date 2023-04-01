@@ -2,20 +2,20 @@
 	import Header from '$lib/header/Header.svelte';
 	import Footer from '$lib/footer/Footer.svelte';
 	import { navigating } from '$app/stores';
-	import { loading } from '$lib/store';
-	
-	$: $loading = !!$navigating
+	import { loading } from '$lib/store/loadingStore';
+
+	$: $loading = !!$navigating;
 </script>
 
 <Header />
 
 <main>
-	{#if $loading}
-		<div class="overlay">Loading...</div>
-	{/if} 
+	<div>
+		{#if $loading}
+			<span class="loader"></span>
+		{/if}
 		<slot />
-	 
-	<!-- <slot/> -->
+	</div>
 </main>
 
 <footer class="fixed-bottom">
@@ -23,17 +23,55 @@
 </footer>
 
 <style>
-.overlay {
-	position: fixed; /* Sit on top of the page content */
-	display: none; /* Hidden by default */
-	width: 100%; /* Full width (cover the whole page) */
-	height: 100%; /* Full height (cover the whole page) */
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-	z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-	cursor: pointer; /* Add a pointer on hover */
-  }
+	
+	.loader {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-left: -50px;
+		margin-top: -50px;
+		background-size: 100%;
+		animation: rotate 1s linear infinite;
+		z-index: 1440;
+	}
+	.loader::before,
+	.loader::after {
+		content: '';
+		box-sizing: border-box;
+		position: absolute;
+		inset: 0px;
+		border-radius: 50%;
+		border: 5px solid #fff;
+		animation: prixClipFix 2s linear infinite;
+	}
+	.loader::after {
+		inset: 8px;
+		transform: rotate3d(90, 90, 0, 180deg);
+		border-color: #ff3d00;
+	}
+
+	@keyframes rotate {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	@keyframes prixClipFix {
+		0% {
+			clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+		}
+		50% {
+			clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+		}
+		75%,
+		100% {
+			clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%);
+		}
+	}
 </style>

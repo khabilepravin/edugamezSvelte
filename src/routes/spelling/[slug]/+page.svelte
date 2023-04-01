@@ -3,13 +3,13 @@
 	import { goto } from '$app/navigation';
 
 	// local imports
-	import AudioPlayer from '../AudioPlayer.svelte';
-	import { spellingUserAnswers } from '$lib/store';
-	import { getCountryCodeByTimezone, getUrlByRegion } from '../utility';
-	import Progress from '$lib/progress.svelte';
+	import AudioPlayer from '$lib/components/audioPlayer.svelte';
+	import { spellingUserAnswers } from '$lib/store/answersStore';
+	import { getCountryCodeByTimezone, getUrlByRegion } from '$lib/utils/region';
+	import Progress from '$lib/components/progress.svelte';
 	import { Tag } from 'carbon-components-svelte';
-	import { percentage } from '$lib/percent';
-	import RegionSelector from '$lib/regionselector.svelte';
+	import { percentage } from '$lib/utils/percent';
+	import RegionSelector from '$lib/components/regionselector.svelte';
 	import 'carbon-components-svelte/css/white.css';
 
 	// public props

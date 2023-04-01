@@ -1,5 +1,4 @@
-import { error } from '@sveltejs/kit';
-//import { getSpellingWordsV2 } from '../_api'; 
+ 
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, where, orderBy, limit } from "firebase/firestore";
 
@@ -17,43 +16,15 @@ const app = initializeApp(firebaseConfig);
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
     const difficulty = params.slug;
-    //setTimeout(()=>{ console.log('stuff');}, 4000);
-
-   //return {};
-    const spellingWordsV2 = await getSpellingWordsV2(difficulty);
-    //console.log(JSON.stringify(spellingWordsV2));
-    // .then(data =>{
-    //     console.log(JSON.stringify(data));
-    //     spellingWordsV2 = data;
-    // });
-
+    setTimeout(()=>{ console.log('stuff');}, 4000);
+   
+    const spellingWordsV2 = await getSpellingWordsV2(difficulty);    
     return {        
             spellingDataV2: spellingWordsV2        
-    };
-    // return {
-       
-    //         spellingDataV2: spellingWordsV2
-       
-    // };
-//    return {
-//        body: {
-//            spellingDataV2: spellingWordsV2
-//        }
-//    };
+    };    
 
-//   if (params.slug === 'hello-world') {
-//     return {
-//       title: 'Hello world!',
-//       content: 'Welcome to our blog. Lorem ipsum dolor sit amet...'
-//     };
-//   }
- 
-//   throw error(404, 'Not found');
+ //  throw error(404, 'Not found');
 }
-
-
-
-
 
 async function getSpellingWordsV2(difficulty) {
     try
@@ -70,10 +41,6 @@ async function getSpellingWordsV2(difficulty) {
         const querySnapshot = await getDocs(q);
 
         const docsArray = [];
-
-        // for(let i =0;i< 90000; i++){
-        //     console.log(i);
-        // }
 
         querySnapshot.forEach((doc) => {
             docsArray.push(doc.data());
