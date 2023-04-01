@@ -4,6 +4,7 @@
 
 	// local imports
 	import AudioPlayer from '$lib/components/audioPlayer.svelte';
+	import Answerinput from '$lib/components/answerinput.svelte';
 	import { spellingUserAnswers } from '$lib/store/answersStore';
 	import { getCountryCodeByTimezone, getUrlByRegion } from '$lib/utils/region';
 	import Progress from '$lib/components/progress.svelte';
@@ -27,6 +28,7 @@
 	let spelledAnswer = '';
 	const maxRecordsInATest = 10;
 	let percentComplete = 0;
+	let currentWord = '';
 	let timer;
 
 	let currentRegion = 'en-US';
@@ -37,7 +39,7 @@
 	onMount(async () => {
 
        // data.spellingDataV2 = data;
-        console.log(JSON.stringify(data.spellingDataV2));
+        //console.log(JSON.stringify(data.spellingDataV2));
 		setComponentData(data.spellingDataV2[currentIndex]);
 		// focus on textbox
 		document.getElementById('spellingTextbox').focus();
@@ -49,8 +51,11 @@
 		definitonAudioUrl = getUrlByRegion(currentWordInstance.DefinitionAudios, currentRegion);
 		exampleAudioUrl = getUrlByRegion(currentWordInstance.ExampleAudios, currentRegion);
 		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
+		currentWord = currentWordInstance.Word;
 		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
+
 		currentRegion = getCountryCodeByTimezone();
+
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
@@ -164,6 +169,7 @@
 						autocapitalize="none"
 						bind:value={spelledAnswer}
 					/>
+					<Answerinput letters={currentWord.split('')}/>
 				</div>
 			</div>
 			<Progress
