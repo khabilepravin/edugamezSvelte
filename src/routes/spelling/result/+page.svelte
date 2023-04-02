@@ -1,5 +1,5 @@
 <script>
-	import { spellingUserAnswers } from '$lib/store';
+	import { spellingUserAnswers } from '$lib/store/answersStore';
 	import { fade } from 'svelte/transition';
 </script>
 
