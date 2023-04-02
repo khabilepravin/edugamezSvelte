@@ -1,6 +1,8 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+	import { onMount, createEventDispatcher } from 'svelte';
+	import { fade } from 'svelte/transition';
 	import { letters } from '../store/currentWordLetters';
+	
 
 	let currentLetters = [];
 
@@ -11,6 +13,12 @@
 
 	const answeredEventDispatcher = createEventDispatcher();
 
+	onMount(() => {
+		const inputs = document.getElementsByName('answerChars');
+		if (inputs !== undefined && inputs.length > 0) {
+			inputs[0].focus();
+		}
+	});
 	function KeyupHandler(e) {
 		const input = e.currentTarget;
 		const currentIndex = parseInt(e.currentTarget.id);
@@ -66,9 +74,13 @@
 
 	function ClearOldValues() {
 		const inputs = document.getElementsByName('answerChars');
-		inputs.forEach((input) => {
-			input.value = '';
-		});
+		if (inputs !== undefined && inputs.length > 0) {
+			inputs.forEach((input) => {
+				input.value = '';
+			});
+			inputs[0].focus();
+		}
+		
 	}
 </script>
 
@@ -81,6 +93,7 @@
 			name="answerChars"
 			on:keyup={KeyupHandler}
 			on:keypress={KeypressHandler}
+			transition:fade
 		/>
 	{/each}
 </div>
@@ -90,9 +103,9 @@
 		margin: 0 0.5rem;
 		padding: 0.5rem;
 		border: 1px solid #333;
-		width: 50px;
-		height: 50px;
+		width: 44px;
+		height: 44px;
 		text-align: center;
-		font-size: 3rem;
+		font-size: 2rem;
 	}
 </style>

@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount } from 'svelte';	
 	import { goto } from '$app/navigation';
 
 	// local imports
@@ -38,12 +38,8 @@
 
 	// lifecycle hooks
 	onMount(async () => {
-
-       // data.spellingDataV2 = data;
-        //console.log(JSON.stringify(data.spellingDataV2));
 		setComponentData(data.spellingDataV2[currentIndex]);
-		// focus on textbox
-		document.getElementById('spellingTextbox').focus();
+		//document.getElementById('spellingTextbox').focus();
 	});
 
 	// private functions
@@ -56,7 +52,6 @@
 		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
 		$letters = currentWord.split('');
 		currentRegion = getCountryCodeByTimezone();
-
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
@@ -97,6 +92,10 @@
 		return inputArr.filter((value, index) => {
 			return inputArr.indexOf(value) === index;
 		});
+	}
+
+	function handleAnswered(event){
+		spelledAnswer = event.detail.enteredAnswer;
 	}
 </script>
 
@@ -159,7 +158,7 @@
 			{/each}
 			<div class="row">
 				<div class="col-sm">
-					<input
+					<!-- <input
 						id="spellingTextbox"
 						type="text"
 						class="form-control"
@@ -169,8 +168,8 @@
 						autocorrect="off"
 						autocapitalize="none"
 						bind:value={spelledAnswer}
-					/>
-					<Answerinput letters={currentWord.split('')}/>
+					/> -->
+					<Answerinput letters={currentWord.split('')} on:answered={handleAnswered}/>
 				</div>
 			</div>
 			<Progress
