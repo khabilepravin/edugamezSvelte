@@ -6,6 +6,7 @@
 	import AudioPlayer from '$lib/components/audioPlayer.svelte';
 	import Answerinput from '$lib/components/answerinput.svelte';
 	import { spellingUserAnswers } from '$lib/store/answersStore';
+	import { letters } from "$lib/store/currentWordLetters";
 	import { getCountryCodeByTimezone, getUrlByRegion } from '$lib/utils/region';
 	import Progress from '$lib/components/progress.svelte';
 	import { Tag } from 'carbon-components-svelte';
@@ -53,7 +54,7 @@
 		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
 		currentWord = currentWordInstance.Word;
 		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
-
+		$letters = currentWord.split('');
 		currentRegion = getCountryCodeByTimezone();
 
 	};
