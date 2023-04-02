@@ -79,7 +79,6 @@
 			currentWordData = data.spellingDataV2[currentIndex];
 			setComponentData(currentWordData);
 			spelledAnswer = '';
-			document.getElementById('spellingTextbox').focus();
 		}
 	};
 
