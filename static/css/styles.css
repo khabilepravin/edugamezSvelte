@@ -804,8 +804,8 @@ input[type='checkbox'] {
 /*     Features     */
 /********************/
 .cards-1 {
-	padding-top: 7.75rem;
-	padding-bottom: 4.5rem;
+	padding-top: 6rem;
+	padding-bottom: 2rem;
 }
 
 .cards-1 .h2-heading {
@@ -818,10 +818,10 @@ input[type='checkbox'] {
 }
 
 .cards-1 .card {
-	margin-bottom: 4rem;
+	margin-bottom: 2rem;
 	padding: 2.125rem 1.75rem 1rem 2rem;
 	border: none;
-	border-radius: 6px;
+	border-radius: 10px;
 	background-color: #ffffff;
 	text-align: left;
 }

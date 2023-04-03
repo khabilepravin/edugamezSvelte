@@ -21,7 +21,7 @@
 				<div class="col-lg-12">
 					<div class="cards-container">
 						<!-- Card -->
-						<a href="/spelling/game?difficulty=low" class="link-no-decoration">
+						<a href="/spelling/low" class="link-no-decoration">
 						<div class="card">
 							<!-- <span class="fa-stack">
 								<i class="fas fa-circle fa-stack-2x" />

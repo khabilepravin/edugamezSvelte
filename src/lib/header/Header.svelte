@@ -13,7 +13,7 @@
 					<a class="nav-link page-scroll" href="/pricing">Pricing</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link page-scroll" href="/contact">Contact</a>
+					<a class="nav-link page-scroll" href="/contact">Feedback</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link page-scroll" href="/about">About Us</a>

@@ -99,17 +99,17 @@
 </script>
 
 <svelte:head>
-	<title >Spelling Game</title>
+	<title >Spelling Practice</title>
 </svelte:head>
 <form on:submit|preventDefault={handleNext}>
 	<div class="text-center">
 		<div class="container">
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-sm pb-3">
 					<img src="../images/spelling-icon.webp" class="iconImageSize" alt="Spelling icon" />
 					<h6>Spelling Game</h6>
 				</div>
-			</div>
+			</div> -->
 			<div class="row">
 				<div class="col-sm pb-3">
 					<RegionSelector on:regionChanged={handleRegionChange} selectedRegion={currentRegion} />

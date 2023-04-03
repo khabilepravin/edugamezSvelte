@@ -2,7 +2,6 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { letters } from '../store/currentWordLetters';
-	
 
 	let currentLetters = [];
 
@@ -73,14 +72,15 @@
 	}
 
 	function ClearOldValues() {
-		const inputs = document.getElementsByName('answerChars');
-		if (inputs !== undefined && inputs.length > 0) {
-			inputs.forEach((input) => {
-				input.value = '';
-			});
-			inputs[0].focus();
+		if (!!document) {
+			const inputs = document.getElementsByName('answerChars');
+			if (inputs !== undefined && inputs.length > 0) {
+				inputs.forEach((input) => {
+					input.value = '';
+				});
+				inputs[0].focus();
+			}
 		}
-		
 	}
 </script>
 
