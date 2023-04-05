@@ -4,6 +4,7 @@
 	import { letters } from '../store/currentWordLetters';
 
 	let currentLetters = [];
+	let pressedKeyCode = '';
 
 	letters.subscribe((value) => {
 		currentLetters = value;
@@ -23,6 +24,7 @@
 		const currentIndex = parseInt(e.currentTarget.id);
 		const inputs = document.getElementsByName('answerChars');
 
+		pressedKeyCode = e.code;
 		if (e.code === 'ArrowRight') {
 			if (currentIndex < inputs.length - 1) {
 				inputs[currentIndex + 1].focus();
@@ -61,9 +63,14 @@
 	}
 
 	function KeypressHandler(e) {
+		console.log(`KeyCode: ${e.key}`);
 		if (!onlyLetters(e.key)) {
-			e.preventDefault();
-			e.stopPropagation();
+			if (e.key === 8) {
+				console.log(`Hello world!`);
+			} else {
+				e.preventDefault();
+				e.stopPropagation();
+			}
 		}
 	}
 
@@ -98,8 +105,9 @@
 			on:keyup={KeyupHandler}
 			on:keypress={KeypressHandler}
 			transition:fade
-		/>
+		/>		
 	{/each}
+	<input id="pressedKey" class="largeInput" bind:value={pressedKeyCode}/>
 </div>
 
 <style>
@@ -111,5 +119,15 @@
 		height: 44px;
 		text-align: center;
 		font-size: 2rem;
+	}
+
+	.largeInput {
+		margin: 0 0.5rem;
+		padding: 0.5rem;
+		border: 1px solid #333;
+		width: 100%;
+		height: 44px;
+		text-align: center;
+		font-size: 1rem;
 	}
 </style>
