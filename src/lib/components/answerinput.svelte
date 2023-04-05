@@ -23,8 +23,7 @@
 		const input = e.currentTarget;
 		const currentIndex = parseInt(e.currentTarget.id);
 		const inputs = document.getElementsByName('answerChars');
-
-		pressedKeyCode = e.code;
+		
 		if (e.code === 'ArrowRight') {
 			if (currentIndex < inputs.length - 1) {
 				inputs[currentIndex + 1].focus();
@@ -74,6 +73,14 @@
 		}
 	}
 
+	function KeyDownHandler(e){
+		pressedKeyCode = e.code;
+		//let input = e.currentTarget;
+		if (e.code === 'Backspace') {			
+			
+		}
+	}
+
 	function onlyLetters(str) {
 		return /^[A-Za-z]*$/.test(str);
 	}
@@ -104,6 +111,7 @@
 			autocorrect="off"
 			on:keyup={KeyupHandler}
 			on:keypress={KeypressHandler}
+			on:keydown={KeyDownHandler}			
 			transition:fade
 		/>		
 	{/each}
