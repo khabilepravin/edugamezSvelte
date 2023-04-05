@@ -74,7 +74,7 @@
 	}
 
 	function KeyDownHandler(e){
-		pressedKeyCode = e.code;
+		pressedKeyCode = e.key;
 		//let input = e.currentTarget;
 		if (e.code === 'Backspace') {			
 			
