@@ -2,9 +2,10 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { letters } from '../store/currentWordLetters';
+	import { Button } from "carbon-components-svelte";
+  	import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
 
 	let currentLetters = [];
-	let pressedKeyCode = '';
 
 	letters.subscribe((value) => {
 		currentLetters = value;
@@ -101,7 +102,7 @@
 				inputs[0].focus();
 			}
 		}
-	}
+	}	
 </script>
 
 <div>
@@ -120,8 +121,8 @@
 			on:keydown={KeyDownHandler}
 			transition:fade
 		/>
-	{/each}
-	<input id="pressedKey" class="largeInput" bind:value={pressedKeyCode} />
+	{/each}	
+	<Button kind="danger-tertiary" size="small" iconDescription="Delete" icon={TrashCan} on:click={ClearOldValues} />
 </div>
 
 <style>
@@ -133,15 +134,5 @@
 		height: 44px;
 		text-align: center;
 		font-size: 2rem;
-	}
-
-	.largeInput {
-		margin: 0 0.5rem;
-		padding: 0.5rem;
-		border: 1px solid #333;
-		width: 100%;
-		height: 44px;
-		text-align: center;
-		font-size: 1rem;
 	}
 </style>

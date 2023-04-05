@@ -1,4 +1,5 @@
 <script>
+	import "carbon-components-svelte/css/white.css";
 	import Header from '$lib/header/Header.svelte';
 	import Footer from '$lib/footer/Footer.svelte';
 	import { navigating } from '$app/stores';
@@ -44,7 +45,7 @@
 		position: absolute;
 		inset: 0px;
 		border-radius: 50%;
-		border: 5px solid #fff;
+		border: 5px solid blue;
 		animation: prixClipFix 2s linear infinite;
 	}
 	.loader::after {
