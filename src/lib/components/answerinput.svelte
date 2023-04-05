@@ -23,7 +23,7 @@
 		const input = e.currentTarget;
 		const currentIndex = parseInt(e.currentTarget.id);
 		const inputs = document.getElementsByName('answerChars');
-		
+
 		if (e.code === 'ArrowRight') {
 			if (currentIndex < inputs.length - 1) {
 				inputs[currentIndex + 1].focus();
@@ -73,11 +73,17 @@
 		}
 	}
 
-	function KeyDownHandler(e){
-		pressedKeyCode = e.key;
-		//let input = e.currentTarget;
-		if (e.code === 'Backspace') {			
-			
+	function KeyDownHandler(e) {
+		const input = e.currentTarget;
+		const currentIndex = parseInt(e.currentTarget.id);
+		const inputs = document.getElementsByName('answerChars');
+		if (e.key === 'Backspace') {
+			if (!input.value) {
+				if (currentIndex > 0) {
+					inputs[currentIndex - 1].focus();
+					return;
+				}
+			}
 		}
 	}
 
@@ -111,11 +117,11 @@
 			autocorrect="off"
 			on:keyup={KeyupHandler}
 			on:keypress={KeypressHandler}
-			on:keydown={KeyDownHandler}			
+			on:keydown={KeyDownHandler}
 			transition:fade
-		/>		
+		/>
 	{/each}
-	<input id="pressedKey" class="largeInput" bind:value={pressedKeyCode}/>
+	<input id="pressedKey" class="largeInput" bind:value={pressedKeyCode} />
 </div>
 
 <style>
