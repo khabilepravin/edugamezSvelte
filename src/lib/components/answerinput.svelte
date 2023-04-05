@@ -91,6 +91,10 @@
 			maxlength="1"
 			id={i}
 			name="answerChars"
+			autocapitalize="off"
+			autocomplete="off"
+			spellcheck="false"
+			autocorrect="off"
 			on:keyup={KeyupHandler}
 			on:keypress={KeypressHandler}
 			transition:fade
