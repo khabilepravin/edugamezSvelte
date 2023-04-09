@@ -16,14 +16,10 @@ const app = initializeApp(firebaseConfig);
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
     const difficulty = params.slug;
-    setTimeout(()=>{ console.log('stuff');}, 4000);
-   
-    const spellingWordsV2 = await getSpellingWordsV2(difficulty);    
+    const spellingWordsV2 = await getSpellingWordsV2(difficulty);       
     return {        
             spellingDataV2: spellingWordsV2        
-    };    
-
- //  throw error(404, 'Not found');
+    };
 }
 
 async function getSpellingWordsV2(difficulty) {

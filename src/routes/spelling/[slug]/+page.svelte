@@ -1,12 +1,11 @@
 <script>
-	import { onMount } from 'svelte';	
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 
 	// local imports
 	import AudioPlayer from '$lib/components/audioPlayer.svelte';
 	import Answerinput from '$lib/components/answerinput.svelte';
 	import { spellingUserAnswers } from '$lib/store/answersStore';
-	import { letters } from "$lib/store/currentWordLetters";
 	import { getCountryCodeByTimezone, getUrlByRegion } from '$lib/utils/region';
 	import Progress from '$lib/components/progress.svelte';
 	import { Tag } from 'carbon-components-svelte';
@@ -15,8 +14,8 @@
 	import 'carbon-components-svelte/css/white.css';
 
 	// public props
-     /** @type {import('./$types').PageData} */
-    export let data;
+	/** @type {import('./$types').PageData} */
+	export let data;
 	//let data.spellingDataV2;
 
 	// local props
@@ -31,6 +30,7 @@
 	let percentComplete = 0;
 	let currentWord = '';
 	let timer;
+	let onQuestionChange;
 
 	let currentRegion = 'en-US';
 	// store variables
@@ -50,7 +50,7 @@
 		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
 		currentWord = currentWordInstance.Word;
 		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
-		$letters = currentWord.split('');
+		//$letters = currentWord.split('');
 		currentRegion = getCountryCodeByTimezone();
 	};
 
@@ -79,6 +79,7 @@
 			currentWordData = data.spellingDataV2[currentIndex];
 			setComponentData(currentWordData);
 			spelledAnswer = '';
+			onQuestionChange();
 		}
 	};
 
@@ -93,23 +94,17 @@
 		});
 	}
 
-	function handleAnswered(event){
+	function handleAnswered(event) {
 		spelledAnswer = event.detail.enteredAnswer;
 	}
 </script>
 
 <svelte:head>
-	<title >Spelling Practice</title>
+	<title>Spelling Practice</title>
 </svelte:head>
 <form on:submit|preventDefault={handleNext}>
 	<div class="text-center">
 		<div class="container">
-			<!-- <div class="row">
-				<div class="col-sm pb-3">
-					<img src="../images/spelling-icon.webp" class="iconImageSize" alt="Spelling icon" />
-					<h6>Spelling Game</h6>
-				</div>
-			</div> -->
 			<div class="row">
 				<div class="col-sm pb-3">
 					<RegionSelector on:regionChanged={handleRegionChange} selectedRegion={currentRegion} />
@@ -157,18 +152,11 @@
 			{/each}
 			<div class="row">
 				<div class="col-sm">
-					<!-- <input
-						id="spellingTextbox"
-						type="text"
-						class="form-control"
-						placeholder="Spelling"
-						spellcheck="false"
-						autocomplete="new-password"
-						autocorrect="off"
-						autocapitalize="none"
-						bind:value={spelledAnswer}
-					/> -->
-					<Answerinput letters={currentWord.split('')} on:answered={handleAnswered}/>
+					<Answerinput
+						currentLetters={currentWord.split('')}
+						on:answered={handleAnswered}
+						bind:LettersChanged={onQuestionChange}
+					/>
 				</div>
 			</div>
 			<Progress
@@ -186,5 +174,5 @@
 		position: fixed;
 		bottom: 40px;
 		right: 40px;
-	}	
+	}
 </style>

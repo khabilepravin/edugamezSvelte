@@ -1,72 +1,73 @@
 <script>
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { letters } from '../store/currentWordLetters';
-	import { Button } from "carbon-components-svelte";
-  	import TrashCan from "carbon-icons-svelte/lib/TrashCan.svelte";
+	import { Button } from 'carbon-components-svelte';
+	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 
-	let currentLetters = [];
+	export let currentLetters = [];
 
-	letters.subscribe((value) => {
-		currentLetters = value;
+	export const LettersChanged = () => {
 		ClearOldValues();
-	});
+	};
 
 	const answeredEventDispatcher = createEventDispatcher();
 
 	onMount(() => {
-		const inputs = document.getElementsByName('answerChars');
-		if (inputs !== undefined && inputs.length > 0) {
-			inputs[0].focus();
+		if (!!document) {
+			const inputs = document.getElementsByName('answerChars');
+			if (inputs !== undefined && inputs.length > 0) {
+				inputs[0].focus();
+			}
 		}
 	});
+
 	function KeyupHandler(e) {
-		const input = e.currentTarget;
-		const currentIndex = parseInt(e.currentTarget.id);
-		const inputs = document.getElementsByName('answerChars');
+		if (!!document) {
+			const input = e.currentTarget;
+			const currentIndex = parseInt(e.currentTarget.id);
+			const inputs = document.getElementsByName('answerChars');
 
-		if (e.code === 'ArrowRight') {
-			if (currentIndex < inputs.length - 1) {
-				inputs[currentIndex + 1].focus();
-				return;
+			if (e.code === 'ArrowRight') {
+				if (currentIndex < inputs.length - 1) {
+					inputs[currentIndex + 1].focus();
+					return;
+				}
 			}
-		}
 
-		if (e.code === 'ArrowLeft') {
-			if (currentIndex > 0) {
-				inputs[currentIndex - 1].focus();
-				return;
-			}
-		}
-
-		if (e.code === 'Backspace') {
-			if (!input.value) {
+			if (e.code === 'ArrowLeft') {
 				if (currentIndex > 0) {
 					inputs[currentIndex - 1].focus();
 					return;
 				}
 			}
-		}
 
-		if (onlyLetters(input.value)) {
-			if (input.value) {
-				const userAnswer = [...inputs].map((input) => input.value).join('');
-				if (userAnswer.length === inputs.length) {
-					answeredEventDispatcher('answered', { enteredAnswer: userAnswer });
+			if (e.code === 'Backspace') {
+				if (!input.value) {
+					if (currentIndex > 0) {
+						inputs[currentIndex - 1].focus();
+						return;
+					}
 				}
+			}
 
-				if (currentIndex !== inputs.length - 1) {
-					inputs[currentIndex + 1].focus();
+			if (onlyLetters(input.value)) {
+				if (input.value) {
+					const userAnswer = [...inputs].map((input) => input.value).join('');
+					if (userAnswer.length === inputs.length) {
+						answeredEventDispatcher('answered', { enteredAnswer: userAnswer });
+					}
+
+					if (currentIndex !== inputs.length - 1) {
+						inputs[currentIndex + 1].focus();
+					}
 				}
 			}
 		}
 	}
 
 	function KeypressHandler(e) {
-		console.log(`KeyCode: ${e.key}`);
 		if (!onlyLetters(e.key)) {
 			if (e.key === 8) {
-				console.log(`Hello world!`);
 			} else {
 				e.preventDefault();
 				e.stopPropagation();
@@ -75,14 +76,16 @@
 	}
 
 	function KeyDownHandler(e) {
-		const input = e.currentTarget;
-		const currentIndex = parseInt(e.currentTarget.id);
-		const inputs = document.getElementsByName('answerChars');
-		if (e.key === 'Backspace') {
-			if (!input.value) {
-				if (currentIndex > 0) {
-					inputs[currentIndex - 1].focus();
-					return;
+		if (!!document) {
+			const input = e.currentTarget;
+			const currentIndex = parseInt(e.currentTarget.id);
+			const inputs = document.getElementsByName('answerChars');
+			if (e.key === 'Backspace') {
+				if (!input.value) {
+					if (currentIndex > 0) {
+						inputs[currentIndex - 1].focus();
+						return;
+					}
 				}
 			}
 		}
@@ -102,7 +105,7 @@
 				inputs[0].focus();
 			}
 		}
-	}	
+	}
 </script>
 
 <div>
@@ -121,14 +124,20 @@
 			on:keydown={KeyDownHandler}
 			transition:fade
 		/>
-	{/each}	
-	<Button kind="danger-tertiary" size="small" iconDescription="Delete" icon={TrashCan} on:click={ClearOldValues} />
+	{/each}
+	<Button
+		kind="danger-tertiary"
+		size="small"
+		iconDescription="Delete"
+		icon={TrashCan}
+		on:click={ClearOldValues}
+	/>
 </div>
 
 <style>
 	input {
 		margin: 0 0.5rem;
-		padding: 0.5rem;
+		padding: 0.3rem;
 		border: 1px solid #333;
 		width: 44px;
 		height: 44px;
