@@ -39,7 +39,6 @@
 	// lifecycle hooks
 	onMount(async () => {
 		setComponentData(data.spellingDataV2[currentIndex]);
-		//document.getElementById('spellingTextbox').focus();
 	});
 
 	// private functions
@@ -50,7 +49,6 @@
 		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
 		currentWord = currentWordInstance.Word;
 		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
-		//$letters = currentWord.split('');
 		currentRegion = getCountryCodeByTimezone();
 	};
 
