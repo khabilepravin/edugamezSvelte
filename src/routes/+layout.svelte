@@ -29,7 +29,7 @@
 		width: 48px;
 		height: 48px;
 		border-radius: 50%;
-		position: absolute;
+		position: fixed;
 		top: 50%;
 		left: 50%;
 		margin-left: -50px;
