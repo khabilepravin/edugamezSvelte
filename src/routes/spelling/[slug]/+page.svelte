@@ -7,7 +7,6 @@
 	import Answerinput from '$lib/components/answerinput.svelte';
 	import { spellingUserAnswers } from '$lib/store/answersStore';
 	import { getCountryCodeByTimezone, getUrlByRegion } from '$lib/utils/region';
-	import Progress from '$lib/components/progress.svelte';
 	import { Tag } from 'carbon-components-svelte';
 	import { percentage } from '$lib/utils/percent';
 	import RegionSelector from '$lib/components/regionselector.svelte';
@@ -131,7 +130,7 @@
 				<div class="col">
 					<AudioPlayer src={exampleAudioUrl} autoPlay={null} />
 				</div>
-			</div>		
+			</div>
 		</div>
 		<div class="container">
 			{#each partsOfTheSpeech as part}
@@ -149,16 +148,12 @@
 						bind:LettersChanged={onQuestionChange}
 					/>
 				</div>
-			</div>		
+			</div>
+			<div class="row">
+				<div class="col-sm">
+					<button value="Next" type="submit" class="btn btn-primary mt-3 float">Next </button>
+				</div>
+			</div>
 		</div>
 	</div>
-	<button value="Next" type="submit" class="btn btn-primary mt-3 float">Next </button>
 </form>
-
-<style>
-	.float {
-		position: absolute;
-		bottom: 5px;
-		right: 5px;
-	}
-</style>
