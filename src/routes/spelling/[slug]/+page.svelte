@@ -157,8 +157,8 @@
 
 <style>
 	.float {
-		position: fixed;
-		bottom: 40px;
-		right: 40px;
+		position: absolute;
+		bottom: 5px;
+		right: 5px;
 	}
 </style>
