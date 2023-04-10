@@ -13,11 +13,11 @@
             </p>
             <br/>
             <p>
-                And just like everything else in life, practice is the only way to get better at it.                
+                And just like everything else, practice is the only way to get better at it.                
             </p>
             <br/>
             <p>
-                MaxSpelling is a platform with ever increasing content to support learners of all level to get better at spelling.
+                MaxSpelling is a platform with ever increasing content to support learners of all levels to get better at spelling.
             </p>
 		</div>
 		<!-- end of col -->
