@@ -109,36 +109,28 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm">
+				<div class="col">
 					<h6>Word</h6>
+				</div>
+				<div class="col">
+					<h6>Definition</h6>
+				</div>
+				<div class="col">
+					<h6>Example</h6>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-sm">
+				<div class="col">
 					<AudioPlayer src={wordAudioUrl} autoPlay="true" />
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm">
-					<h6>Definition</h6>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm">
+				<div class="col">
 					<AudioPlayer src={definitonAudioUrl} autoPlay={null} />
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm">
-					<h6>Example</h6>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm">
+				<div class="col">
 					<AudioPlayer src={exampleAudioUrl} autoPlay={null} />
 				</div>
-			</div>
+			</div>		
 		</div>
 		<div class="container">
 			{#each partsOfTheSpeech as part}
@@ -156,12 +148,7 @@
 						bind:LettersChanged={onQuestionChange}
 					/>
 				</div>
-			</div>
-			<Progress
-				currentProgress={percentComplete}
-				currentItemNumber={currentIndex + 1}
-				totalItems={maxRecordsInATest}
-			/>
+			</div>		
 		</div>
 	</div>
 	<button value="Next" type="submit" class="btn btn-primary mt-3 float">Next </button>
