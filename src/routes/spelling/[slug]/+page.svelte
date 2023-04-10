@@ -39,6 +39,7 @@
 	// lifecycle hooks
 	onMount(async () => {
 		setComponentData(data.spellingDataV2[currentIndex]);
+		onQuestionChange();
 	});
 
 	// private functions

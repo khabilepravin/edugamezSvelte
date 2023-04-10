@@ -8,24 +8,20 @@
 
 	export const LettersChanged = () => {
 		ClearOldValues();
+		focusOnFirstIfAvailable();
 	};
 
 	const answeredEventDispatcher = createEventDispatcher();
 
 	onMount(() => {
-		if (!!document) {
-			const inputs = document.getElementsByName('answerChars');
-			if (inputs !== undefined && inputs.length > 0) {
-				inputs[0].focus();
-			}
-		}
+		focusOnFirstIfAvailable();
 	});
 
 	function KeyupHandler(e) {
 		if (!!document) {
 			const input = e.currentTarget;
 			const currentIndex = parseInt(e.currentTarget.id);
-			const inputs = document.getElementsByName('answerChars');
+			const inputs = getAnswerInputBoxes();
 
 			if (e.code === 'ArrowRight') {
 				if (currentIndex < inputs.length - 1) {
@@ -79,7 +75,7 @@
 		if (!!document) {
 			const input = e.currentTarget;
 			const currentIndex = parseInt(e.currentTarget.id);
-			const inputs = document.getElementsByName('answerChars');
+			const inputs = getAnswerInputBoxes();
 			if (e.key === 'Backspace') {
 				if (!input.value) {
 					if (currentIndex > 0) {
@@ -96,14 +92,37 @@
 	}
 
 	function ClearOldValues() {
+		const inputs = getAnswerInputBoxes();
+		if (!!inputs && inputs.length > 0) {
+			inputs.forEach((input) => {
+				input.value = '';
+			});
+		}
+	}
+
+	function ClearButtonClickHandle(event) {
+		ClearOldValues();
+		focusOnFirstIfAvailable();
+	}
+
+	function getAnswerInputBoxes() {
 		if (!!document) {
-			const inputs = document.getElementsByName('answerChars');
-			if (inputs !== undefined && inputs.length > 0) {
-				inputs.forEach((input) => {
-					input.value = '';
-				});
-				inputs[0].focus();
-			}
+			return document.getElementsByName('answerChars');
+		} else {
+			return null;
+		}
+	}
+
+	function focusOnFirstIfAvailable() {
+		const inputs = getAnswerInputBoxes();
+		if (!!inputs && inputs.length > 0) {
+			inputs[0].focus();
+		}
+	}
+
+	function init(el) {
+		if (el.id === '0') {
+			el.focus();
 		}
 	}
 </script>
@@ -123,6 +142,7 @@
 			on:keypress={KeypressHandler}
 			on:keydown={KeyDownHandler}
 			transition:fade
+			use:init
 		/>
 	{/each}
 	<Button
@@ -130,7 +150,7 @@
 		size="small"
 		iconDescription="Delete"
 		icon={TrashCan}
-		on:click={ClearOldValues}
+		on:click={ClearButtonClickHandle}
 	/>
 </div>
 
