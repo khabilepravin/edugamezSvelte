@@ -25,7 +25,7 @@
 	let partsOfTheSpeech = [];
 	let definitionAndExampleFor;
 	let spelledAnswer = '';
-	const maxRecordsInATest = 10;
+	const maxRecordsInATest = 7;
 	let percentComplete = 0;
 	let currentWord = '';
 	let timer;
@@ -69,7 +69,7 @@
 
 		$spellingUserAnswers = [...$spellingUserAnswers, getUserAnswer(currentWordData, spelledAnswer)];
 
-		if (currentIndex === 9) {
+		if (currentIndex === (maxRecordsInATest-1)) { //last one
 			goto('/spelling/result');
 		} else {
 			// Move to next
@@ -150,8 +150,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm">
-					<button value="Next" type="submit" class="btn btn-primary mt-3 float">Next </button>
+				<div class="col">
+					<Tag type="green" class="mt-3 float-left">{currentIndex+1} of {maxRecordsInATest}</Tag>
+				</div>
+				<div class="col">
+					<button value="Next" type="submit" class="btn btn-primary mt-3 float-right">{currentIndex+1 == maxRecordsInATest ? 'Done' : 'Next'} </button>
 				</div>
 			</div>
 		</div>
