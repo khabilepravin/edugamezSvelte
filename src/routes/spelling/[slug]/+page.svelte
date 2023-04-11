@@ -31,7 +31,7 @@
 	let timer;
 	let onQuestionChange;
 
-	let currentRegion = 'en-US';
+	let currentRegion = 'en-GB';
 	// store variables
 	$spellingUserAnswers = [];
 
@@ -69,7 +69,8 @@
 
 		$spellingUserAnswers = [...$spellingUserAnswers, getUserAnswer(currentWordData, spelledAnswer)];
 
-		if (currentIndex === (maxRecordsInATest-1)) { //last one
+		if (currentIndex === maxRecordsInATest - 1) {
+			//last one
 			goto('/spelling/result');
 		} else {
 			// Move to next
@@ -92,9 +93,9 @@
 		});
 	}
 
-	function handleAnswered(event) {
-		spelledAnswer = event.detail.enteredAnswer;
-	}
+	// function handleAnswered(event) {
+	// 	spelledAnswer = event.detail.enteredAnswer;
+	// }
 </script>
 
 <svelte:head>
@@ -143,18 +144,20 @@
 			<div class="row">
 				<div class="col-sm">
 					<Answerinput
-						currentLetters={currentWord.split('')}
-						on:answered={handleAnswered}
+						currentLetters={currentWord.split('')}						
 						bind:LettersChanged={onQuestionChange}
+						bind:currentStateOfTheAnswer={spelledAnswer}
 					/>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col">
-					<Tag type="green" class="mt-3 float-left">{currentIndex+1} of {maxRecordsInATest}</Tag>
+					<Tag type="green" class="mt-3 float-left">{currentIndex + 1} of {maxRecordsInATest}</Tag>
 				</div>
 				<div class="col">
-					<button value="Next" type="submit" class="btn btn-primary mt-3 float-right">{currentIndex+1 == maxRecordsInATest ? 'Done' : 'Next'} </button>
+					<button value="Next" type="submit" class="btn btn-primary mt-3 float-right"
+						>{currentIndex + 1 == maxRecordsInATest ? 'Done' : 'Next'}
+					</button>
 				</div>
 			</div>
 		</div>

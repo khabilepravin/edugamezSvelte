@@ -4,19 +4,22 @@
 	import { Button } from 'carbon-components-svelte';
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 
+	// public props
 	export let currentLetters = [];
+	export let currentStateOfTheAnswer = '';
 
+	// public funcs
 	export const LettersChanged = () => {
 		ClearOldValues();
 		focusOnFirstIfAvailable();
 	};
 
-	const answeredEventDispatcher = createEventDispatcher();
-
+	// life cycle hooks
 	onMount(() => {
 		focusOnFirstIfAvailable();
 	});
 
+	// local event handlers
 	function KeyupHandler(e) {
 		if (!!document) {
 			const input = e.currentTarget;
@@ -48,11 +51,9 @@
 
 			if (onlyLetters(input.value)) {
 				if (input.value) {
-					const userAnswer = [...inputs].map((input) => input.value).join('');
-					if (userAnswer.length === inputs.length) {
-						answeredEventDispatcher('answered', { enteredAnswer: userAnswer });
-					}
-
+					// construct the answer
+					currentStateOfTheAnswer = [...inputs].map((input) => input.value).join('');
+					
 					if (currentIndex !== inputs.length - 1) {
 						inputs[currentIndex + 1].focus();
 					}
@@ -162,6 +163,6 @@
 		width: 44px;
 		height: 44px;
 		text-align: center;
-		font-size: 2rem;
+		font-size: 1.5rem;
 	}
 </style>
