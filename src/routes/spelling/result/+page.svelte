@@ -1,6 +1,15 @@
 <script>
 	import { spellingUserAnswers } from '$lib/store/answersStore';
 	import { fade } from 'svelte/transition';
+	import { Tag, Button } from 'carbon-components-svelte';
+	import { goto } from '$app/navigation';
+	import Checkmark from 'carbon-icons-svelte/lib/Checkmark.svelte';
+	import Close from 'carbon-icons-svelte/lib/Close.svelte';
+	import Repeat from 'carbon-icons-svelte/lib/Repeat.svelte';
+
+	function handleRepeatClick(){
+		goto('/');
+	}
 </script>
 
 <main>
@@ -8,26 +17,29 @@
 		<div class="row row-cols-1">
 			<div class="col"><h5>Results</h5></div>
 		</div>
-		<div class="row row-cols-2">
-			<div class="col">Correct Spelling</div>
+		<div class="row row-cols-2">			
 			<div class="col">You Spelled</div>
+			<div class="col">Correct Spelling</div>
 		</div>
 
 		{#each $spellingUserAnswers as result}
 			<div class="row row-cols-2">
-				<div class="col text-primary">{result.actualWord}</div>
-				<div
-					class={result.isCorrect ? 'col text-success' : 'col text-danger strikethrough-decoration'}
-				>
-					{result.userAnswer ? result.userAnswer : '--'}
+				<div class="col">
+					<Tag icon={result.isCorrect ? Checkmark : Close} type={result.isCorrect ? 'green' : 'red'}>
+						<span class={result.isCorrect ? '' : 'font-weight-bold'}>{result.userAnswer ? result.userAnswer : '--'}</span>
+					</Tag>
+				</div>
+				<div class="col">
+					{#if !result.isCorrect}
+						<Tag type="green" icon={Checkmark}
+							><span class="font-weight-bold">{result.actualWord}</span></Tag
+						>
+					{/if}
 				</div>
 			</div>
 		{/each}
+		<div>		
+			<Button size="small" icon={Repeat} on:click={handleRepeatClick}>Repeat</Button>		
+		</div>
 	</div>
 </main>
-
-<style>
-	.strikethrough-decoration {
-		text-decoration: line-through;
-	}
-</style>
