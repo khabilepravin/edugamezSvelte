@@ -29,6 +29,7 @@
     "@ultimate/vault": "^0.0.2",
     "cookie": "^0.4.1",
     "firebase": "^9.8.1",
+    "flag-icons": "^6.6.6",
     "google-charts": "^2.0.0",
     "svelte-icons-pack": "^1.4.6"
   }

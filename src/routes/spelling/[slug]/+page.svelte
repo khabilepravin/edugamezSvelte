@@ -49,7 +49,7 @@
 		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
 		currentWord = currentWordInstance.Word;
 		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
-		currentRegion = getCountryCodeByTimezone();
+		//currentRegion = getCountryCodeByTimezone();
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
@@ -106,7 +106,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm pb-3">
-					<RegionSelector on:regionChanged={handleRegionChange} selectedRegion={currentRegion} />
+					<RegionSelector on:regionChanged={handleRegionChange}  />
 				</div>
 			</div>
 			<div class="row">
@@ -136,9 +136,9 @@
 		<div class="container">
 			{#each partsOfTheSpeech as part}
 				{#if part === definitionAndExampleFor}
-					<Tag type="green">{part}</Tag>
+					<Tag type="green"><strong>{part}</strong></Tag>
 				{:else}
-					<Tag type="outline">{part}</Tag>
+					<Tag type="green" disabled>{part}</Tag>
 				{/if}
 			{/each}
 			<div class="row">
