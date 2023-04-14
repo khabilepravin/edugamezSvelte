@@ -6,7 +6,7 @@
 	import AudioPlayer from '$lib/components/audioPlayer.svelte';
 	import Answerinput from '$lib/components/answerinput.svelte';
 	import { spellingUserAnswers } from '$lib/store/answersStore';
-	import { getCountryCodeByTimezone, getUrlByRegion } from '$lib/utils/region';
+	import { getUrlByRegion } from '$lib/utils/region';
 	import { Tag } from 'carbon-components-svelte';
 	import { percentage } from '$lib/utils/percent';
 	import RegionSelector from '$lib/components/regionselector.svelte';
@@ -30,6 +30,7 @@
 	let currentWord = '';
 	let timer;
 	let onQuestionChange;
+	let difficultyLevel;
 
 	let currentRegion = 'en-GB';
 	// store variables
@@ -38,6 +39,7 @@
 	// lifecycle hooks
 	onMount(async () => {
 		setComponentData(data.spellingDataV2[currentIndex]);
+		difficultyLevel = data.difficultyLevel;
 		onQuestionChange();
 	});
 
@@ -92,21 +94,17 @@
 			return inputArr.indexOf(value) === index;
 		});
 	}
-
-	// function handleAnswered(event) {
-	// 	spelledAnswer = event.detail.enteredAnswer;
-	// }
 </script>
 
 <svelte:head>
-	<title>Spelling Practice</title>
+	<title>Spelling Practice Difficulty {difficultyLevel}</title>
 </svelte:head>
 <form on:submit|preventDefault={handleNext}>
 	<div class="text-center">
 		<div class="container">
 			<div class="row">
 				<div class="col-sm pb-3">
-					<RegionSelector on:regionChanged={handleRegionChange}  />
+					<RegionSelector on:regionChanged={handleRegionChange} />
 				</div>
 			</div>
 			<div class="row">
@@ -144,7 +142,7 @@
 			<div class="row">
 				<div class="col-sm">
 					<Answerinput
-						currentLetters={currentWord.split('')}						
+						currentLetters={currentWord.split('')}
 						bind:LettersChanged={onQuestionChange}
 						bind:currentStateOfTheAnswer={spelledAnswer}
 					/>

@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>MaxSpelling - Practice Perfect</title>
 </svelte:head>
 
 <div id="games">

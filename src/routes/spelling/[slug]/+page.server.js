@@ -18,7 +18,8 @@ export async function load({ params }) {
     const difficulty = params.slug;
     const spellingWordsV2 = await getSpellingWordsV2(difficulty);       
     return {        
-            spellingDataV2: spellingWordsV2        
+            spellingDataV2: spellingWordsV2,
+            difficultyLevel: difficulty        
     };
 }
 

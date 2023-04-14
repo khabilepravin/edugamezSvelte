@@ -9,6 +9,9 @@
 	}
 
 </script>
+<svelte:head>
+	<title>MaxSpelling - Feedback</title>
+</svelte:head>
 <div class="container">	
 	<div class="row">
 		<div class="col-lg-12">

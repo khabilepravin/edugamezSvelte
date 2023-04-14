@@ -1,3 +1,6 @@
+<svelte:head>
+	<title>MaxSpelling - About Us</title>
+</svelte:head>
 <div class="container">
 	<div class="row">
 		<div class="col-lg-12">
