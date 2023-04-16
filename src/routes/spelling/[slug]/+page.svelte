@@ -15,7 +15,6 @@
 	// public props
 	/** @type {import('./$types').PageData} */
 	export let data;
-	//let data.spellingDataV2;
 
 	// local props
 	let currentIndex = 0;
@@ -30,6 +29,9 @@
 	let currentWord = '';
 	let timer;
 	let onQuestionChange;
+	let handleWordResetOfAudio;
+	let handleDefinitionResetOfAudio;
+	let handleExampleResetOfAudio;
 	let difficultyLevel;
 
 	let currentRegion = 'en-GB';
@@ -51,7 +53,6 @@
 		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
 		currentWord = currentWordInstance.Word;
 		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
-		//currentRegion = getCountryCodeByTimezone();
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
@@ -66,9 +67,9 @@
 
 	// Event handlers
 	const handleNext = () => {
+		resetAllAudioPlayers();
 		percentComplete = percentage(currentIndex + 1, maxRecordsInATest);
-		let currentWordData = data.spellingDataV2[currentIndex];
-
+		let currentWordData = data.spellingDataV2[currentIndex];		
 		$spellingUserAnswers = [...$spellingUserAnswers, getUserAnswer(currentWordData, spelledAnswer)];
 
 		if (currentIndex === maxRecordsInATest - 1) {
@@ -93,6 +94,12 @@
 		return inputArr.filter((value, index) => {
 			return inputArr.indexOf(value) === index;
 		});
+	}
+
+	function resetAllAudioPlayers(){
+		handleWordResetOfAudio();
+		handleDefinitionResetOfAudio();
+		handleExampleResetOfAudio();
 	}
 </script>
 
@@ -121,13 +128,25 @@
 
 			<div class="row">
 				<div class="col">
-					<AudioPlayer src={wordAudioUrl} autoPlay="true" />
+					<AudioPlayer
+						src={wordAudioUrl}
+						autoPlay="true"
+						bind:handleResetAudio={handleWordResetOfAudio}
+					/>
 				</div>
 				<div class="col">
-					<AudioPlayer src={definitonAudioUrl} autoPlay={null} />
+					<AudioPlayer
+						src={definitonAudioUrl}
+						autoPlay={null}
+						bind:handleResetAudio={handleDefinitionResetOfAudio}
+					/>
 				</div>
 				<div class="col">
-					<AudioPlayer src={exampleAudioUrl} autoPlay={null} />
+					<AudioPlayer
+						src={exampleAudioUrl}
+						autoPlay={null}
+						bind:handleResetAudio={handleExampleResetOfAudio}
+					/>
 				</div>
 			</div>
 		</div>

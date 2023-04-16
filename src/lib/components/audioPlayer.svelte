@@ -12,6 +12,12 @@
 	let player;
 	let buttonIcon = Play;
 
+	export const handleResetAudio = () => {
+		player.pause();
+		player.currentTime = 0;
+		buttonIcon = Play;
+	};
+
 	// event handlers
 	function handleClick() {
 		if (player.paused === false) {
