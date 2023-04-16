@@ -42,17 +42,17 @@
 	<ContentSwitcher on:change={handleRegionChange} bind:selectedIndex>
 		<Switch>
 			<div style="display: flex; align-items: center;">
-				<span class="fi fi-us" />&nbsp; American
+				<span class="fi fi-us" title="American Pronunciation" />&nbsp; US
 			</div>
 		</Switch>
 		<Switch>
 			<div style="display: flex; align-items: center;">
-				<span class="fi fi-gb" />&nbsp; British
+				<span class="fi fi-gb" alt="British Pronunciation" />&nbsp; GB
 			</div>
 		</Switch>
 		<Switch>
 			<div style="display: flex; align-items: center;">
-				<span class="fi fi-au" />&nbsp; Australian
+				<span class="fi fi-au" title="Australian Pronunciation"/>&nbsp; AU
 			</div>
 		</Switch>
 	</ContentSwitcher>
