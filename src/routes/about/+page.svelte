@@ -11,7 +11,7 @@
     <div class="row">
 		<div class="col-lg-12">
 			<p>
-                We believe spelling is not only cruicial for writing but for reading as well.
+                We believe spelling is cruicial for writing as well as for reading.
                 Spelling is a key aspect of vocabulary development, this, in turn supports reading comprehension and enhances choices made when composing written texts.
             </p>
             <br/>
