@@ -9,6 +9,7 @@
 	import { getUrlByRegion } from '$lib/utils/region';
 	import { Tag } from 'carbon-components-svelte';
 	import { percentage } from '$lib/utils/percent';
+	import { arrayMove } from '$lib/utils/arr';
 	import RegionSelector from '$lib/components/regionselector.svelte';
 	import 'carbon-components-svelte/css/white.css';
 
@@ -47,12 +48,12 @@
 
 	// private functions
 	const setComponentData = (currentWordInstance) => {
+		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
 		wordAudioUrl = getUrlByRegion(currentWordInstance.WordAudios, currentRegion);
 		definitonAudioUrl = getUrlByRegion(currentWordInstance.DefinitionAudios, currentRegion);
 		exampleAudioUrl = getUrlByRegion(currentWordInstance.ExampleAudios, currentRegion);
 		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
 		currentWord = currentWordInstance.Word;
-		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
@@ -91,9 +92,13 @@
 	};
 
 	function deDuplicatePartsOfSpeechArray(inputArr) {
-		return inputArr.filter((value, index) => {
+		const deDuplicatedArray = inputArr.filter((value, index) => {
 			return inputArr.indexOf(value) === index;
 		});
+
+		const indexOfPartOfTheSpeech = deDuplicatedArray.indexOf(definitionAndExampleFor);
+		// Moving the current part of the speech at the begining
+		return arrayMove(deDuplicatedArray, indexOfPartOfTheSpeech, 0); 
 	}
 
 	function resetAllAudioPlayers(){
