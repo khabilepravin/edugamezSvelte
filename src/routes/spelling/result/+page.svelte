@@ -7,7 +7,10 @@
 	import Close from 'carbon-icons-svelte/lib/Close.svelte';
 	import Repeat from 'carbon-icons-svelte/lib/Repeat.svelte';
 
-	function handleRepeatClick(){
+	let correctAnswers = $spellingUserAnswers.filter((word) => word.isCorrect);
+	let isEverythingCorrect = $spellingUserAnswers.length === correctAnswers.length;
+
+	function handleRepeatClick() {
 		goto('/');
 	}
 </script>
@@ -17,29 +20,43 @@
 		<div class="row row-cols-1">
 			<div class="col"><h5>Results</h5></div>
 		</div>
-		<div class="row row-cols-2">			
-			<div class="col">You Spelled</div>
-			<div class="col">Correct Spelling</div>
-		</div>
 
-		{#each $spellingUserAnswers as result}
-			<div class="row row-cols-2">
+		{#if isEverythingCorrect}
+			<div class="row row-cols-1">
 				<div class="col">
-					<Tag icon={result.isCorrect ? Checkmark : Close} type={result.isCorrect ? 'green' : 'red'}>
-						<span class={result.isCorrect ? '' : 'font-weight-bold'}>{result.userAnswer ? result.userAnswer : '--'}</span>
-					</Tag>
-				</div>
-				<div class="col">
-					{#if !result.isCorrect}
-						<Tag type="green" icon={Checkmark}
-							><span class="font-weight-bold">{result.actualWord}</span></Tag
-						>
-					{/if}
+					<h3>Well Done! Everything was spelled correctly.</h3>
 				</div>
 			</div>
-		{/each}
-		<div>		
-			<Button size="small" icon={Repeat} on:click={handleRepeatClick}>Repeat</Button>		
+		{:else}
+			<div class="row row-cols-2">
+				<div class="col">You Spelled</div>
+				<div class="col">Correct Spelling</div>
+			</div>
+
+			{#each $spellingUserAnswers as result}
+				<div class="row row-cols-2">
+					<div class="col">
+						<Tag
+							icon={result.isCorrect ? Checkmark : Close}
+							type={result.isCorrect ? 'green' : 'red'}
+						>
+							<span class={result.isCorrect ? '' : 'font-weight-bold'}
+								>{result.userAnswer ? result.userAnswer : '--'}</span
+							>
+						</Tag>
+					</div>
+					<div class="col">
+						{#if !result.isCorrect}
+							<Tag type="green" icon={Checkmark}
+								><span class="font-weight-bold">{result.actualWord}</span></Tag
+							>
+						{/if}
+					</div>
+				</div>
+			{/each}
+		{/if}
+		<div>
+			<Button size="small" icon={Repeat} on:click={handleRepeatClick}>Repeat</Button>
 		</div>
 	</div>
 </main>
