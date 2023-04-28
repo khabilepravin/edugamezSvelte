@@ -10,6 +10,7 @@
 	import { Tag } from 'carbon-components-svelte';
 	import { percentage } from '$lib/utils/percent';
 	import { arrayMove } from '$lib/utils/arr';
+	import { capitalizeFirstLetter } from '$lib/utils/string';
 	import RegionSelector from '$lib/components/regionselector.svelte';
 	import 'carbon-components-svelte/css/white.css';
 
@@ -26,9 +27,9 @@
 	let definitionAndExampleFor;
 	let spelledAnswer = '';
 	const maxRecordsInATest = 7;
-	let percentComplete = 0;
+	//let percentComplete = 0;
 	let currentWord = '';
-	let timer;
+	//let timer;
 	let onQuestionChange;
 	let handleWordResetOfAudio;
 	let handleDefinitionResetOfAudio;
@@ -42,7 +43,7 @@
 	// lifecycle hooks
 	onMount(async () => {
 		setComponentData(data.spellingDataV2[currentIndex]);
-		difficultyLevel = data.difficultyLevel;
+		difficultyLevel = capitalizeFirstLetter(data.difficultyLevel);
 		onQuestionChange();
 	});
 
@@ -175,6 +176,7 @@
 			<div class="row">
 				<div class="col">
 					<Tag type="green" class="mt-3 float-left">{currentIndex + 1} of {maxRecordsInATest}</Tag>
+					<Tag type="red" class="mt-3 float-left">Difficulty {difficultyLevel}</Tag>
 				</div>
 				<div class="col">
 					<button value="Next" type="submit" class="btn btn-primary mt-3 float-right"
