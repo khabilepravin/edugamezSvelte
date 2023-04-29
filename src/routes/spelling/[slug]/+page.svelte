@@ -8,7 +8,6 @@
 	import { spellingUserAnswers } from '$lib/store/answersStore';
 	import { getUrlByRegion } from '$lib/utils/region';
 	import { Tag } from 'carbon-components-svelte';
-	import { percentage } from '$lib/utils/percent';
 	import { arrayMove } from '$lib/utils/arr';
 	import { capitalizeFirstLetter } from '$lib/utils/string';
 	import RegionSelector from '$lib/components/regionselector.svelte';
@@ -27,9 +26,7 @@
 	let definitionAndExampleFor;
 	let spelledAnswer = '';
 	const maxRecordsInATest = 7;
-	//let percentComplete = 0;
 	let currentWord = '';
-	//let timer;
 	let onQuestionChange;
 	let handleWordResetOfAudio;
 	let handleDefinitionResetOfAudio;
@@ -70,7 +67,6 @@
 	// Event handlers
 	const handleNext = () => {
 		resetAllAudioPlayers();
-		percentComplete = percentage(currentIndex + 1, maxRecordsInATest);
 		let currentWordData = data.spellingDataV2[currentIndex];		
 		$spellingUserAnswers = [...$spellingUserAnswers, getUserAnswer(currentWordData, spelledAnswer)];
 
