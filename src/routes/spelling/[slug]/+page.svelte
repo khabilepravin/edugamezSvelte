@@ -10,6 +10,7 @@
 	import { Tag } from 'carbon-components-svelte';
 	import { arrayMove } from '$lib/utils/arr';
 	import { capitalizeFirstLetter } from '$lib/utils/string';
+	import { findExactDifference } from '$lib/utils/wordDifference';
 	import RegionSelector from '$lib/components/regionselector.svelte';
 	import 'carbon-components-svelte/css/white.css';
 
@@ -55,19 +56,21 @@
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
-		let isCorrect = originalWord.Word.trim().toLowerCase() === userAnswer.trim().toLowerCase();
+		const isCorrect = originalWord.Word.trim().toLowerCase() === userAnswer.trim().toLowerCase();
+		const exactDifference = findExactDifference(originalWord.Word, userAnswer);
 
 		return {
 			actualWord: originalWord.Word,
 			userAnswer: userAnswer,
-			isCorrect: isCorrect
+			isCorrect: isCorrect,
+		    exactDifference: exactDifference
 		};
 	};
 
 	// Event handlers
 	const handleNext = () => {
 		resetAllAudioPlayers();
-		let currentWordData = data.spellingDataV2[currentIndex];		
+		let currentWordData = data.spellingDataV2[currentIndex];
 		$spellingUserAnswers = [...$spellingUserAnswers, getUserAnswer(currentWordData, spelledAnswer)];
 
 		if (currentIndex === maxRecordsInATest - 1) {
@@ -95,10 +98,10 @@
 
 		const indexOfPartOfTheSpeech = deDuplicatedArray.indexOf(definitionAndExampleFor);
 		// Moving the current part of the speech at the begining
-		return arrayMove(deDuplicatedArray, indexOfPartOfTheSpeech, 0); 
+		return arrayMove(deDuplicatedArray, indexOfPartOfTheSpeech, 0);
 	}
 
-	function resetAllAudioPlayers(){
+	function resetAllAudioPlayers() {
 		handleWordResetOfAudio();
 		handleDefinitionResetOfAudio();
 		handleExampleResetOfAudio();
