@@ -1,23 +1,27 @@
 <script>
+	import Checkmark from 'carbon-icons-svelte/lib/Checkmark.svelte';
+	import Close from 'carbon-icons-svelte/lib/Close.svelte';
 	export let resultEntry;
 </script>
 
 <div>
-	<h2>
+	<h3>
+		<Checkmark/>
 		{#each resultEntry.actualWord as char, i}
 			<span class="originalword">
 				{char}
 			</span>
 		{/each}
-	</h2>
+	</h3>
 
-	<h2>
+	<h3>
+		<Close/>
 		{#each resultEntry.exactDifference as char, i}
 			<span class="correct" class:danger={resultEntry.exactDifference[i] === 'x'}>
 				{resultEntry.userAnswer[i] === undefined ? '_' : resultEntry.userAnswer[i]}
 			</span>
 		{/each}
-	</h2>
+	</h3>
 </div>
 
 <style>

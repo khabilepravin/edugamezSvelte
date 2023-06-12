@@ -40,7 +40,7 @@
 				}
 			}
 
-			if (e.code === 'Backspace') {
+			if (e.code === 'Backspace') {0
 				if (!input.value) {
 					if (currentIndex > 0) {
 						inputs[currentIndex - 1].focus();
