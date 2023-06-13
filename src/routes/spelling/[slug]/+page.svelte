@@ -63,7 +63,10 @@
 			actualWord: originalWord.Word,
 			userAnswer: userAnswer,
 			isCorrect: isCorrect,
-		    exactDifference: exactDifference
+		    exactDifference: exactDifference,
+			wordAudioUrl,
+			definitonAudioUrl,
+			exampleAudioUrl
 		};
 	};
 
