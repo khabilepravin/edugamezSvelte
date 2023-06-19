@@ -20,6 +20,6 @@
 	</div>
 </main>
 
-<footer class="fixed-bottom">
+<footer>
 	<Footer />
 </footer>
