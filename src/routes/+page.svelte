@@ -12,7 +12,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h2 class="h2-heading">Select a Level</h2>
+					<h4 class="h2-heading">Spelling Practice</h4>
+					<h5 class="h2-heading">Select a Level</h5>
 				</div>
 				<!-- end of col -->
 			</div>

@@ -23,3 +23,12 @@
 <footer>
 	<Footer />
 </footer>
+
+<style>
+	 main{
+		min-height: 80%;
+		flex-direction: column;
+		justify-content: flex-start;
+		display: flex;
+	} 
+</style>

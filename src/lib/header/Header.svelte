@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-light">
 	<div class="container">
-		<a href="/"><img src="/images/logo.png" alt="alternative" /></a>
+		<div class="titleHolder">
+			<a href="/"><img src="/images/logo.png" alt="alternative" /></a><span class="siteName"
+				>&nbsp;&nbsp;MaxSpelling</span
+			>
+		</div>
 		<button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
 			<span class="navbar-toggler-icon" />
 		</button>
@@ -25,3 +29,18 @@
 		</div>
 	</div>
 </nav>
+
+<style>
+	.titleHolder{
+		display:flex;
+		align-items: center;
+	}
+
+	.siteName {
+		font-family: 'Open Sans';
+  font-weight: bold;
+  font-size: 15px;
+  color: #333;
+}
+
+</style>
