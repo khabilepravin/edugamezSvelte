@@ -20,15 +20,17 @@
 	</div>
 </main>
 
-<footer>
+<!-- <footer> -->
 	<Footer />
-</footer>
+<!-- </footer> -->
 
 <style>
 	 main{
-		min-height: 80%;
+		min-height: 98%;
 		flex-direction: column;
 		justify-content: flex-start;
 		display: flex;
 	} 
+
+
 </style>
