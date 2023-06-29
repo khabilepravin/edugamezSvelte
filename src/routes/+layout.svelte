@@ -1,5 +1,5 @@
 <script>
-	import "carbon-components-svelte/css/white.css";
+	import 'carbon-components-svelte/css/white.css';
 	import Header from '$lib/header/Header.svelte';
 	import Footer from '$lib/footer/Footer.svelte';
 	import { navigating } from '$app/stores';
@@ -14,23 +14,19 @@
 <main>
 	<div>
 		{#if $loading}
-			<Loading/>
+			<Loading />
 		{/if}
 		<slot />
 	</div>
 </main>
 
-<!-- <footer> -->
-	<Footer />
-<!-- </footer> -->
+<Footer />
 
 <style>
-	 main{
+	main {
 		min-height: 98%;
 		flex-direction: column;
 		justify-content: flex-start;
 		display: flex;
-	} 
-
-
+	}
 </style>
