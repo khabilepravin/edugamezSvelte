@@ -27,10 +27,8 @@
 			</div>
 		{:else}
 			{#each $spellingUserAnswers as result}
-				{#if result.isCorrect === false}
-					<WordDiff resultEntry={result} />
-					<hr />
-				{/if}
+				<WordDiff resultEntry={result} />
+				<hr />
 			{/each}
 		{/if}
 		<div>
