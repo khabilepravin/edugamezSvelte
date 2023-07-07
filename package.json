@@ -2,24 +2,25 @@
   "name": "EduGamez-App",
   "version": "0.0.1",
   "scripts": {
-    "dev": "svelte-kit dev",
-    "build": "svelte-kit build",
-    "package": "svelte-kit package",
-    "preview": "svelte-kit preview",
-    "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-    "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch"
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^1.0.0-next.48",
-    "@sveltejs/kit": "^1.0.0-next.345",
-    "carbon-components-svelte": "^0.70.10",
+    "@sveltejs/adapter-auto": "^2.0.0",
+    "@sveltejs/kit": "^1.5.0",
+    "carbon-components-svelte": "^0.70.13",
+    "carbon-icons-svelte": "^11.4.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",
     "prettier": "^2.5.1",
     "prettier-plugin-svelte": "^2.5.0",
-    "svelte": "^3.50.1",
-    "tailwindcss": "^3.0.23"
+    "svelte": "^3.54.0",
+    "tailwindcss": "^3.0.23",
+    "vite": "^4.2.1"
   },
   "type": "module",
   "dependencies": {
@@ -28,6 +29,7 @@
     "@ultimate/vault": "^0.0.2",
     "cookie": "^0.4.1",
     "firebase": "^9.8.1",
+    "flag-icons": "^6.6.6",
     "google-charts": "^2.0.0",
     "svelte-icons-pack": "^1.4.6"
   }

@@ -1,6 +1,6 @@
+ 
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, query, where, orderBy, limit } from "firebase/firestore";
-
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_ENV_apiKey,
@@ -13,24 +13,20 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-export async function getSpellingWords() {
-    const db = getFirestore();
-
-    const querySnapshot = await getDocs(collection(db, "spellingwords"));
-
-    const docsArray = [];
-
-    querySnapshot.forEach((doc) => {
-        docsArray.push(doc.data());
-    });
-
-    return docsArray;
+/** @type {import('./$types').PageLoad} */
+export async function load({ params }) {
+    const difficulty = params.slug;
+    const spellingWordsV2 = await getSpellingWordsV2(difficulty);       
+    return {        
+            spellingDataV2: spellingWordsV2,
+            difficultyLevel: difficulty        
+    };
 }
 
-
-export async function getSpellingWordsV2(difficulty) {
+async function getSpellingWordsV2(difficulty) {
     try
     {
+     
         const db = getFirestore();
         const collectionRef = collection(db, "spellingwordsv2");
         
