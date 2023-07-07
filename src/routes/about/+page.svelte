@@ -16,9 +16,9 @@
 				made when composing written texts.
 			</p>
 			<p>
-				The way we have structured the content enables you to enhanced listening comprehension,
+				The way we have structured the content enables you to improve listening comprehension,
 				listening to pronunciations enables you to train your ear to understand different accents,
-				intonations, and speech patterns. This improves your overall listening comprehension skills
+				intonations, and speech patterns. This enhances your overall listening comprehension skills
 				and allows you to better understand native speakers.
 			</p>
 			<p>And just like everything else, practice is the only way to get better at it.</p>
