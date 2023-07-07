@@ -24,7 +24,7 @@
 
 <style>
 	main {
-		min-height: 98%;
+		min-height: 67vh;
 		flex-direction: column;
 		justify-content: flex-start;
 		display: flex;
