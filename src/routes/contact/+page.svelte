@@ -1,6 +1,7 @@
 <script>
 	import { Loading } from 'carbon-components-svelte';
 
+	export const prerender = true;
 	let showLoading = true;
 
 	function onIFrameContentLoaded(){
