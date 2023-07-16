@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>MaxSpelling - Practice Perfect</title>
+	<title>MaxSpelling - Get better at spelling</title>
 </svelte:head>
 
 <div id="games">
@@ -23,44 +23,45 @@
 					<div class="cards-container">
 						<!-- Card -->
 						<a href="/spelling/low" class="link-no-decoration">
-						<div class="card">
-							<!-- <span class="fa-stack">
-								<i class="fas fa-circle fa-stack-2x" />
-								<i class="fas fa-school fa-stack-1x" />
-							</span> -->
-							<img src="images/beginner.png" alt="spelling" class="tile-image"/>
-							<div class="card-body">
-								<h5 class="card-title text-center">
-									<a href="/spelling/low" class="link-no-decoration">Beginner</a>
-								</h5>
-								
-								<p class="text-center">Baby Steps</p>
+							<div class="card text-center">
+								<img src="images/beginner.png" alt="spelling beginner level" class="card-img-top mx-auto tile-image" />
+								<div class="card-body">
+									<h5 class="card-title text-center">
+										<a href="/spelling/low" class="link-no-decoration">Beginner</a>
+									</h5>
+
+									<p class="text-center">Baby Steps</p>
+								</div>
 							</div>
-						
-						</div>
-					</a>
+						</a>
 						<!-- end of card -->
 
 						<!-- Card -->
 						<a href="/spelling/medium" class="link-no-decoration">
-						<div class="card">							
-							<img src="images/inter.png" alt="Map games" class="tile-image"/>
-							<div class="card-body">
-								<h5 class="card-title text-center"><a href="/spelling/medium" class="link-no-decoration">Intermediate</a></h5>
-								<p class="text-center">Quite Proficient</p>
+							<div class="card text-center">
+								<img src="images/inter.png" alt="spelling intermediate level" class="card-img-top mx-auto tile-image" />
+								<div class="card-body">
+									<h5 class="card-title text-center">
+										<a href="/spelling/medium" class="link-no-decoration">Intermediate</a>
+									</h5>
+									<p class="text-center">Quite Proficient</p>
+								</div>
 							</div>
-						</div>						
 						</a>
-						
+
 						<a href="/spelling/high" class="link-no-decoration">
-						<div class="card">
-							<img src="images/advanced.png" alt="Flag games" class="tile-image"/>
-							<div class="card-body">
-								<h5 class="card-title text-center"><a href="/spelling/high" class="link-no-decoration">Advanced</a></h5>
-								<p class="text-center">Pro At It</p>
+							<div class="card text-center">
+								
+								<div class="card-body">
+									<img src="images/advanced.png" alt="spelling advanced level" class="card-img-top mx-auto tile-image" />
+									<h5 class="card-title text-center">
+										<a href="/spelling/high" class="link-no-decoration">Advanced</a>
+									</h5>
+									<p class="text-center">Pro At It</p>
+								</div>
 							</div>
-						</div>
-					</a>
+					
+						</a>
 					</div>
 				</div>
 			</div>
@@ -73,9 +74,8 @@
 		text-decoration: none;
 	}
 
-	.tile-image{
-		height: 200px;
-		width: 200px;
-		align-self: center;
-	}
+	.tile-image {
+		height: 150px !important;
+		width: 150px !important;
+ 	} 
 </style>

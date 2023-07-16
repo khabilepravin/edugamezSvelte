@@ -177,7 +177,7 @@
 			</div>
 			<div class="row">
 				<div class="col">
-					<Tag type="green" class="mt-3 float-left">{currentIndex + 1} of {maxRecordsInATest}</Tag>
+					<Tag type="green" class="mt-3 float-left"><strong>{currentIndex + 1} of {maxRecordsInATest}</strong></Tag>
 					<Tag type="red" class="mt-3 float-left">Difficulty {difficultyLevel}</Tag>
 				</div>
 				<div class="col">
