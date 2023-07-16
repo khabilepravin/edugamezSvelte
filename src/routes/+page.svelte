@@ -23,8 +23,8 @@
 					<div class="cards-container">
 						<!-- Card -->
 						<a href="/spelling/low" class="link-no-decoration">
-							<div class="card">
-								<img src="images/beginner.png" alt="spelling" class="card-img-top tile-image" />
+							<div class="card text-center">
+								<img src="images/beginner.png" alt="spelling beginner level" class="card-img-top mx-auto tile-image" />
 								<div class="card-body">
 									<h5 class="card-title text-center">
 										<a href="/spelling/low" class="link-no-decoration">Beginner</a>
@@ -38,8 +38,8 @@
 
 						<!-- Card -->
 						<a href="/spelling/medium" class="link-no-decoration">
-							<div class="card">
-								<img src="images/inter.png" alt="Map games" class="card-img-top tile-image" />
+							<div class="card text-center">
+								<img src="images/inter.png" alt="spelling intermediate level" class="card-img-top mx-auto tile-image" />
 								<div class="card-body">
 									<h5 class="card-title text-center">
 										<a href="/spelling/medium" class="link-no-decoration">Intermediate</a>
@@ -50,15 +50,17 @@
 						</a>
 
 						<a href="/spelling/high" class="link-no-decoration">
-							<div class="card">
-								<img src="images/advanced.png" alt="Flag games" class="card-img-top tile-image" />
+							<div class="card text-center">
+								
 								<div class="card-body">
+									<img src="images/advanced.png" alt="spelling advanced level" class="card-img-top mx-auto tile-image" />
 									<h5 class="card-title text-center">
 										<a href="/spelling/high" class="link-no-decoration">Advanced</a>
 									</h5>
 									<p class="text-center">Pro At It</p>
 								</div>
 							</div>
+					
 						</a>
 					</div>
 				</div>
@@ -75,6 +77,5 @@
 	.tile-image {
 		height: 150px !important;
 		width: 150px !important;
-		align-self: center;
  	} 
 </style>
