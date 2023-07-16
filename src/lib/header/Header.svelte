@@ -31,16 +31,15 @@
 </nav>
 
 <style>
-	.titleHolder{
-		display:flex;
+	.titleHolder {
+		display: flex;
 		align-items: center;
 	}
 
 	.siteName {
 		font-family: 'Open Sans';
-  font-weight: bold;
-  font-size: 15px;
-  color: #333;
-}
-
+		font-weight: normal;
+		font-size: 15px;
+		color: #333;
+	}
 </style>
