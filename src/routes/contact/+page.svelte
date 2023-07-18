@@ -1,19 +1,17 @@
 <script>
-	import { Loading } from 'carbon-components-svelte';
-
 	export const prerender = true;
 	let showLoading = true;
 
-	function onIFrameContentLoaded(){
+	function onIFrameContentLoaded() {
 		console.log('something is loaded');
 		showLoading = false;
 	}
-
 </script>
+
 <svelte:head>
 	<title>MaxSpelling - Feedback</title>
 </svelte:head>
-<div class="container">	
+<div class="container">
 	<div class="row">
 		<div class="col-lg-12">
 			<iframe
@@ -26,10 +24,6 @@
 				marginwidth="0"
 				on:load={onIFrameContentLoaded}>Loading…</iframe
 			>
-
-			{#if showLoading}
-				<Loading />
-			{/if}
 		</div>
 	</div>
 </div>

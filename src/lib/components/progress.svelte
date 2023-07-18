@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	export let currentProgress;
 	export let currentItemNumber;
 	export let totalItems;
@@ -29,4 +29,4 @@
 		margin-left: 10px;
 		display: inline-block;
 	}
-</style>
+</style> -->

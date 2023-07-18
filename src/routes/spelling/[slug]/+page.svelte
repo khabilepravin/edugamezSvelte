@@ -3,16 +3,15 @@
 	import { goto } from '$app/navigation';
 
 	// local imports
-	import AudioPlayer from '$lib/components/audioPlayer.svelte';
-	import Answerinput from '$lib/components/answerinput.svelte';
-	import { spellingUserAnswers } from '$lib/store/answersStore';
-	import { getUrlByRegion } from '$lib/utils/region';
-	import { Tag } from 'carbon-components-svelte';
-	import { arrayMove } from '$lib/utils/arr';
-	import { capitalizeFirstLetter } from '$lib/utils/string';
-	import { findExactDifference } from '$lib/utils/wordDifference';
-	import RegionSelector from '$lib/components/regionselector.svelte';
-	import 'carbon-components-svelte/css/white.css';
+	import AudioPlayer from '$lib/Components/audioPlayer.svelte';
+	import Answerinput from '$lib/Components/answerinput.svelte';
+	import { spellingUserAnswers } from '$lib/Store/answersStore';
+	import { getUrlByRegion } from '$lib/Utils/region';
+	import { arrayMove } from '$lib/Utils/arr';
+	import { capitalizeFirstLetter } from '$lib/Utils/string';
+	import { findExactDifference } from '$lib/Utils/wordDifference';
+	import RegionSelector from '$lib/Components/regionselector.svelte';
+	import { Stepper, Step } from '@skeletonlabs/skeleton';
 
 	// public props
 	/** @type {import('./$types').PageData} */
@@ -63,7 +62,7 @@
 			actualWord: originalWord.Word,
 			userAnswer: userAnswer,
 			isCorrect: isCorrect,
-		    exactDifference: exactDifference,
+			exactDifference: exactDifference,
 			wordAudioUrl,
 			definitonAudioUrl,
 			exampleAudioUrl
@@ -122,48 +121,33 @@
 					<RegionSelector on:regionChanged={handleRegionChange} />
 				</div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<h6>Word</h6>
-				</div>
-				<div class="col">
-					<h6>Definition</h6>
-				</div>
-				<div class="col">
-					<h6>Example</h6>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col">
-					<AudioPlayer
-						src={wordAudioUrl}
-						autoPlay="true"
-						bind:handleResetAudio={handleWordResetOfAudio}
-					/>
-				</div>
-				<div class="col">
-					<AudioPlayer
-						src={definitonAudioUrl}
-						autoPlay={null}
-						bind:handleResetAudio={handleDefinitionResetOfAudio}
-					/>
-				</div>
-				<div class="col">
-					<AudioPlayer
-						src={exampleAudioUrl}
-						autoPlay={null}
-						bind:handleResetAudio={handleExampleResetOfAudio}
-					/>
-				</div>
+			<div class="columns-3">
+				<AudioPlayer
+					src={wordAudioUrl}
+					autoPlay="true"
+					playerText="Word"
+					bind:handleResetAudio={handleWordResetOfAudio}
+				/>
+				<AudioPlayer
+					src={definitonAudioUrl}
+					autoPlay={null}
+					playerText="Definition"
+					bind:handleResetAudio={handleDefinitionResetOfAudio}
+				/>
+				<AudioPlayer
+					src={exampleAudioUrl}
+					autoPlay={null}
+					playerText="Example"
+					bind:handleResetAudio={handleExampleResetOfAudio}
+				/>
 			</div>
 		</div>
 		<div class="container">
 			{#each partsOfTheSpeech as part}
 				{#if part === definitionAndExampleFor}
-					<Tag type="green"><strong>{part}</strong></Tag>
+					<span class="badge variant-filled">{part}</span>
 				{:else}
-					<Tag type="green" disabled>{part}</Tag>
+					<span class="badge">{part}</span>
 				{/if}
 			{/each}
 			<div class="row">
@@ -175,16 +159,18 @@
 					/>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<Tag type="green" class="mt-3 float-left"><strong>{currentIndex + 1} of {maxRecordsInATest}</strong></Tag>
-					<Tag type="red" class="mt-3 float-left">Difficulty {difficultyLevel}</Tag>
-				</div>
-				<div class="col">
-					<button value="Next" type="submit" class="btn btn-primary mt-3 float-right"
-						>{currentIndex + 1 == maxRecordsInATest ? 'Done' : 'Next'}
-					</button>
-				</div>
+			<div class="flow-root">
+				<span class="badge variant-filled float-left m-3"
+					><strong>{currentIndex + 1} of {maxRecordsInATest}</strong></span
+				>
+				<span class="badge variant-filled float-left m-3">Difficulty {difficultyLevel}</span>
+
+				<button
+					value="Next"
+					type="submit"
+					class="btn btn-sm variant-filled bg-secondary-500 float-right m-3"
+					>{currentIndex + 1 == maxRecordsInATest ? 'Done' : 'Next'}
+				</button>
 			</div>
 		</div>
 	</div>

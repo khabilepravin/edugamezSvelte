@@ -1,8 +1,6 @@
 <script>
 	import { onMount, createEventDispatcher } from 'svelte';
-	import { fade } from 'svelte/transition';
-	import { Button } from 'carbon-components-svelte';
-	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
+	import { fade } from 'svelte/transition';	
 
 	// public props
 	export let currentLetters = [];
@@ -40,7 +38,8 @@
 				}
 			}
 
-			if (e.code === 'Backspace') {0
+			if (e.code === 'Backspace') {
+				0;
 				if (!input.value) {
 					if (currentIndex > 0) {
 						inputs[currentIndex - 1].focus();
@@ -53,7 +52,7 @@
 				if (input.value) {
 					// construct the answer
 					currentStateOfTheAnswer = [...inputs].map((input) => input.value).join('');
-					
+
 					if (currentIndex !== inputs.length - 1) {
 						inputs[currentIndex + 1].focus();
 					}
@@ -131,6 +130,7 @@
 <div>
 	{#each currentLetters as { letter }, i}
 		<input
+			class="input variant-form-material"
 			type="text"
 			maxlength="1"
 			id={i}
@@ -146,13 +146,7 @@
 			use:init
 		/>
 	{/each}
-	<Button
-		kind="danger-tertiary"
-		size="small"
-		iconDescription="Delete"
-		icon={TrashCan}
-		on:click={ClearButtonClickHandle}
-	/>
+	<button type="button" class="btn variant-filled bg-red-500" on:click={ClearButtonClickHandle}><i class="fa fa-trash"></i></button>
 </div>
 
 <style>

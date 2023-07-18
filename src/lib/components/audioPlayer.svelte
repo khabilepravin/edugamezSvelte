@@ -1,40 +1,38 @@
 <script>
-	import { fade } from 'svelte/transition';
-	import { Button } from 'carbon-components-svelte';
-	import Play from 'carbon-icons-svelte/lib/Play.svelte';
-	import Pause from 'carbon-icons-svelte/lib/Pause.svelte';
+	import { fade } from 'svelte/transition';	
 
 	// public props
 	export let src;
 	export let autoPlay;
+	export let playerText;
 
 	// local props
 	let player;
-	let buttonIcon = Play;
+	let buttonIcon = 'fa fa-play';
 
 	export const handleResetAudio = () => {
 		player.pause();
 		player.currentTime = 0;
-		buttonIcon = Play;
+		buttonIcon = 'fa fa-play';
 	};
 
 	// event handlers
 	function handleClick() {
 		if (player.paused === false) {
 			player.pause();
-			buttonIcon = Play;
+			buttonIcon = 'fa fa-play';
 		} else {
 			player.play();
-			buttonIcon = Pause;
+			buttonIcon = 'fa fa-pause';
 		}
 	}
 
 	function handleOnPlay() {
-		buttonIcon = Pause;
+		buttonIcon = 'fa fa-pause';
 	}
 
 	function handleEnded() {
-		buttonIcon = Play;
+		buttonIcon = 'fa fa-play';
 	}
 </script>
 
@@ -51,13 +49,10 @@
 			autoplay={autoPlay}
 			on:play={handleOnPlay}
 		/>
-		<Button
-			icon={buttonIcon}
+		<button type="button"			
 			on:click={handleClick}
-			iconDescription="Play/Pause"
-			size="small"
-			kind="secondary"
-		/>
+			class="btn btn-sm variant-filled">
+		<i class={buttonIcon}></i><span class="ps-1">{playerText}</span></button>
 	{/if}
 </div>
 

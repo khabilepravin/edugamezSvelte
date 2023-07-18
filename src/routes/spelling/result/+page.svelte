@@ -1,11 +1,9 @@
 <script>
-	import { spellingUserAnswers } from '$lib/store/answersStore';
+	import { spellingUserAnswers } from '$lib/Store/answersStore';
 	import { fade } from 'svelte/transition';
-	import { Tag, Button } from 'carbon-components-svelte';
 	import { goto } from '$app/navigation';
-
-	import Repeat from 'carbon-icons-svelte/lib/Repeat.svelte';
-	import WordDiff from '$lib/components/worddiff.svelte';
+	import WordDiff from '$lib/Components/worddiff.svelte';
+	import Worddiff from '../../../lib/Components/worddiff.svelte';
 
 	let correctAnswers = $spellingUserAnswers.filter((word) => word.isCorrect);
 	let isEverythingCorrect = $spellingUserAnswers.length === correctAnswers.length;
@@ -25,14 +23,38 @@
 					<h3>Well Done! Everything was spelled correctly.</h3>
 				</div>
 			</div>
-		{:else}
-			{#each $spellingUserAnswers as result}
-				<WordDiff resultEntry={result} />
-				<hr />
-			{/each}
 		{/if}
+		<div class="table-container">
+			<!-- Native Table Element -->
+			<table class="table table-hover">
+				<thead>
+					<tr class="text-center">
+						<th><i class="fa fa-sheet-plastic"></i></th>
+						<th><i class="fa fa-book"></i></th>
+						<th><i class="fa fa-user"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each $spellingUserAnswers as result}
+						<tr>
+							<td><i class={result.isCorrect ? 'fa fa-check' : 'fa fa-xmark'}></i></td>
+							<td>{#each result.actualWord as char, i}
+								<span class="font-bold">
+									{char}
+								</span>
+							{/each}</td>
+							<td><Worddiff resultEntry={result}></Worddiff></td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+
 		<div>
-			<Button size="small" icon={Repeat} on:click={handleRepeatClick}>Repeat</Button>
+			<!-- <Button size="small" icon={Repeat} on:click={handleRepeatClick}>Repeat</Button> -->
+			<button type="button" class="btn variant-filled m-2" on:click={handleRepeatClick}
+				><i class="fa fa-repeat pe-2" />Repeat</button
+			>
 		</div>
 	</div>
 </main>
