@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 
 	// local imports
-	import AudioPlayer from '$lib/Components/audioPlayer.svelte';
+	import AudioPlayer from '$lib/Components/audioplayer.svelte';
 	import Answerinput from '$lib/Components/answerinput.svelte';
 	import { spellingUserAnswers } from '$lib/Store/answersStore';
 	import { getUrlByRegion } from '$lib/Utils/region';
