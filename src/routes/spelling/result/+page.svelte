@@ -2,7 +2,7 @@
 	import { spellingUserAnswers } from '$lib/Store/answersStore';
 	import { fade } from 'svelte/transition';
 	import { goto } from '$app/navigation';
-	import WordDiff from '$lib/Components/worddiff.svelte';	
+	import WordDiff from '$lib/components/worddiff.svelte';	
 
 	let correctAnswers = $spellingUserAnswers.filter((word) => word.isCorrect);
 	let isEverythingCorrect = $spellingUserAnswers.length === correctAnswers.length;

@@ -3,14 +3,14 @@
 	import { goto } from '$app/navigation';
 
 	// local imports
-	import AudioPlayer from '$lib/Components/audioplayer.svelte';
-	import Answerinput from '$lib/Components/answerinput.svelte';
+	import AudioPlayer from '$lib/components/audioplayer.svelte';
+	import Answerinput from '$lib/components/answerinput.svelte';
 	import { spellingUserAnswers } from '$lib/Store/answersStore';
 	import { getUrlByRegion } from '$lib/Utils/region';
 	import { arrayMove } from '$lib/Utils/arr';
 	import { capitalizeFirstLetter } from '$lib/Utils/string';
 	import { findExactDifference } from '$lib/Utils/wordDifference';
-	import RegionSelector from '$lib/Components/regionselector.svelte';
+	import RegionSelector from '$lib/components/regionselector.svelte';
 	import { Stepper, Step } from '@skeletonlabs/skeleton';
 
 	// public props
