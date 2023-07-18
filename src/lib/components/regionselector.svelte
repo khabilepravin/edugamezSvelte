@@ -1,7 +1,7 @@
 <script>
 	import { createEventDispatcher } from 'svelte';	
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
-	import { getCountryCodeByTimezone } from '$lib/Utils/region';	
+	import { getCountryCodeByTimezone } from '$lib/utils/region';	
 
 	const dispatch = createEventDispatcher();
 

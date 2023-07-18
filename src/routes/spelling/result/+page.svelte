@@ -1,5 +1,5 @@
 <script>
-	import { spellingUserAnswers } from '$lib/Store/answersStore';
+	import { spellingUserAnswers } from '$lib/store/answersStore';
 	import { fade } from 'svelte/transition';
 	import { goto } from '$app/navigation';
 	import WordDiff from '$lib/components/worddiff.svelte';	
