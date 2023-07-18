@@ -6,7 +6,7 @@
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 	import { AppShell, AppBar, LightSwitch, Drawer, drawerStore } from '@skeletonlabs/skeleton';
-	import Navigation from '$lib/navigation/Navigation.svelte';
+	import Navigation from '$lib/navigation/navigation.svelte';
 
 	function drawerOpen() {
 		drawerStore.open({});
