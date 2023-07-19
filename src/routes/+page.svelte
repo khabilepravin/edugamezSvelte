@@ -18,7 +18,7 @@
 				<section class="p-4">Beginner</section>
 				<footer class="card-footer">Subtext</footer>
 			</a>
-			<a class="block card card-hover p-4" href="/elements/cards">
+			<a class="block card card-hover p-4" href="/spelling/medium">
 				<header class="card-header">
 					<img
 						src="images/inter.png"
@@ -29,7 +29,7 @@
 				<section class="p-4">Intermediate</section>
 				<footer class="card-footer">Subtext</footer>
 			</a>
-			<a class="block card card-hover p-4" href="/elements/cards">
+			<a class="block card card-hover p-4" href="/spelling/high">
 				<header class="card-header">
 					<img
 						src="images/advanced.png"
