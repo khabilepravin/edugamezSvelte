@@ -146,7 +146,7 @@
 			use:init
 		/>
 	{/each}
-	<button type="button" class="btn variant-filled bg-red-500" on:click={ClearButtonClickHandle}><i class="fa fa-trash"></i></button>
+	<button type="button" class="btn variant-filled bg-red-500 m-2" on:click={ClearButtonClickHandle}><i class="fa fa-trash"></i></button>
 </div>
 
 <style>
