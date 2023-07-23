@@ -11,7 +11,7 @@
 	import { capitalizeFirstLetter } from '$lib/utils/string';
 	import { findExactDifference } from '$lib/utils/wordDifference';
 	import RegionSelector from '$lib/components/regionselector.svelte';
-	import { Stepper, Step } from '@skeletonlabs/skeleton';
+	import { getCountryCodeByTimezone } from '$lib/utils/region';	
 
 	// public props
 	/** @type {import('./$types').PageData} */
@@ -33,7 +33,7 @@
 	let handleExampleResetOfAudio;
 	let difficultyLevel;
 
-	let currentRegion = 'en-GB';
+	let currentRegion = getCountryCodeByTimezone();
 	// store variables
 	$spellingUserAnswers = [];
 
@@ -145,7 +145,7 @@
 		<div class="container">
 			{#each partsOfTheSpeech as part}
 				{#if part === definitionAndExampleFor}
-					<span class="badge variant-filled my-2">{part}</span>
+					<span class="badge variant-filled-success my-2">{part}</span>
 				{:else}
 					<span class="badge my-2">{part}</span>
 				{/if}
@@ -163,7 +163,7 @@
 				<span class="badge variant-filled float-left m-3"
 					><strong>{currentIndex + 1} of {maxRecordsInATest}</strong></span
 				>
-				<span class="badge variant-filled float-left m-3">Difficulty {difficultyLevel}</span>
+				<span class="badge variant-filled-warning float-left m-3">Difficulty {difficultyLevel}</span>
 
 				<button
 					value="Next"
