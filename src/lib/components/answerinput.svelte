@@ -1,6 +1,6 @@
 <script>
 	import { onMount, createEventDispatcher } from 'svelte';
-	import { fade } from 'svelte/transition';	
+	import { fade } from 'svelte/transition';
 
 	// public props
 	export let currentLetters = [];
@@ -130,7 +130,7 @@
 <div>
 	{#each currentLetters as { letter }, i}
 		<input
-			class="input variant-form-material"
+			class="input variant-form-material mt-4 m-2 text-xl font-semibold"
 			type="text"
 			maxlength="1"
 			id={i}
@@ -146,17 +146,15 @@
 			use:init
 		/>
 	{/each}
-	<button type="button" class="btn variant-filled bg-red-500 m-2" on:click={ClearButtonClickHandle}><i class="fa fa-trash"></i></button>
+	<button type="button" class="btn variant-filled bg-red-500 m-2" on:click={ClearButtonClickHandle}
+		><i class="fa fa-trash" /></button
+	>
 </div>
 
 <style>
 	input {
-		margin: 0 0.5rem;
-		padding: 0.3rem;
-		border: 1px solid #333;
 		width: 44px;
 		height: 44px;
 		text-align: center;
-		font-size: 1.5rem;
 	}
 </style>
