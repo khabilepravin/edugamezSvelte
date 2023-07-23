@@ -3,10 +3,12 @@
 	import '@skeletonlabs/skeleton/themes/theme-modern.css';
 	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
+	import { navigating } from '$app/stores';
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 	import { AppShell, AppBar, LightSwitch, Drawer, drawerStore } from '@skeletonlabs/skeleton';
 	import Navigation from '$lib/navigation/navigation.svelte';
+	import Loading from '$lib/components/loading.svelte';
 
 	function drawerOpen() {
 		drawerStore.open({});
@@ -45,9 +47,9 @@
 		<Navigation />
 	</svelte:fragment>
 
-	<svelte:fragment slot="footer">
-	
-	</svelte:fragment>
-	<!-- Page Route Content -->
-	<slot />
+	<svelte:fragment slot="footer" />
+
+	{#if $navigating}
+		<Loading />
+	{/if}<slot />
 </AppShell>

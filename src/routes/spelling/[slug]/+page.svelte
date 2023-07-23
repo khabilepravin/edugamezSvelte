@@ -121,7 +121,7 @@
 					<RegionSelector on:regionChanged={handleRegionChange} />
 				</div>
 			</div>
-			<div class="columns-3">
+			<div class="columns-3 my-2">
 				<AudioPlayer
 					src={wordAudioUrl}
 					autoPlay="true"
@@ -145,9 +145,9 @@
 		<div class="container">
 			{#each partsOfTheSpeech as part}
 				{#if part === definitionAndExampleFor}
-					<span class="badge variant-filled">{part}</span>
+					<span class="badge variant-filled my-2">{part}</span>
 				{:else}
-					<span class="badge">{part}</span>
+					<span class="badge my-2">{part}</span>
 				{/if}
 			{/each}
 			<div class="row">
@@ -168,7 +168,7 @@
 				<button
 					value="Next"
 					type="submit"
-					class="btn btn-sm variant-filled bg-secondary-500 float-right m-3"
+					class="btn variant-filled bg-secondary-500 float-right m-3"
 					>{currentIndex + 1 == maxRecordsInATest ? 'Done' : 'Next'}
 				</button>
 			</div>
