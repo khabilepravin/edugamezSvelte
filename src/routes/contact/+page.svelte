@@ -1,4 +1,6 @@
 <script>
+	import Loading from '$lib/components/loading.svelte';
+
 	export const prerender = true;
 	let showLoading = true;
 
@@ -11,6 +13,9 @@
 <svelte:head>
 	<title>MaxSpelling - Feedback</title>
 </svelte:head>
+{#if showLoading}
+	<Loading />
+{/if}
 <div class="container">
 	<div class="row">
 		<div class="col-lg-12">
