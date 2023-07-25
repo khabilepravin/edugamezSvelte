@@ -2,7 +2,7 @@
 	import { spellingUserAnswers } from '$lib/store/answersStore';
 	import { fade } from 'svelte/transition';
 	import { goto } from '$app/navigation';
-	import WordDiff from '$lib/components/worddiff.svelte';	
+	import WordDiff from '$lib/components/worddiff.svelte';
 
 	let correctAnswers = $spellingUserAnswers.filter((word) => word.isCorrect);
 	let isEverythingCorrect = $spellingUserAnswers.length === correctAnswers.length;
@@ -26,23 +26,23 @@
 		<div class="table-container">
 			<!-- Native Table Element -->
 			<table class="table table-hover">
-				<thead>
-					<tr class="text-center">
-						<th><i class="fa fa-sheet-plastic"></i></th>
-						<th><i class="fa fa-book"></i></th>
-						<th><i class="fa fa-user"></i></th>
-					</tr>
-				</thead>
 				<tbody>
+					<tr>
+						<td><i class="fa fa-sheet-plastic" /></td>
+						<td><i class="fa fa-book" /></td>
+						<td><i class="fa fa-user" /></td>
+					</tr>
 					{#each $spellingUserAnswers as result}
 						<tr>
-							<td><i class={result.isCorrect ? 'fa fa-check' : 'fa fa-xmark'}></i></td>
-							<td>{#each result.actualWord as char, i}
-								<span class="font-bold">
-									{char}
-								</span>
-							{/each}</td>
-							<td><WordDiff resultEntry={result}></WordDiff></td>
+							<td><i class={result.isCorrect ? 'fa fa-check' : 'fa fa-xmark'} /></td>
+							<td
+								>{#each result.actualWord as char, i}
+									<span class="font-bold">
+										{char}
+									</span>
+								{/each}</td
+							>
+							<td><WordDiff resultEntry={result} /></td>
 						</tr>
 					{/each}
 				</tbody>
