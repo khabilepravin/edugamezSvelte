@@ -160,15 +160,15 @@
 				</div>
 			</div>
 			<div class="flow-root">
-				<span class="badge variant-filled float-left m-3"
-					><strong>{currentIndex + 1} of {maxRecordsInATest}</strong></span
+				<span class="badge variant-filled float-left m-3 font-bold text-base"
+					>{currentIndex + 1} of {maxRecordsInATest}</span
 				>
-				<span class="badge variant-filled-warning float-left m-3">Difficulty {difficultyLevel}</span>
+				<span class="badge variant-filled-warning float-left m-3 text-base">Difficulty {difficultyLevel}</span>
 
 				<button
 					value="Next"
 					type="submit"
-					class="btn variant-filled bg-secondary-500 float-right m-3"
+					class="btn btn-lg variant-filled bg-secondary-500 float-right m-3"
 					>{currentIndex + 1 == maxRecordsInATest ? 'Done' : 'Next'}
 				</button>
 			</div>
