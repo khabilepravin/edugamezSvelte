@@ -23,7 +23,7 @@
 		<AppBar>
 			<svelte:fragment slot="lead">
 				<div class="flex items-center">
-					<button class="lg:hidden btn btn-sm mr-2" on:click={drawerOpen}>
+					<button class="lg:hidden btn btn-sm" on:click={drawerOpen}>
 						<span>
 							<svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
 								<rect width="100" height="20" />
@@ -32,7 +32,7 @@
 							</svg>
 						</span>
 					</button>
-					<img src="/images/logo.png" alt="MaxSpelling Logo" /><strong class="text-xl pl-2"
+					<img src="/images/logo.png" alt="MaxSpelling Logo" /><strong class="text-xl ml-2"
 						>MaxSpelling</strong
 					>
 				</div>
