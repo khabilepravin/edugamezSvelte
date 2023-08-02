@@ -8,23 +8,3 @@
 >
 	<ProgressRadial ... stroke={100} meter="stroke-secondary-500" track="stroke-secondary-500/20" />
 </div>
-
-<style>
-	@-webkit-keyframes spinner {
-		0% {
-			-webkit-transform: rotate(0deg);
-		}
-		100% {
-			-webkit-transform: rotate(360deg);
-		}
-	}
-
-	@keyframes spinner {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(360deg);
-		}
-	}
-</style>
