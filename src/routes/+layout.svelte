@@ -9,9 +9,14 @@
 	import { AppShell, AppBar, LightSwitch, Drawer, drawerStore } from '@skeletonlabs/skeleton';
 	import Navigation from '$lib/navigation/navigation.svelte';
 	import Loading from '$lib/components/loading.svelte';
+	import { goto } from '$app/navigation';
 
 	function drawerOpen() {
 		drawerStore.open({});
+	}
+
+	function goHome(){
+		goto('/');
 	}
 </script>
 
@@ -32,9 +37,11 @@
 							</svg>
 						</span>
 					</button>
-					<img src="/images/logo.png" alt="MaxSpelling Logo" /><strong class="text-xl ml-2"
+					<button class="lg:hidden btn btn-sm p-0 m-0" on:click={goHome}>
+					<img src="/images/logo.png" alt="MaxSpelling Logo"  /><strong class="text-xl ml-2"
 						>MaxSpelling</strong
 					>
+				</button>
 				</div>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
