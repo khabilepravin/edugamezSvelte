@@ -1,5 +1,6 @@
 <script>
-	import { drawerStore } from '@skeletonlabs/skeleton';
+	import { AppRail, drawerStore, AppRailAnchor } from '@skeletonlabs/skeleton';
+	
 	function drawerClose() {
 		drawerStore.close();
 	}
@@ -9,6 +10,6 @@
 	<ul>
 		<li><a href="/" on:click={drawerClose}>Homepage</a></li>
 		<li><a href="/about" on:click={drawerClose}>About</a></li>		
-		<li><a href="/contact" on:click={drawerClose}>Contact</a></li>
+		<li><a href="/feedback" on:click={drawerClose}>Feedback</a></li>
 	</ul>
 </nav>
