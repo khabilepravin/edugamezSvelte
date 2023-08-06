@@ -10,7 +10,7 @@
 			<a class="block card card-hover my-3" href="/spelling/low">
 				<header class="card-header">
 					<img
-						src="images/beginner.png"
+						src="images/beginner.webp"
 						class="object-cover h-40 w-30"
 						alt="spelling beginner level"
 					/>
@@ -21,7 +21,7 @@
 			<a class="block card card-hover my-3" href="/spelling/medium">
 				<header class="card-header">
 					<img
-						src="images/inter.png"
+						src="images/inter.webp"
 						class="object-cover h-40 w-30"
 						alt="spelling beginner level"
 					/>
@@ -32,7 +32,7 @@
 			<a class="block card card-hover my-3" href="/spelling/high">
 				<header class="card-header">
 					<img
-						src="images/advanced.png"
+						src="images/advanced.webp"
 						class="object-cover h-40 w-30"
 						alt="spelling beginner level"
 					/>
