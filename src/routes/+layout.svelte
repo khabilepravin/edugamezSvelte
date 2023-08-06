@@ -37,12 +37,13 @@
 							</svg>
 						</span>
 					</button>
-					<button class="lg:hidden btn btn-sm p-0 m-0" on:click={goHome}>
-					<img src="/images/logo.png" alt="MaxSpelling Logo"  /><strong class="text-xl ml-2"
-						>MaxSpelling</strong
-					>
-				</button>
+					<button class="btn btn-sm p-0 m-0" on:click={goHome}>
+						<img src="/images/logo.png" alt="MaxSpelling Logo"  /><strong class="text-xl ml-2"
+							>MaxSpelling</strong
+						>
+					</button>
 				</div>
+
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<LightSwitch />
