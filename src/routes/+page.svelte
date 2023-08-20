@@ -3,7 +3,7 @@
 	<title>MaxSpelling-Up Your Spelling Game</title>
 </svelte:head>
 <div class="container h-full mx-auto flex justify-center items-center">
-	<div class="space-y-10 text-center flex flex-col items-center">
+	<div class="space-y-3 text-center flex flex-col items-center">
 		<h2 class="h2 my-2">Welcome to MaxSpelling</h2>
 		<h4 class="h4">Select your level to practice</h4>
 		<!-- Animated Logo -->

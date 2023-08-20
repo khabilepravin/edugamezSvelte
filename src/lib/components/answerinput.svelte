@@ -130,7 +130,7 @@
 <div>
 	{#each currentLetters as { letter }, i}
 		<input
-			class="input variant-form-material mt-4 m-2 text-xl font-semibold"
+			class="input variant-form-material m-1 text-xl font-semibold"
 			type="text"
 			maxlength="1"
 			id={i}
