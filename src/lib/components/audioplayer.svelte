@@ -1,5 +1,7 @@
 <script>
-	import { fade } from 'svelte/transition';	
+	import { fade } from 'svelte/transition';
+	import Loading from './loading.svelte';
+	import { ProgressRadial } from '@skeletonlabs/skeleton';
 
 	// public props
 	export let src;
@@ -9,6 +11,7 @@
 	// local props
 	let player;
 	let buttonIcon = 'fa fa-play';
+	let loadingAudio = true;
 
 	export const handleResetAudio = () => {
 		player.pause();
@@ -34,6 +37,11 @@
 	function handleEnded() {
 		buttonIcon = 'fa fa-play';
 	}
+
+	function handleCanPlayThrough() {
+		console.log('can play');
+		loadingAudio = false;
+	}
 </script>
 
 <div>
@@ -48,11 +56,21 @@
 			on:ended={handleEnded}
 			autoplay={autoPlay}
 			on:play={handleOnPlay}
+			on:canplaythrough={handleCanPlayThrough}
 		/>
-		<button type="button"			
-			on:click={handleClick}
-			class="btn btn-sm variant-filled">
-		<i class={buttonIcon}></i><span class="ps-1">{playerText}</span></button>
+		<button type="button" on:click={handleClick} class="btn btn-sm variant-filled" disabled={loadingAudio}>
+			{#if loadingAudio}
+				<ProgressRadial
+					...
+					stroke={80}
+					meter="stroke-secondary-500"
+					track="stroke-secondary-500/30"
+					width="w-4"
+				/>
+			{:else}
+				<i class={buttonIcon} />
+			{/if}<span class="ps-1">{playerText}</span></button
+		>
 	{/if}
 </div>
 
