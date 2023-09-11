@@ -11,7 +11,7 @@
 	import { capitalizeFirstLetter } from '$lib/utils/string';
 	import { findExactDifference } from '$lib/utils/wordDifference';
 	import RegionSelector from '$lib/components/regionselector.svelte';
-	import { getCountryCodeByTimezone } from '$lib/utils/region';	
+	import { getCountryCodeByTimezone } from '$lib/utils/region';
 
 	// public props
 	/** @type {import('./$types').PageData} */
@@ -32,8 +32,8 @@
 	let handleDefinitionResetOfAudio;
 	let handleExampleResetOfAudio;
 	let difficultyLevel;
-
 	let currentRegion = getCountryCodeByTimezone();
+
 	// store variables
 	$spellingUserAnswers = [];
 
@@ -108,6 +108,22 @@
 		handleDefinitionResetOfAudio();
 		handleExampleResetOfAudio();
 	}
+
+	function handleWordAudioPlaying() {
+		console.log('word playing');
+		handleDefinitionResetOfAudio();
+		handleExampleResetOfAudio();
+	}
+
+	function handleDefinitionAudioPlaying() {
+		handleWordResetOfAudio();
+		handleExampleResetOfAudio();
+	}
+
+	function handleExampleAudioPlaying() {
+		handleDefinitionResetOfAudio();
+		handleWordResetOfAudio();
+	}
 </script>
 
 <svelte:head>
@@ -126,18 +142,21 @@
 					src={wordAudioUrl}
 					autoPlay="true"
 					playerText="Word"
+					on:startedPlaying={handleWordAudioPlaying}
 					bind:handleResetAudio={handleWordResetOfAudio}
 				/>
 				<AudioPlayer
 					src={definitonAudioUrl}
 					autoPlay={null}
 					playerText="Definition"
+					on:startedPlaying={handleDefinitionAudioPlaying}
 					bind:handleResetAudio={handleDefinitionResetOfAudio}
 				/>
 				<AudioPlayer
 					src={exampleAudioUrl}
 					autoPlay={null}
 					playerText="Example"
+					on:startedPlaying={handleExampleAudioPlaying}
 					bind:handleResetAudio={handleExampleResetOfAudio}
 				/>
 			</div>
@@ -163,7 +182,9 @@
 				<span class="badge variant-filled float-left m-3 font-bold text-base"
 					>{currentIndex + 1} of {maxRecordsInATest}</span
 				>
-				<span class="badge variant-filled-warning float-left m-3 text-base">Difficulty {difficultyLevel}</span>
+				<span class="badge variant-filled-warning float-left m-3 text-base"
+					>Difficulty {difficultyLevel}</span
+				>
 
 				<button
 					value="Next"
