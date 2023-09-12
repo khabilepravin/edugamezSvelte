@@ -1,19 +1,21 @@
 <script>
-	import { fade } from 'svelte/transition';
-	import Loading from './loading.svelte';
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
+	import {createEventDispatcher } from 'svelte';
 
 	// public props
 	export let src;
 	export let autoPlay;
 	export let playerText;
 
+	const dispatch = createEventDispatcher();
+	
 	// local props
 	let player;
 	let buttonIcon = 'fa fa-play';
 	let loadingAudio = true;
 
 	export const handleResetAudio = () => {
+		loadingAudio = true;
 		player.pause();
 		player.currentTime = 0;
 		buttonIcon = 'fa fa-play';
@@ -32,14 +34,15 @@
 
 	function handleOnPlay() {
 		buttonIcon = 'fa fa-pause';
+		dispatch('startedPlaying', {});
 	}
 
-	function handleEnded() {
+    function handleEnded() {
 		buttonIcon = 'fa fa-play';
+
 	}
 
 	function handleCanPlayThrough() {
-		console.log('can play');
 		loadingAudio = false;
 	}
 </script>
@@ -58,7 +61,12 @@
 			on:play={handleOnPlay}
 			on:canplaythrough={handleCanPlayThrough}
 		/>
-		<button type="button" on:click={handleClick} class="btn btn-sm variant-filled" disabled={loadingAudio}>
+		<button
+			type="button"
+			on:click={handleClick}
+			class="btn btn-sm variant-filled"
+			disabled={loadingAudio}
+		>
 			{#if loadingAudio}
 				<ProgressRadial
 					...
