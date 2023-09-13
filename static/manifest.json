@@ -4,9 +4,19 @@
     "start_url": "/",
     "icons": [
       {
-        "src": "logo.png",
+        "src": "/logo.png",
         "type": "image/png",
         "sizes": "32x32"
+      },
+      {
+        "src": "/logo-144px.png",
+        "type": "image/png",
+        "sizes": "208x220"
+      },      
+      {
+        "src": "/logo-144px-square.png",
+        "type": "image/png",
+        "sizes": "144x144"
       }
     ],
     "background_color": "#3367D6",
@@ -15,25 +25,25 @@
     "theme_color": "#3367D6",
     "shortcuts": [
       {
-        "name": "Easy",
-        "short_name": "Easy",
-        "description": "Easy Spelling Practice",
+        "name": "Beginner",
+        "short_name": "Beginner",
+        "description": "Beginner Spelling Practice",
         "url": "/spelling/low",
-        "icons": [{ "src": "/logo.png", "sizes": "32x32" }]
+        "icons": [{ "src": "/easy-busIcon.png", "sizes": "96x96" }]
       },
       {
-        "name": "Medium",
-        "short_name": "Medium",
-        "description": "Medium Spelling Practice",
-        "url": "/spelling/low",
-        "icons": [{ "src": "/logo.png", "sizes": "32x32" }]
+        "name": "Intermediate",
+        "short_name": "Intermediate",
+        "description": "Intermediate Spelling Practice",
+        "url": "/spelling/medium",
+        "icons": [{ "src": "/medium-aeroplaneIcon.png", "sizes": "96x96" }]
       },
       {
-        "name": "Hard",
-        "short_name": "Hard",
-        "description": "Hard Spelling Practice",
-        "url": "/spelling/low",
-        "icons": [{ "src": "/logo.png", "sizes": "32x32" }]
+        "name": "Advanced",
+        "short_name": "Advanced",
+        "description": "Advanced Spelling Practice",
+        "url": "/spelling/high",
+        "icons": [{ "src": "/advanced-rocketIcon.png", "sizes": "96x96" }]
       }
     ],
     "description": "Spelling practice"
