@@ -38,8 +38,9 @@
 
 <div class="d-flex flex-column justify-content-center align-items-center">
 	<RadioGroup>
-		<RadioItem bind:group={selectedIndex} name="justify" value={0} on:change={handleRegionChange}>US</RadioItem>
-		<RadioItem bind:group={selectedIndex} name="justify" value={1} on:change={handleRegionChange}>GB</RadioItem>
-		<RadioItem bind:group={selectedIndex} name="justify" value={2} on:change={handleRegionChange}>AU</RadioItem>
+		<RadioItem bind:group={selectedIndex} name="justify" value={0} on:change={handleRegionChange}> <span class="fi fi-us fis m-1"></span>
+			USA</RadioItem>
+		<RadioItem bind:group={selectedIndex} name="justify" value={1} on:change={handleRegionChange}><span class="fi fi-gb fis m-1"></span>ENG</RadioItem>
+		<RadioItem bind:group={selectedIndex} name="justify" value={2} on:change={handleRegionChange}><span class="fi fi-au fis m-1"></span>AUS</RadioItem>
 	</RadioGroup>	
 </div>
