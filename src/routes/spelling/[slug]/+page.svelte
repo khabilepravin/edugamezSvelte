@@ -1,11 +1,13 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { popup, RangeSlider } from '@skeletonlabs/skeleton';
 
 	// local imports
 	import AudioPlayer from '$lib/components/audioplayer.svelte';
 	import Answerinput from '$lib/components/answerinput.svelte';
 	import { spellingUserAnswers } from '$lib/store/answersStore';
+	import { currentPlaybackRate } from '$lib/store/playbackRateStore'
 	import { getUrlByRegion } from '$lib/utils/region';
 	import { arrayMove } from '$lib/utils/arr';
 	import { capitalizeFirstLetter } from '$lib/utils/string';
@@ -32,8 +34,9 @@
 	let handleDefinitionResetOfAudio;
 	let handleExampleResetOfAudio;
 	let difficultyLevel;
-	let currentRegion = getCountryCodeByTimezone();
-
+	let currentRegion = getCountryCodeByTimezone();	
+	let currentAudioPlaybackRate = $currentPlaybackRate;
+	
 	// store variables
 	$spellingUserAnswers = [];
 
@@ -52,6 +55,8 @@
 		exampleAudioUrl = getUrlByRegion(currentWordInstance.ExampleAudios, currentRegion);
 		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
 		currentWord = currentWordInstance.Word;
+		currentAudioPlaybackRate = $currentPlaybackRate;
+		//console.log(currentAudioPlaybackRate);
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
@@ -110,7 +115,6 @@
 	}
 
 	function handleWordAudioPlaying() {
-		console.log('word playing');
 		handleDefinitionResetOfAudio();
 		handleExampleResetOfAudio();
 	}
@@ -124,17 +128,57 @@
 		handleDefinitionResetOfAudio();
 		handleWordResetOfAudio();
 	}
+
+	function playbackSpeedChanged(event) {
+		currentPlaybackRate.set(event.target.value);
+		currentAudioPlaybackRate = $currentPlaybackRate;
+	}
+
+	const popupFeatured = {
+		// Represents the type of event that opens/closed the popup
+		event: 'click',
+		// Matches the data-popup value on your popup element
+		target: 'popupFeatured',
+		// Defines which side of your trigger the popup will appear
+		placement: 'bottom'
+	};
 </script>
 
 <svelte:head>
 	<title>Spelling Practice Difficulty {difficultyLevel}</title>
 </svelte:head>
+<div class="card p-4 w-72 shadow-xl" data-popup="popupFeatured">
+	<div>
+		<RangeSlider
+			name="range-slider"
+			bind:value={$currentPlaybackRate}
+			max={1.5}
+			step={0.25}
+			min={0.5}
+			ticked
+			on:change={playbackSpeedChanged}
+		>
+			<div class="flex justify-between items-center">
+				<div class="font-bold">Playback Speed</div>
+				<div class="text-xs">{$currentPlaybackRate}</div>
+			</div>
+		</RangeSlider>
+	</div>
+	<!-- <div class="arrow bg-surface-100-800-token" /> -->
+</div>
 <form on:submit|preventDefault={handleNext}>
 	<div class="text-center">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm pb-3">
+				<div class="col-sm pb-2">
 					<RegionSelector on:regionChanged={handleRegionChange} />
+				</div>
+				<div class="col-sm pb-1">
+					<button
+						type="button"
+						class="btn-icon btn-icon-sm variant-filled-tertiary"
+						use:popup={popupFeatured}><i class="fa fa-gear" /></button
+					>
 				</div>
 			</div>
 			<div class="columns-3 my-2">
@@ -143,7 +187,8 @@
 					autoPlay="true"
 					playerText="Word"
 					on:startedPlaying={handleWordAudioPlaying}
-					bind:handleResetAudio={handleWordResetOfAudio}
+					bind:handleResetAudio={handleWordResetOfAudio}		
+					bind:playbackRate={currentAudioPlaybackRate}			
 				/>
 				<AudioPlayer
 					src={definitonAudioUrl}
@@ -151,6 +196,7 @@
 					playerText="Definition"
 					on:startedPlaying={handleDefinitionAudioPlaying}
 					bind:handleResetAudio={handleDefinitionResetOfAudio}
+					bind:playbackRate={currentAudioPlaybackRate}
 				/>
 				<AudioPlayer
 					src={exampleAudioUrl}
@@ -158,6 +204,7 @@
 					playerText="Example"
 					on:startedPlaying={handleExampleAudioPlaying}
 					bind:handleResetAudio={handleExampleResetOfAudio}
+					bind:playbackRate={currentAudioPlaybackRate}
 				/>
 			</div>
 		</div>
