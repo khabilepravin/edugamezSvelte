@@ -55,8 +55,7 @@
 		exampleAudioUrl = getUrlByRegion(currentWordInstance.ExampleAudios, currentRegion);
 		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
 		currentWord = currentWordInstance.Word;
-		currentAudioPlaybackRate = $currentPlaybackRate;
-		//console.log(currentAudioPlaybackRate);
+		currentAudioPlaybackRate = $currentPlaybackRate;		
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
@@ -160,7 +159,7 @@
 		>
 			<div class="flex justify-between items-center">
 				<div class="font-bold">Playback Speed</div>
-				<div class="text-xs">{$currentPlaybackRate}</div>
+				<div class="text-xs"><strong>{$currentPlaybackRate}</strong></div>
 			</div>
 		</RangeSlider>
 	</div>
@@ -171,14 +170,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm pb-2">
-					<RegionSelector on:regionChanged={handleRegionChange} />
-				</div>
-				<div class="col-sm pb-1">
+					<RegionSelector on:regionChanged={handleRegionChange} />	
 					<button
-						type="button"
-						class="btn-icon btn-icon-sm variant-filled-tertiary"
-						use:popup={popupFeatured}><i class="fa fa-gear" /></button
-					>
+					type="button"
+					class="btn-icon btn-icon-sm variant-filled-tertiary m-2"
+					use:popup={popupFeatured}><i class="fa fa-gear" /></button
+				>				
 				</div>
 			</div>
 			<div class="columns-3 my-2">
@@ -209,6 +206,7 @@
 			</div>
 		</div>
 		<div class="container">
+			
 			{#each partsOfTheSpeech as part}
 				{#if part === definitionAndExampleFor}
 					<span class="badge variant-filled-success my-2">{part}</span>
@@ -216,6 +214,7 @@
 					<span class="badge my-2">{part}</span>
 				{/if}
 			{/each}
+			
 			<div class="row">
 				<div class="col-sm">
 					<Answerinput
@@ -226,17 +225,17 @@
 				</div>
 			</div>
 			<div class="flow-root">
-				<span class="badge variant-filled float-left m-3 font-bold text-base"
+				<span class="badge variant-filled float-left ml-4 my-4 font-bold text-base"
 					>{currentIndex + 1} of {maxRecordsInATest}</span
 				>
-				<span class="badge variant-filled-warning float-left m-3 text-base"
+				<span class="badge variant-filled-warning float-left ml-2 my-4 text-base"
 					>Difficulty {difficultyLevel}</span
 				>
 
 				<button
 					value="Next"
 					type="submit"
-					class="btn btn-lg variant-filled bg-secondary-500 float-right m-3"
+					class="btn btn-lg variant-filled bg-secondary-500 float-right m-2"
 					>{currentIndex + 1 == maxRecordsInATest ? 'Done' : 'Next'}
 				</button>
 			</div>

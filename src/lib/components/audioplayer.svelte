@@ -1,8 +1,6 @@
 <script>
 	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import {createEventDispatcher,onMount } from 'svelte';
-	import { currentPlaybackRate } from '$lib/store/playbackRateStore'
-	import {get}from 'svelte/store';
 
 	// public props
 	export let src;
@@ -36,14 +34,12 @@
 	}
 
 	function handleOnPlay() {
-		buttonIcon = 'fa fa-pause';
-		console.log(playbackRate);
+		buttonIcon = 'fa fa-pause';		
 		dispatch('startedPlaying', {});
 	}
 
     function handleEnded() {
 		buttonIcon = 'fa fa-play';
-
 	}
 
 	function handleCanPlayThrough() {
