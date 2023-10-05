@@ -6,10 +6,13 @@
 	import { navigating } from '$app/stores';
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
+	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import { AppShell, AppBar, LightSwitch, Drawer, drawerStore } from '@skeletonlabs/skeleton';
 	import Navigation from '$lib/navigation/navigation.svelte';
 	import Loading from '$lib/components/loading.svelte';
 	import { goto } from '$app/navigation';
+	import { storePopup } from '@skeletonlabs/skeleton';
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
 	function drawerOpen() {
 		drawerStore.open({});
