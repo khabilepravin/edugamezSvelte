@@ -40,7 +40,7 @@
 	<RadioGroup>
 		<RadioItem bind:group={selectedIndex} name="justify" value={0} on:change={handleRegionChange}> <span class="fi fi-us m-1"></span>
 			USA</RadioItem>
-		<RadioItem bind:group={selectedIndex} name="justify" value={1} on:change={handleRegionChange}><span class="fi fi-gb m-1"></span>ENG</RadioItem>
+		<RadioItem bind:group={selectedIndex} name="justify" value={1} on:change={handleRegionChange}><span class="fi fi-gb-eng m-1"></span>ENG</RadioItem>
 		<RadioItem bind:group={selectedIndex} name="justify" value={2} on:change={handleRegionChange}><span class="fi fi-au m-1"></span>AUS</RadioItem>
 	</RadioGroup>	
 </div>
