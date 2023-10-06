@@ -7,7 +7,7 @@
 	import AudioPlayer from '$lib/components/audioplayer.svelte';
 	import Answerinput from '$lib/components/answerinput.svelte';
 	import { spellingUserAnswers } from '$lib/store/answersStore';
-	import { currentPlaybackRate } from '$lib/store/playbackRateStore'
+	import { currentPlaybackRate } from '$lib/store/playbackRateStore';
 	import { getUrlByRegion } from '$lib/utils/region';
 	import { arrayMove } from '$lib/utils/arr';
 	import { capitalizeFirstLetter } from '$lib/utils/string';
@@ -34,9 +34,10 @@
 	let handleDefinitionResetOfAudio;
 	let handleExampleResetOfAudio;
 	let difficultyLevel;
-	let currentRegion = getCountryCodeByTimezone();	
+	let currentRegion = getCountryCodeByTimezone();
 	let currentAudioPlaybackRate = $currentPlaybackRate;
-	
+	let wordPlayFunction;
+
 	// store variables
 	$spellingUserAnswers = [];
 
@@ -55,7 +56,7 @@
 		exampleAudioUrl = getUrlByRegion(currentWordInstance.ExampleAudios, currentRegion);
 		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
 		currentWord = currentWordInstance.Word;
-		currentAudioPlaybackRate = $currentPlaybackRate;		
+		currentAudioPlaybackRate = $currentPlaybackRate;
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
@@ -131,6 +132,7 @@
 	function playbackSpeedChanged(event) {
 		currentPlaybackRate.set(event.target.value);
 		currentAudioPlaybackRate = $currentPlaybackRate;
+		wordPlayFunction();
 	}
 
 	const popupFeatured = {
@@ -170,12 +172,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm pb-2">
-					<RegionSelector on:regionChanged={handleRegionChange} />	
+					<RegionSelector on:regionChanged={handleRegionChange} />
 					<button
-					type="button"
-					class="btn-icon btn-icon-sm variant-filled-tertiary m-2"
-					use:popup={popupFeatured}><i class="fa fa-gear" /></button
-				>				
+						type="button"
+						class="btn-icon btn-icon-sm variant-filled-tertiary m-2"
+						use:popup={popupFeatured}><i class="fa fa-gear" /></button
+					>
 				</div>
 			</div>
 			<div class="columns-3 my-2">
@@ -184,8 +186,9 @@
 					autoPlay="true"
 					playerText="Word"
 					on:startedPlaying={handleWordAudioPlaying}
-					bind:handleResetAudio={handleWordResetOfAudio}		
-					bind:playbackRate={currentAudioPlaybackRate}			
+					bind:handleResetAudio={handleWordResetOfAudio}
+					bind:playbackRate={currentAudioPlaybackRate}
+					bind:playAudio={wordPlayFunction}
 				/>
 				<AudioPlayer
 					src={definitonAudioUrl}
@@ -206,7 +209,6 @@
 			</div>
 		</div>
 		<div class="container">
-			
 			{#each partsOfTheSpeech as part}
 				{#if part === definitionAndExampleFor}
 					<span class="badge variant-filled-success my-2">{part}</span>
@@ -214,7 +216,7 @@
 					<span class="badge my-2">{part}</span>
 				{/if}
 			{/each}
-			
+
 			<div class="row">
 				<div class="col-sm">
 					<Answerinput
