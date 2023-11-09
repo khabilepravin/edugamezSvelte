@@ -50,21 +50,21 @@
 
 	// private functions
 	const setComponentData = (currentWordInstance) => {
-		definitionAndExampleFor = currentWordInstance.DefinitionAndExampleFor;
-		wordAudioUrl = getUrlByRegion(currentWordInstance.WordAudios, currentRegion);
-		definitonAudioUrl = getUrlByRegion(currentWordInstance.DefinitionAudios, currentRegion);
-		exampleAudioUrl = getUrlByRegion(currentWordInstance.ExampleAudios, currentRegion);
-		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.PartsOfTheSpeech);
-		currentWord = currentWordInstance.Word;
+		definitionAndExampleFor = currentWordInstance.definitionandexamplefor;
+		wordAudioUrl = getUrlByRegion(currentWordInstance.wordaudios, currentRegion);
+		definitonAudioUrl = getUrlByRegion(currentWordInstance.definitionaudios, currentRegion);
+		exampleAudioUrl = getUrlByRegion(currentWordInstance.exampleaudios, currentRegion);
+		partsOfTheSpeech = deDuplicatePartsOfSpeechArray(currentWordInstance.partsofthespeech);
+		currentWord = currentWordInstance.word;
 		currentAudioPlaybackRate = $currentPlaybackRate;
 	};
 
 	const getUserAnswer = (originalWord, userAnswer) => {
-		const isCorrect = originalWord.Word.trim().toLowerCase() === userAnswer.trim().toLowerCase();
-		const exactDifference = findExactDifference(originalWord.Word, userAnswer);
+		const isCorrect = originalWord.word.trim().toLowerCase() === userAnswer.trim().toLowerCase();
+		const exactDifference = findExactDifference(originalWord.word, userAnswer);
 
 		return {
-			actualWord: originalWord.Word,
+			actualWord: originalWord.word,
 			userAnswer: userAnswer,
 			isCorrect: isCorrect,
 			exactDifference: exactDifference,
