@@ -31,6 +31,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@supabase/supabase-js": "^2.38.4",
 		"firebase": "^10.0.0",
 		"font-awesome": "^4.7.0"
 	}
