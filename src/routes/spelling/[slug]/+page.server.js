@@ -5,7 +5,7 @@ const _supabase = createClient(import.meta.env.VITE_ENV_supabaseUrl, import.meta
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }) {
     const difficulty = params.slug;
-    const spellingWordsV2 = await getSpellingWordsFromSupabase('low',7);
+    const spellingWordsV2 = await getSpellingWordsFromSupabase(difficulty,7);
     return {        
             spellingDataV2: spellingWordsV2,
             difficultyLevel: difficulty        
