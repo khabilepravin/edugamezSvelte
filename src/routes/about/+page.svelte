@@ -4,9 +4,7 @@
 <div class="container mx-auto px-6">
 	<h4 class="h4 mt-4">About Us</h4>
 	<p class="py-2 font-medium">
-		We believe spelling is cruicial for writing as well as for reading. Spelling is a key aspect of
-		vocabulary development, this, in turn supports reading comprehension and enhances choices made
-		when composing written texts.
+		We believe spelling is crucial for writing as well as for reading. Spelling is a key aspect of vocabulary development, this, in turn, supports reading comprehension and enhances choices made when composing written texts.
 	</p>
 	<p class="py-2 font-medium">
 		The way we have structured the content enables you to improve listening comprehension, listening
