@@ -9,7 +9,7 @@
 		<!-- Animated Logo -->
 
 		<div class="columns-1 md:columns-3">
-			<a class="block card card-hover my-3" href="/spelling/low">
+			<a class="block card card-hover" href="/spelling/low">
 				<header class="card-header">
 					<img
 						src="images/beginner.webp"
