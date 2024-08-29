@@ -3,18 +3,20 @@
 </svelte:head>
 <div class="container mx-auto px-6">
 	<h4 class="h4 mt-4">About Us</h4>
-	<p class="py-2 font-medium">
-		We believe spelling is crucial for writing as well as for reading. Spelling is a key aspect of vocabulary development, this, in turn, supports reading comprehension and enhances choices made when composing written texts.
+	<p class="py-2 text-lg">
+		At MaxSpelling, we recognize that strong spelling skills are fundamental to both writing and
+		reading success. Mastery of spelling not only builds vocabulary but also plays a crucial role in
+		enhancing reading comprehension and improving the quality of written communication.
 	</p>
-	<p class="py-2 font-medium">
-		The way we have structured the content enables you to improve listening comprehension, listening
-		to pronunciations enables you to train your ear to understand different accents, intonations,
-		and speech patterns. This enhances your overall listening comprehension skills and allows you to
-		better understand native speakers.
+	<p class="py-2 text-lg">
+		Our carefully structured content is designed to support learners in developing their listening
+		comprehension as well. By engaging with various pronunciations, users can train their ear to
+		recognize different accents, intonations, and speech patterns, ultimately improving their
+		ability to understand native speakers.
 	</p>
-	<p class="py-2 font-medium">And just like everything else, practice is the only way to get better at it.</p>
-	<p class="py-2 font-medium">
-		MaxSpelling is a platform with ever increasing content to support learners of all levels to get
-		better at spelling.
+	<p class="py-2 text-lg">As with any skill, consistent practice is the key to improvement.</p>
+	<p class="py-2 text-lg">
+		MaxSpelling offers a continually expanding library of content to help learners at all levels
+		refine their spelling skills and achieve mastery.
 	</p>
 </div>
