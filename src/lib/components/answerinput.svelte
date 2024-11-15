@@ -142,7 +142,7 @@
 			on:keyup={KeyupHandler}
 			on:keypress={KeypressHandler}
 			on:keydown={KeyDownHandler}
-			transition:fade
+			transition:fade|global
 			use:init
 		/>
 	{/each}
