@@ -15,7 +15,7 @@
 </script>
 
 <main>
-	<div class="container text-center" transition:fade>
+	<div class="container text-center" transition:fade|global>
 		{#if isEverythingCorrect}
 			<div class="row row-cols-1">
 				<div class="col">
