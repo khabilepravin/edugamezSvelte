@@ -12,6 +12,9 @@
 	import Loading from '$lib/components/loading.svelte';
 	import { goto } from '$app/navigation';
 	import { storePopup } from '@skeletonlabs/skeleton';
+	import { setContext } from 'svelte';
+	/** @type {{children?: import('svelte').Snippet}} */
+	let { children } = $props();
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
 	function drawerOpen() {
@@ -27,41 +30,53 @@
 <Drawer><Navigation /></Drawer>
 <!-- App Shell -->
 <AppShell slotSidebarLeft="bg-surface-500/5 w-0 lg:w-64">
-	<svelte:fragment slot="header">
-		<!-- App Bar -->
-		<AppBar>
-			<svelte:fragment slot="lead">
-				<div class="flex items-center">
-					<button class="lg:hidden btn btn-sm" on:click={drawerOpen}>
-						<span>
-							<svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
-								<rect width="100" height="20" />
-								<rect y="30" width="100" height="20" />
-								<rect y="60" width="100" height="20" />
-							</svg>
-						</span>
-					</button>
-					<button class="btn btn-sm p-0 m-0" on:click={goHome}>
-						<img src="/images/logo.png" alt="MaxSpelling Logo"  /><strong class="text-xl ml-2"
-							>MaxSpelling</strong
-						>
-					</button>
-				</div>
+	{#snippet header()}
+	
+			<!-- App Bar -->
+			<AppBar>
+				{#snippet lead()}
+					
+						<div class="flex items-center">
+							<button class="lg:hidden btn btn-sm" onclick={drawerOpen}>
+								<span>
+									<svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
+										<rect width="100" height="20" />
+										<rect y="30" width="100" height="20" />
+										<rect y="60" width="100" height="20" />
+									</svg>
+								</span>
+							</button>
+							<button class="btn btn-sm p-0 m-0" onclick={goHome}>
+								<img src="/images/logo.png" alt="MaxSpelling Logo"  /><strong class="text-xl ml-2"
+									>MaxSpelling</strong
+								>
+							</button>
+						</div>
 
-			</svelte:fragment>
-			<svelte:fragment slot="trail">
-				<LightSwitch />
-			</svelte:fragment>
-		</AppBar>
-	</svelte:fragment>
+					
+					{/snippet}
+				{#snippet trail()}
+					
+						<LightSwitch />
+					
+					{/snippet}
+			</AppBar>
+		
+	{/snippet}
 	<!-- Left sidebar slot -->
-	<svelte:fragment slot="sidebarLeft">
-		<Navigation />
-	</svelte:fragment>
+	{#snippet sidebarLeft()}
+	
+			<Navigation />
+		
+	{/snippet}
 
-	<svelte:fragment slot="footer" />
+	{#snippet footer()}
+		<!-- <svelte:fragment  /> -->
+	{/snippet}
 
 	{#if $navigating}
 		<Loading />
-	{/if}<slot />
+	{/if}
+	
+	{@render children?.()}
 </AppShell>

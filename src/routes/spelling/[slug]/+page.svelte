@@ -16,27 +16,29 @@
 	import { getCountryCodeByTimezone } from '$lib/utils/region';
 
 	// public props
-	/** @type {import('./$types').PageData} */
-	export let data;
+
+	/** @type {{data: import('./$types').PageData}} */
+	let { data } = $props();
+
+	// child components TODO: Perhaps find a better way to do this svelte 5
+	let answerInputChildComponent = $state();
+	let wordAudioPlayChildComponent = $state();
+	let definitionAudioPlayChildComponent = $state();
+	let exampleAudioPlayerChildComponent = $state();
 
 	// local props
-	let currentIndex = 0;
-	let wordAudioUrl;
-	let definitonAudioUrl;
-	let exampleAudioUrl;
-	let partsOfTheSpeech = [];
-	let definitionAndExampleFor;
-	let spelledAnswer = '';
+	let currentIndex = $state(0);
+	let wordAudioUrl = $state();
+	let definitonAudioUrl = $state();
+	let exampleAudioUrl = $state();
+	let partsOfTheSpeech = $state([]);
+	let definitionAndExampleFor = $state();
+	let spelledAnswer = $state('');
 	const maxRecordsInATest = 7;
-	let currentWord = '';
-	let onQuestionChange;
-	let handleWordResetOfAudio;
-	let handleDefinitionResetOfAudio;
-	let handleExampleResetOfAudio;
-	let difficultyLevel;
+	let currentWord = $state('');
+	let difficultyLevel = $state();
 	let currentRegion = getCountryCodeByTimezone();
-	let currentAudioPlaybackRate = $currentPlaybackRate;
-	let wordPlayFunction;
+	let currentAudioPlaybackRate = $state($currentPlaybackRate);
 
 	// store variables
 	$spellingUserAnswers = [];
@@ -45,7 +47,7 @@
 	onMount(async () => {
 		setComponentData(data.spellingDataV2[currentIndex]);
 		difficultyLevel = capitalizeFirstLetter(data.difficultyLevel);
-		onQuestionChange();
+		answerInputChildComponent.LettersChanged();
 	});
 
 	// private functions
@@ -75,7 +77,8 @@
 	};
 
 	// Event handlers
-	const handleNext = () => {
+	const handleNext = (event) => {
+		event.preventDefault();
 		resetAllAudioPlayers();
 		let currentWordData = data.spellingDataV2[currentIndex];
 		$spellingUserAnswers = [...$spellingUserAnswers, getUserAnswer(currentWordData, spelledAnswer)];
@@ -89,7 +92,7 @@
 			currentWordData = data.spellingDataV2[currentIndex];
 			setComponentData(currentWordData);
 			spelledAnswer = '';
-			onQuestionChange();
+			answerInputChildComponent.LettersChanged();
 		}
 	};
 
@@ -109,30 +112,30 @@
 	}
 
 	function resetAllAudioPlayers() {
-		handleWordResetOfAudio();
-		handleDefinitionResetOfAudio();
-		handleExampleResetOfAudio();
+		wordAudioPlayChildComponent.handleResetAudio();
+		definitionAudioPlayChildComponent.handleResetAudio();
+		exampleAudioPlayerChildComponent.handleResetAudio();
 	}
 
 	function handleWordAudioPlaying() {
-		handleDefinitionResetOfAudio();
-		handleExampleResetOfAudio();
+		definitionAudioPlayChildComponent.handleResetAudio();
+		exampleAudioPlayerChildComponent.handleResetAudio();
 	}
 
 	function handleDefinitionAudioPlaying() {
-		handleWordResetOfAudio();
-		handleExampleResetOfAudio();
+		wordAudioPlayChildComponent.handleResetAudio();
+		exampleAudioPlayerChildComponent.handleResetAudio();
 	}
 
 	function handleExampleAudioPlaying() {
-		handleDefinitionResetOfAudio();
-		handleWordResetOfAudio();
+		wordAudioPlayChildComponent.handleResetAudio();
+		definitionAudioPlayChildComponent.handleResetAudio();
 	}
 
 	function playbackSpeedChanged(event) {
 		currentPlaybackRate.set(event.target.value);
 		currentAudioPlaybackRate = $currentPlaybackRate;
-		wordPlayFunction();
+		wordAudioPlayChildComponent.playAudio();
 	}
 
 	const popupFeatured = {
@@ -167,7 +170,7 @@
 	</div>
 	<!-- <div class="arrow bg-surface-100-800-token" /> -->
 </div>
-<form on:submit|preventDefault={handleNext}>
+<form onsubmit={handleNext}>
 	<div class="text-center">
 		<div class="container">
 			<div class="row">
@@ -176,7 +179,7 @@
 					<button
 						type="button"
 						class="btn-icon btn-icon-sm variant-filled-tertiary m-2"
-						use:popup={popupFeatured}><i class="fa fa-gear" /></button
+						use:popup={popupFeatured}><i class="fa fa-gear"></i></button
 					>
 				</div>
 			</div>
@@ -185,26 +188,25 @@
 					src={wordAudioUrl}
 					autoPlay="true"
 					playerText="Word"
-					on:startedPlaying={handleWordAudioPlaying}
-					bind:handleResetAudio={handleWordResetOfAudio}
 					bind:playbackRate={currentAudioPlaybackRate}
-					bind:playAudio={wordPlayFunction}
+					startedPlaying={handleWordAudioPlaying}
+					bind:this={wordAudioPlayChildComponent}
 				/>
 				<AudioPlayer
 					src={definitonAudioUrl}
 					autoPlay={null}
 					playerText="Definition"
-					on:startedPlaying={handleDefinitionAudioPlaying}
-					bind:handleResetAudio={handleDefinitionResetOfAudio}
 					bind:playbackRate={currentAudioPlaybackRate}
+					startedPlaying={handleDefinitionAudioPlaying}
+					bind:this={definitionAudioPlayChildComponent}
 				/>
 				<AudioPlayer
 					src={exampleAudioUrl}
 					autoPlay={null}
 					playerText="Example"
-					on:startedPlaying={handleExampleAudioPlaying}
-					bind:handleResetAudio={handleExampleResetOfAudio}
 					bind:playbackRate={currentAudioPlaybackRate}
+					bind:this={exampleAudioPlayerChildComponent}
+					startedPlaying={handleExampleAudioPlaying}
 				/>
 			</div>
 		</div>
@@ -221,7 +223,7 @@
 				<div class="col-sm">
 					<Answerinput
 						currentLetters={currentWord.split('')}
-						bind:LettersChanged={onQuestionChange}
+						bind:this={answerInputChildComponent}
 						bind:currentStateOfTheAnswer={spelledAnswer}
 					/>
 				</div>

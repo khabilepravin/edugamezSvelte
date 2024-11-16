@@ -2,10 +2,9 @@
 	import Loading from '$lib/components/loading.svelte';
 
 	export const prerender = true;
-	let showLoading = true;
+	let showLoading = $state(true);
 
 	function onIFrameContentLoaded() {
-		console.log('something is loaded');
 		showLoading = false;
 	}
 </script>
@@ -27,7 +26,7 @@
 				frameborder="0"
 				marginheight="0"
 				marginwidth="0"
-				on:load={onIFrameContentLoaded}>Loading…</iframe
+				onload={onIFrameContentLoaded}>Loading…</iframe
 			>
 		</div>
 	</div>
