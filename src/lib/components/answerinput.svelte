@@ -3,8 +3,8 @@
 	import { fade } from 'svelte/transition';
 
 	// public props
-	export let currentLetters = [];
-	export let currentStateOfTheAnswer = '';
+	/** @type {{currentLetters?: any, currentStateOfTheAnswer?: string}} */
+	let { currentLetters = [], currentStateOfTheAnswer = $bindable('') } = $props();
 
 	// public funcs
 	export const LettersChanged = () => {
@@ -139,15 +139,15 @@
 			autocomplete="off"
 			spellcheck="false"
 			autocorrect="off"
-			on:keyup={KeyupHandler}
-			on:keypress={KeypressHandler}
-			on:keydown={KeyDownHandler}
+			onkeyup={KeyupHandler}
+			onkeypress={KeypressHandler}
+			onkeydown={KeyDownHandler}
 			transition:fade|global
 			use:init
 		/>
 	{/each}
-	<button type="button" class="btn variant-filled bg-red-500 m-2" on:click={ClearButtonClickHandle}
-		><i class="fa fa-trash" /></button
+	<button type="button" class="btn variant-filled bg-red-500 m-2" onclick={ClearButtonClickHandle}
+		><i class="fa fa-trash"></i></button
 	>
 </div>
 

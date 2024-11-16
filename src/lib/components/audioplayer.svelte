@@ -3,17 +3,21 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 
 	// public props
-	export let src;
-	export let autoPlay;
-	export let playerText;
-	export let playbackRate;
+	/** @type {{src: any, autoPlay: any, playerText: any, playbackRate: any}} */
+	let {
+		src,
+		autoPlay,
+		playerText,
+		playbackRate = $bindable(),
+		startedPlaying
+	} = $props();
 
-	const dispatch = createEventDispatcher();
+	//const dispatch = createEventDispatcher();
 
 	// local props
-	let player;
-	let buttonIcon = 'fa fa-play';
-	let loadingAudio = true;
+	let player = $state();
+	let buttonIcon = $state('fa fa-play');
+	let loadingAudio = $state(true);
 
 	export const handleResetAudio = () => {
 		loadingAudio = true;
@@ -40,7 +44,8 @@
 
 	function handleOnPlay() {
 		buttonIcon = 'fa fa-pause';
-		dispatch('startedPlaying', {});
+		//dispatch('startedPlaying', {});
+		startedPlaying();
 	}
 
 	function handleEnded() {
@@ -62,15 +67,15 @@
 			bind:this={player}
 			{src}
 			bind:playbackRate
-			on:ended={handleEnded}
+			onended={handleEnded}
 			autoplay={autoPlay}
-			on:play={handleOnPlay}
-			on:canplaythrough={handleCanPlayThrough}
-		/>
+			onplay={handleOnPlay}
+			oncanplaythrough={handleCanPlayThrough}
+		></audio>
 
 		<button
 			type="button"
-			on:click={handleClick}
+			onclick={handleClick}
 			class="btn btn-sm variant-filled"
 			disabled={loadingAudio}
 		>
@@ -83,7 +88,7 @@
 					width="w-4"
 				/>
 			{:else}
-				<i class={buttonIcon} />
+				<i class={buttonIcon}></i>
 			{/if}<span class="ps-1">{playerText}</span></button
 		>
 	{/if}

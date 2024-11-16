@@ -1,5 +1,6 @@
 <script>
-	export let resultEntry;
+	/** @type {{resultEntry: any}} */
+	let { resultEntry } = $props();
 </script>
 
 {#if resultEntry.isCorrect === false}

@@ -7,8 +7,6 @@
 	let correctAnswers = $spellingUserAnswers.filter((word) => word.isCorrect);
 	let isEverythingCorrect = $spellingUserAnswers.length === correctAnswers.length;
 
-	console.log(JSON.stringify($spellingUserAnswers));
-
 	function handleRepeatClick() {
 		goto('/');
 	}
@@ -28,13 +26,13 @@
 			<table class="table table-hover">
 				<tbody>
 					<tr>
-						<td><i class="fa fa-sheet-plastic" /></td>
-						<td><i class="fa fa-book" /></td>
-						<td><i class="fa fa-user" /></td>
+						<td><i class="fa fa-sheet-plastic"></i></td>
+						<td><i class="fa fa-book"></i></td>
+						<td><i class="fa fa-user"></i></td>
 					</tr>
 					{#each $spellingUserAnswers as result}
 						<tr>
-							<td><i class={result.isCorrect ? 'fa fa-check' : 'fa fa-xmark'} /></td>
+							<td><i class={result.isCorrect ? 'fa fa-check' : 'fa fa-xmark'}></i></td>
 							<td
 								>{#each result.actualWord as char, i}
 									<span class="font-bold">
@@ -51,8 +49,8 @@
 
 		<div>
 			<!-- <Button size="small" icon={Repeat} on:click={handleRepeatClick}>Repeat</Button> -->
-			<button type="button" class="btn variant-filled m-2" on:click={handleRepeatClick}
-				><i class="fa fa-repeat pe-2" />Repeat</button
+			<button type="button" class="btn variant-filled m-2" onclick={handleRepeatClick}
+				><i class="fa fa-repeat pe-2"></i>Repeat</button
 			>
 		</div>
 	</div>

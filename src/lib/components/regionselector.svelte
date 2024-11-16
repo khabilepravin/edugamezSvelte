@@ -5,7 +5,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	let selectedIndex = returnDefaultIndex();
+	let selectedIndex = $state(returnDefaultIndex());
 
 	function returnDefaultIndex() {
 		const currentRegion = getCountryCodeByTimezone();
