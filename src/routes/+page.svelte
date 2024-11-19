@@ -46,7 +46,7 @@
 	</div>
 </div>
 
-<style lang="postcss">
+<!-- <style lang="postcss">
 	figure {
 		@apply flex relative flex-col;
 	}
@@ -77,4 +77,4 @@
 			transform: scale(1.5);
 		}
 	}
-</style>
+</style> -->

@@ -1,13 +1,13 @@
 <script>
 	// The ordering of these imports is critical to your app working properly
-	import '@skeletonlabs/skeleton/themes/theme-modern.css';
+	//import '@skeletonlabs/skeleton/themes/theme-modern.css';
 	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
-	import '@skeletonlabs/skeleton/styles/skeleton.css';
+	//import '@skeletonlabs/skeleton/styles/skeleton.css';
 	import { navigating } from '$app/stores';
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
-	import { AppShell, AppBar, LightSwitch, Drawer, drawerStore } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, LightSwitch, Drawer, getDrawerStore, initializeStores } from '@skeletonlabs/skeleton';
 	import Navigation from '$lib/navigation/navigation.svelte';
 	import Loading from '$lib/components/loading.svelte';
 	import { goto } from '$app/navigation';
@@ -17,6 +17,9 @@
 	let { children } = $props();
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
+	initializeStores();
+
+	const drawerStore = getDrawerStore();
 	function drawerOpen() {
 		drawerStore.open({});
 	}

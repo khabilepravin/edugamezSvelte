@@ -1,6 +1,7 @@
 <script>
-	import { AppRail, drawerStore, AppRailAnchor } from '@skeletonlabs/skeleton';
+	import { AppRail, getDrawerStore, AppRailAnchor } from '@skeletonlabs/skeleton';
 	
+	const drawerStore = getDrawerStore();
 	function drawerClose() {
 		drawerStore.close();
 	}
