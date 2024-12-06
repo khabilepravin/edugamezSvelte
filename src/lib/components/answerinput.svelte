@@ -1,6 +1,7 @@
 <script>
-	import { onMount, createEventDispatcher } from 'svelte';
+	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import Trash from './icons/trash.svelte';
 
 	// public props
 	/** @type {{currentLetters?: any, currentStateOfTheAnswer?: string}} */
@@ -146,8 +147,8 @@
 			use:init
 		/>
 	{/each}
-	<button type="button" class="btn variant-filled bg-red-500 m-2" onclick={ClearButtonClickHandle}
-		><i class="fa fa-trash"></i></button
+	<button type="button" class="btn btn-icon variant-filled bg-red-500" onclick={ClearButtonClickHandle}
+		><Trash></Trash></button
 	>
 </div>
 

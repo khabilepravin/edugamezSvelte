@@ -14,6 +14,9 @@
 	import { findExactDifference } from '$lib/utils/wordDifference';
 	import RegionSelector from '$lib/components/regionselector.svelte';
 	import { getCountryCodeByTimezone } from '$lib/utils/region';
+	import Cog from '$lib/components/icons/cog.svelte';
+	import Chevron from '$lib/components/icons/chevron.svelte';
+	import Check from '$lib/components/icons/check.svelte';
 
 	// public props
 
@@ -176,11 +179,14 @@
 			<div class="row">
 				<div class="col-sm pb-2">
 					<RegionSelector on:regionChanged={handleRegionChange} />
+
 					<button
 						type="button"
 						class="btn-icon btn-icon-sm variant-filled-tertiary m-2"
-						use:popup={popupFeatured}><i class="fa fa-gear"></i></button
+						use:popup={popupFeatured}
 					>
+						<Cog></Cog>
+					</button>
 				</div>
 			</div>
 			<div class="columns-3 my-2">
@@ -239,8 +245,13 @@
 				<button
 					value="Next"
 					type="submit"
-					class="btn btn-lg variant-filled bg-secondary-500 float-right m-2"
-					>{currentIndex + 1 == maxRecordsInATest ? 'Done' : 'Next'}
+					class="btn-icon btn-icon-lg variant-filled bg-secondary-500 float-right m-2"
+				>
+					{#if currentIndex + 1 == maxRecordsInATest}
+						<Check></Check>
+					{:else}
+						<Chevron></Chevron>
+					{/if}
 				</button>
 			</div>
 		</div>
