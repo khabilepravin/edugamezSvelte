@@ -106,7 +106,7 @@
 						<h5 class="h5">{userName}</h5>
 					</button>
 
-					<div class="card p-4 w-48 shadow-xl" data-popup="userMenu">
+					<!-- <div class="card p-4 w-48 shadow-xl" data-popup="userMenu">
 						<nav class="list-nav">
 							<ul class="space-y-2">
 								<li>
@@ -121,7 +121,7 @@
 								</li>
 							</ul>
 						</nav>
-					</div>
+					</div> -->
 				</div>
 			{/snippet}
 		</AppBar>
