@@ -6,7 +6,10 @@
 	import { navigating } from '$app/stores';
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
-	import { createClient } from "@supabase/supabase-js";
+	import { createClient } from '@supabase/supabase-js';
+	import { popup } from '@skeletonlabs/skeleton';
+	import { page } from '$app/stores';
+	//import { page } from '$app/stores';
 
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import {
@@ -54,7 +57,7 @@
 
 		await supabase.auth.signOut();
 
-		window.location.href = "/";
+		window.location.href = '/';
 	}
 
 	function drawerOpen() {
@@ -64,6 +67,7 @@
 	function goHome() {
 		goto('/');
 	}
+
 </script>
 
 <Drawer><Navigation /></Drawer>
@@ -91,11 +95,39 @@
 				</div>
 			{/snippet}
 			{#snippet trail()}
-				<a href="#" onclick={handleSignout}><h5 class="h5">{userName}</h5></a>
-				<!-- <LightSwitch /> -->
+				<div class="relative">
+					<button
+						class="btn-base"
+						use:popup={{
+							event: 'click',
+							target: 'userMenu',
+							placement: 'bottom'
+						}}
+					>
+						<h5 class="h5">{userName}</h5>
+					</button>
+
+					<div class="card p-4 w-48 shadow-xl" data-popup="userMenu">
+						<nav class="list-nav">
+							<ul class="space-y-2">
+								<li>
+									<a href="/profile" class="block hover:text-primary-500 transition-colors">
+										Profile
+									</a>
+								</li>
+								<li>
+									<a href="/dashboard" class="block hover:text-primary-500 transition-colors">
+										Dashboard
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
 			{/snippet}
 		</AppBar>
 	{/snippet}
+	
 	<!-- Left sidebar slot -->
 	{#snippet sidebarLeft()}
 		<Navigation />

@@ -13,9 +13,11 @@
 	},
 	"devDependencies": {
 		"@floating-ui/dom": "^1.6.12",
+		"@iconify/svelte": "^4.2.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.5.27",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@types/uuid": "^10.0.0",
 		"autoprefixer": "^10.4.14",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
@@ -36,6 +38,7 @@
 		"@supabase/supabase-js": "^2.38.4",
 		"@tailwindcss/typography": "^0.5.15",
 		"firebase": "^10.0.0",
-		"font-awesome": "^4.7.0"
+		"font-awesome": "^4.7.0",
+		"uuid": "^11.1.0"
 	}
 }
