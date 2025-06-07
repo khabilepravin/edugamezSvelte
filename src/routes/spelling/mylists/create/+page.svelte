@@ -1,12 +1,65 @@
 <script lang="ts">
 	import { FileDropzone } from '@skeletonlabs/skeleton';
 	//import { toastStore } from '@skeletonlabs/skeleton';
+	import { createAssignment, createList } from '$lib/supabasedb/userLists';
+	import { v4 as uuidv4 } from 'uuid';
+	import { onMount } from 'svelte';
+	import { user } from '$lib/store/userStore';
+
+	const currentUser = $derived($user);
+
 
 	let formData = {
-		name: '',
-		description: '',
-		class: ''
+		student_id: '',
+		list_id: '',
+		title: '',
+		instructions: '',
+		due_date: ''
 	};
+	
+	// onMount(() => {
+	// 	//console.log(`currentUser: ${JSON.stringify(currentUser)}`);
+	// 	// Check if the user is logged in
+	// 	if (currentUser) {
+	// 		console.log(JSON.stringify(currentUser));
+	// 	}
+	// });
+
+	// self creation so it will be same
+	//let assigned_by_teacher_id = currentUser.details.id; //uuidv4(); // Replace with actual teacher ID
+
+	async function handleSubmit() {
+		try {
+			//debugger;
+			const{ details }  = currentUser;
+			
+			console.log(`UserId: ${JSON.stringify(details.details.id)}`);
+			let formattedDueDate = null;
+
+			if (formData.due_date) {
+				formattedDueDate = new Date(formData.due_date).toISOString();
+			}
+
+			//create list first and then use the list id to create assignment
+			const newList = await createList(
+				details.details.id, // Assuming this is the teacher ID
+				formData.name,
+				formData.description,
+				formData.class);
+
+				
+			formData = {
+				student_id: '',
+				list_id: '',
+				title: '',
+				instructions: '',
+				due_date: ''
+			};
+		} catch (error) {
+			console.error('Failed to create assignment:', error);
+			// Display an error message to the user
+		}
+	}
 
 	let files: FileList;
 
@@ -17,7 +70,7 @@
 			const file = files[0];
 			const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
 			if (!validTypes.includes(file.type)) {
-                console.log('Please upload only PDF or image files (JPG, PNG)');
+				console.log('Please upload only PDF or image files (JPG, PNG)');
 				// toastStore.trigger({
 				// 	message: 'Please upload only PDF or image files (JPG, PNG)',
 				// 	background: 'variant-filled-error'
@@ -26,59 +79,53 @@
 			}
 		}
 	}
-
-	async function handleSubmit() {
-		// TODO: Implement form submission logic
-		console.log('Form Data:', formData);
-		console.log('Files:', files);
-	}
 </script>
 
 <svelte:head>
-    <title>Create New List | MaxSpelling</title>
+	<title>Create New List | MaxSpelling</title>
 </svelte:head>
 
 <div class="container mx-auto p-4 max-w-2xl">
-    <div class="mb-8">
-        <h2 class="h2">Create New List</h2>
-        <p class="text-surface-600">Create a new spelling list by uploading a file</p>
-    </div>
+	<div class="mb-8">
+		<h2 class="h2">Create New List</h2>
+		<p class="text-surface-600">Create a new spelling list by uploading a file</p>
+	</div>
 	<!-- File Upload -->
 	<div class="space-y-2">
-        <label class="label">
-            <span>List Name</span>
-            <input
-                class="input px-4 py-2"
-                type="text"
-                placeholder="Enter list name"
-                bind:value={formData.name}
-                required
-            />
-        </label>
+		<label class="label">
+			<span>List Name</span>
+			<input
+				class="input px-4 py-2"
+				type="text"
+				placeholder="Enter list name"
+				bind:value={formData.name}
+				required
+			/>
+		</label>
 
-        <!-- Description -->
-        <label class="label">
-            <span>Description</span>
-            <textarea
-                class="textarea px-4 py-2"
-                rows="3"
-                placeholder="Enter list description"
-                bind:value={formData.description}
-            ></textarea>
-        </label>
+		<!-- Description -->
+		<label class="label">
+			<span>Description</span>
+			<textarea
+				class="textarea px-4 py-2"
+				rows="3"
+				placeholder="Enter list description"
+				bind:value={formData.description}
+			></textarea>
+		</label>
 
-        <!-- Class Selection -->
-        <label class="label">
-            <span>Class</span>
-            <select class="select px-4 py-2" bind:value={formData.class} required>
-                <option value="">Select a class</option>
-                <option value="1">Grade 1</option>
-                <option value="2">Grade 2</option>
-                <option value="3">Grade 3</option>
-                <option value="4">Grade 4</option>
-                <option value="5">Grade 5</option>
-            </select>
-        </label>
+		<!-- Class Selection -->
+		<label class="label">
+			<span>Class</span>
+			<select class="select px-4 py-2" bind:value={formData.class} required>
+				<option value="">Select a class</option>
+				<option value="1">Grade 1</option>
+				<option value="2">Grade 2</option>
+				<option value="3">Grade 3</option>
+				<option value="4">Grade 4</option>
+				<option value="5">Grade 5</option>
+			</select>
+		</label>
 
 		<span class="label">Upload Word List</span>
 		<FileDropzone name="files" accept=".pdf,.jpg,.jpeg,.png" on:change={onFileUpload}>
@@ -104,21 +151,12 @@
 			<p class="text-center text-sm text-surface-500">Supported formats: PDF, JPG, PNG</p>
 		</FileDropzone>
 
-        <div class="flex justify-end gap-4 pt-6 border-t">
-            <a 
-                href="/spelling/mylists" 
-                class="btn variant-soft-surface"
-            >
-                Cancel
-            </a>
-            <button 
-                type="submit" 
-                class="btn variant-filled-primary"
-                on:click={handleSubmit}
-            >
-                Create List
-            </button>
-        </div>
+		<div class="flex justify-end gap-4 pt-6 border-t">
+			<a href="/spelling/mylists" class="btn variant-soft-surface"> Cancel </a>
+			<button type="submit" class="btn variant-filled-primary" on:click={handleSubmit}>
+				Create List
+			</button>
+		</div>
 	</div>
 
 	<!-- ...existing code... -->

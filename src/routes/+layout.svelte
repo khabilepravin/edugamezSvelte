@@ -9,7 +9,8 @@
 	import { createClient } from '@supabase/supabase-js';
 	import { popup } from '@skeletonlabs/skeleton';
 	import { page } from '$app/stores';
-	//import { page } from '$app/stores';
+	import { setUser } from '$lib/store/userStore';
+
 
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 	import {
@@ -32,16 +33,14 @@
 	initializeStores();
 
 	let userName = $state();
-	//let data = $props();
 	const drawerStore = getDrawerStore();
 
 	onMount(async () => {
-		console.log(data);
-		// const userData = await supabase.auth.getUser();
 		if (data) {
-			//	debugger;
+			setUser({ isAuthenticated: true, details: data.data });
+
 			const userFullName = data.data.user_metadata.full_name;
-			console.log(userFullName);
+
 			if (userFullName) {
 				const nameArray = userFullName.trim().split(' ');
 				userName = nameArray[0];

@@ -40,15 +40,37 @@ export async function createList(userId: string, name: string, description: stri
             created_by_teacher_id: userId,
             list_name: name,
             description: description,
-            class: classVal,
+            difficulty_level: classVal, // Assuming classVal is the difficulty level
             created_at: new Date().toISOString(),
-            last_updated: new Date().toISOString(),
-            is_active: true,
+            updated_at: new Date().toISOString(),
+           // is_active: true,
             is_public: false,
-            is_deleted: false
+          //  is_deleted: false
         })
         .select()
         .returns<any[]>();
+
+    if(result.error) {
+        console.error("Error creating list:", result.error);
+        throw result.error;
+    }   
+
+    return result.data;
+}
+
+export async function getListsCreatedByUser(userId: string) {
+    debugger;
+    const result = await supabaseDb
+        .from('lists')
+        .select('*')
+        .eq('created_by_teacher_id', userId)
+        .order('created_at', { ascending: false })
+        .returns<Database['public']['Tables']['lists']['Row'][]>();
+
+    if (result.error) {
+        console.error("Error fetching user lists:", result.error);
+        throw result.error;
+    }
 
     return result.data;
 }
@@ -66,14 +88,15 @@ export async function createAssignment(
     const { data, error } = await supabaseDb
         .from('assignments')
         .insert({
-            id: assignmentId,
-            assigned_by_teacher_id,
-            student_id,
-            list_id,
-            title,
-            instructions,
-            due_date,
-            assigned_date: new Date().toISOString()
+            assignment_id: assignmentId,
+            assigned_by_teacher_id: assigned_by_teacher_id,
+            student_id: student_id,
+            list_id: list_id,
+            title: title,
+            instructions: instructions,
+            due_date: due_date,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
         })
         .select()
         .returns<Database['public']['Tables']['assignments']['Row'][]>();

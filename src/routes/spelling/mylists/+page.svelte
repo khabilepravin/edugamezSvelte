@@ -1,96 +1,100 @@
-<script>
-    import Icon from '@iconify/svelte';
+<script lang="ts">
+    import { getListsCreatedByUser } from '$lib/supabasedb/userLists';
+    import { user } from '$lib/store/userStore';
+    import { onMount } from 'svelte';
     
-    // Example data - replace with actual data fetching logic
-    let wordLists = [
-        {
-            id: 1,
-            name: 'Common Words',
-            totalWords: 20,
-            lastModified: '2024-03-23',
-            class: 'Grade 1'
-        },
-        {
-            id: 2,
-            name: 'Advanced Vocabulary',
-            totalWords: 30,
-            lastModified: '2024-03-22',
-            class: 'Grade 3'
+    let currentUser = $user;
+    let lists = [];
+    let loading = true;
+    let error = null;
+
+    async function loadLists() {
+        try {
+            debugger;
+            if (currentUser?.details?.id) {
+                lists = await getListsCreatedByUser(currentUser.details.id);
+            }
+        } catch (e) {
+            error = e.message;
+            console.error('Error loading lists:', e);
+        } finally {
+            loading = false;
         }
-    ];
+    }
+
+    // Subscribe to user store changes
+    user.subscribe(value => {
+        currentUser = value;
+        if (currentUser?.details?.id) {
+            loadLists();
+        }
+    });
+
+    onMount(async () => {        
+        console.log('Current User:', currentUser);
+        if (currentUser?.details?.id) {
+            await loadLists();
+        }
+    });
 </script>
 
+<svelte:head>
+    <title>My Lists | MaxSpelling</title>
+</svelte:head>
+
 <div class="container mx-auto p-4">
-    <!-- Header with Create Button -->
     <div class="flex justify-between items-center mb-8">
-        <h2 class="h2">My Word Lists</h2>
-        <a 
-            href="/spelling/mylists/create" 
-            class="btn variant-filled-primary"
-        >
-            <Icon icon="mdi:plus" class="text-xl mr-2" />
+        <h2 class="h2">My Lists</h2>
+        <a href="/spelling/mylists/create" class="btn variant-filled-primary">
             Create New List
         </a>
     </div>
 
-    <!-- Lists Grid -->
-    {#if wordLists.length > 0}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {#each wordLists as list (list.id)}
-                <div class="card p-4">
-                    <header class="flex justify-between items-start mb-4">
-                        <div>
-                            <h3 class="h3">{list.name}</h3>
-                            <p class="text-sm text-surface-600">Class: {list.class}</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <button class="btn btn-sm variant-soft-primary">
-                                <Icon icon="mdi:pencil" />
-                            </button>
-                            <button class="btn btn-sm variant-soft-error">
-                                <Icon icon="mdi:delete" />
-                            </button>
-                        </div>
-                    </header>
-                    
-                    <div class="flex justify-between items-center text-sm text-surface-600">
-                        <span>
-                            <Icon icon="mdi:book" class="inline mr-1" />
-                            {list.totalWords} words
-                        </span>
-                        <span>
-                            <Icon icon="mdi:calendar" class="inline mr-1" />
-                            {new Date(list.lastModified).toLocaleDateString()}
-                        </span>
-                    </div>
-                    
-                    <div class="mt-4 pt-4 border-t border-surface-300">
-                        <a 
-                            href="/spelling/practice/{list.id}" 
-                            class="btn variant-filled-primary w-full"
-                        >
-                            Start Practice
-                        </a>
-                    </div>
-                </div>
-            {/each}
+    {#if loading}
+        <div class="flex justify-center p-8">
+            <span class="loading loading-spinner loading-lg"></span>
         </div>
-    {:else}
-        <!-- Empty State -->
-        <div class="card p-8 text-center">
-            <Icon 
-                icon="mdi:book-open-page-variant" 
-                class="text-4xl mb-2 text-surface-500 mx-auto" 
-            />
-            <p class="text-surface-600 mb-4">
-                You haven't created any word lists yet.
-            </p>
-            <a 
-                href="/spelling/mylists/create" 
-                class="btn variant-filled-primary"
-            >
+    {:else if error}
+        <div class="alert variant-filled-error">
+            <span>Error loading lists: {error}</span>
+        </div>
+    {:else if lists.length === 0}
+        <div class="card p-8 text-center variant-ghost">
+            <h3 class="h3 mb-4">No Lists Found</h3>
+            <p class="mb-4">You haven't created any spelling lists yet.</p>
+            <a href="/spelling/mylists/create" class="btn variant-filled-primary">
                 Create Your First List
             </a>
+        </div>
+    {:else}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {#each lists as list}
+                <div class="card p-4 variant-filled-surface">
+                    <header class="card-header">
+                        <h3 class="h3">{list.list_name}</h3>
+                        <p class="opacity-75 text-sm">
+                            Created: {new Date(list.created_at).toLocaleDateString()}
+                        </p>
+                    </header>
+                    <div class="p-4">
+                        <p class="mb-4">{list.description || 'No description provided'}</p>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="badge variant-filled">Grade {list.difficulty_level}</span>
+                            <span class="badge variant-ghost">
+                                {list.is_public ? 'Public' : 'Private'}
+                            </span>
+                        </div>
+                    </div>
+                    <footer class="card-footer flex justify-end gap-2">
+                        <a href="/spelling/mylists/{list.id}/edit" class="btn variant-soft">
+                            Edit
+                        </a>
+                        <a href="/spelling/mylists/{list.id}" class="btn variant-filled">
+                            View
+                        </a>
+                    </footer>
+                </div>
+            {/each}
         </div>
     {/if}
 </div>
