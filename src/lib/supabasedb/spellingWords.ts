@@ -22,5 +22,24 @@ export async function getSpellingWordsByListId(listId: string) {
         .select('*')
         .eq('list_id', listId);
 
+    if (response.data) {
+        // Fisher-Yates (aka Knuth) Shuffle
+        let array = response.data;
+        let currentIndex = array.length,  randomIndex;
+
+        // While there remain elements to shuffle.
+        while (currentIndex !== 0) {
+
+            // Pick a remaining element.
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
     return response.data;
 }

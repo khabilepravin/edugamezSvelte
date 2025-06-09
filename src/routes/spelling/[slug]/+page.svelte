@@ -48,6 +48,7 @@
 
 	// lifecycle hooks
 	onMount(async () => {
+		console.log(data.spellingDataV2);
 		setComponentData(data.spellingDataV2[currentIndex]);
 		difficultyLevel = capitalizeFirstLetter(data.difficultyLevel);
 		answerInputChildComponent.LettersChanged();

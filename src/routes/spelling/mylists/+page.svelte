@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getListsCreatedByUser } from '$lib/supabasedb/userLists';
+    import { getListsCreatedByUser, getAllPublicLists } from '$lib/supabasedb/userLists';
     import { user } from '$lib/store/userStore';
     import { onMount } from 'svelte';
     
@@ -9,11 +9,12 @@
     let error = null;
 
     async function loadLists() {
+        debugger;
         try {
-            debugger;
-            if (currentUser?.details?.id) {
-                lists = await getListsCreatedByUser(currentUser.details.id);
-            }
+           // if (currentUser?.details?.id) {
+                lists = await getAllPublicLists();
+                console.log('Public Lists:', lists);
+            //}
         } catch (e) {
             error = e.message;
             console.error('Error loading lists:', e);
@@ -32,9 +33,10 @@
 
     onMount(async () => {        
         console.log('Current User:', currentUser);
-        if (currentUser?.details?.id) {
+        debugger;
+        //if (currentUser?.details?.id) {
             await loadLists();
-        }
+        //}
     });
 </script>
 
@@ -59,13 +61,13 @@
             <span>Error loading lists: {error}</span>
         </div>
     {:else if lists.length === 0}
-        <div class="card p-8 text-center variant-ghost">
+        <!-- <div class="card p-8 text-center variant-ghost">
             <h3 class="h3 mb-4">No Lists Found</h3>
             <p class="mb-4">You haven't created any spelling lists yet.</p>
             <a href="/spelling/mylists/create" class="btn variant-filled-primary">
                 Create Your First List
             </a>
-        </div>
+        </div> -->
     {:else}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {#each lists as list}
@@ -89,8 +91,8 @@
                         <a href="/spelling/mylists/{list.id}/edit" class="btn variant-soft">
                             Edit
                         </a>
-                        <a href="/spelling/mylists/{list.id}" class="btn variant-filled">
-                            View
+                        <a href="/spelling/{list.id}" class="btn variant-filled">
+                            Practice
                         </a>
                     </footer>
                 </div>

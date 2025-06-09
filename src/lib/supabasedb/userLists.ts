@@ -59,7 +59,6 @@ export async function createList(userId: string, name: string, description: stri
 }
 
 export async function getListsCreatedByUser(userId: string) {
-    debugger;
     const result = await supabaseDb
         .from('lists')
         .select('*')
@@ -107,5 +106,21 @@ export async function createAssignment(
     }
 
     return data;
+}
+
+export async function getAllPublicLists() {
+    const result = await supabaseDb
+        .from('lists')
+        .select('*')
+        .eq('is_public', true)
+        .order('created_at', { ascending: false })
+        .returns<Database['public']['Tables']['lists']['Row'][]>();
+
+    if (result.error) {
+        console.error("Error fetching public lists:", result.error);
+        throw result.error;
+    }
+
+    return result.data;
 }
 
