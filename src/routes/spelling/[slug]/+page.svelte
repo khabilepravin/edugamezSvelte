@@ -17,6 +17,7 @@
 	import Cog from '$lib/components/icons/cog.svelte';
 	import Chevron from '$lib/components/icons/chevron.svelte';
 	import Check from '$lib/components/icons/check.svelte';
+	import Shuffle from '../../../lib/components/icons/shuffle.svelte';
 
 	// public props
 
@@ -42,6 +43,7 @@
 	let difficultyLevel = $state();
 	let currentRegion = getCountryCodeByTimezone();
 	let currentAudioPlaybackRate = $state($currentPlaybackRate);
+	let totalWords = $state(data.spellingDataV2.length);
 
 	// store variables
 	$spellingUserAnswers = [];
@@ -150,6 +152,10 @@
 		// Defines which side of your trigger the popup will appear
 		placement: 'bottom'
 	};
+
+	function handleShuffle() {
+		window.location.reload();
+	}
 </script>
 
 <svelte:head>
@@ -178,82 +184,97 @@
 	<div class="text-center">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm pb-2">
+				<div class="col-sm pb-2 flex items-center justify-center">
 					<RegionSelector on:regionChanged={handleRegionChange} />
-
 					<button
 						type="button"
-						class="btn-icon btn-icon-sm variant-filled-tertiary m-2"
+						class="btn-icon btn-icon-sm variant-filled-tertiary ml-2"
 						use:popup={popupFeatured}
+						title="Settings"
 					>
-						<Cog></Cog>
+						<Cog />
+					</button>
+					<button
+						type="button"
+						class="btn-icon btn-icon-sm variant-filled-secondary ml-2"
+						onclick={handleShuffle}
+						title="Shuffle Words"
+					>
+						<Shuffle />
 					</button>
 				</div>
-			</div>
-			<div class="columns-3 my-2">
-				<AudioPlayer
-					src={wordAudioUrl}
-					autoPlay="true"
-					playerText="Word"
-					bind:playbackRate={currentAudioPlaybackRate}
-					startedPlaying={handleWordAudioPlaying}
-					bind:this={wordAudioPlayChildComponent}
-				/>
-				<AudioPlayer
-					src={definitonAudioUrl}
-					autoPlay={null}
-					playerText="Definition"
-					bind:playbackRate={currentAudioPlaybackRate}
-					startedPlaying={handleDefinitionAudioPlaying}
-					bind:this={definitionAudioPlayChildComponent}
-				/>
-				<AudioPlayer
-					src={exampleAudioUrl}
-					autoPlay={null}
-					playerText="Example"
-					bind:playbackRate={currentAudioPlaybackRate}
-					bind:this={exampleAudioPlayerChildComponent}
-					startedPlaying={handleExampleAudioPlaying}
-				/>
-			</div>
-		</div>
-		<div class="container">
-			{#each partsOfTheSpeech as part}
-				{#if part === definitionAndExampleFor}
-					<span class="badge variant-filled-success my-2">{part}</span>
-				{:else}
-					<span class="badge my-2">{part}</span>
-				{/if}
-			{/each}
-
-			<div class="row">
-				<div class="col-sm">
-					<Answerinput
-						currentLetters={currentWord.split('')}
-						bind:this={answerInputChildComponent}
-						bind:currentStateOfTheAnswer={spelledAnswer}
+				<div class="columns-3 my-2">
+					<AudioPlayer
+						src={wordAudioUrl}
+						autoPlay="true"
+						playerText="Word"
+						bind:playbackRate={currentAudioPlaybackRate}
+						startedPlaying={handleWordAudioPlaying}
+						bind:this={wordAudioPlayChildComponent}
+					/>
+					<AudioPlayer
+						src={definitonAudioUrl}
+						autoPlay={null}
+						playerText="Definition"
+						bind:playbackRate={currentAudioPlaybackRate}
+						startedPlaying={handleDefinitionAudioPlaying}
+						bind:this={definitionAudioPlayChildComponent}
+					/>
+					<AudioPlayer
+						src={exampleAudioUrl}
+						autoPlay={null}
+						playerText="Example"
+						bind:playbackRate={currentAudioPlaybackRate}
+						bind:this={exampleAudioPlayerChildComponent}
+						startedPlaying={handleExampleAudioPlaying}
 					/>
 				</div>
 			</div>
-			<div class="flow-root">
-				<span class="badge variant-filled float-left ml-4 my-4 font-bold text-base"
-					>{currentIndex + 1} of {maxRecordsInATest}</span
-				>
-				<span class="badge variant-filled-warning float-left ml-2 my-4 text-base"
-					>Difficulty {difficultyLevel}</span
-				>
-
-				<button
-					value="Next"
-					type="submit"
-					class="btn-icon btn-icon-lg variant-filled bg-secondary-500 float-right m-2"
-				>
-					{#if currentIndex + 1 == maxRecordsInATest}
-						<Check></Check>
+			<div class="container">
+				{#each partsOfTheSpeech as part}
+					{#if part === definitionAndExampleFor}
+						<span class="badge variant-filled-success my-2">{part}</span>
 					{:else}
-						<Chevron></Chevron>
+						<span class="badge my-2">{part}</span>
 					{/if}
-				</button>
+				{/each}
+
+				<div class="row">
+					<div class="col-sm">
+						<Answerinput
+							currentLetters={currentWord.split('')}
+							bind:this={answerInputChildComponent}
+							bind:currentStateOfTheAnswer={spelledAnswer}
+						/>
+					</div>
+				</div>
+				<div class="flow-root">
+					<span class="badge variant-filled float-left ml-4 my-4 font-bold text-base"
+						>{currentIndex + 1} of {maxRecordsInATest}</span
+					>
+					{#if difficultyLevel}
+						<span class="badge variant-filled-warning float-left ml-2 my-4 text-base"
+							>Difficulty {difficultyLevel}</span
+						>
+					{/if}
+					{#if totalWords > 0}
+						<span class="badge variant-filled-surface float-left ml-2 my-4 text-base"
+							>Of total: {totalWords}</span
+						>
+					{/if}
+
+					<button
+						value="Next"
+						type="submit"
+						class="btn-icon btn-icon-lg variant-filled bg-secondary-500 float-right m-2"
+					>
+						{#if currentIndex + 1 == maxRecordsInATest}
+							<Check></Check>
+						{:else}
+							<Chevron></Chevron>
+						{/if}
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

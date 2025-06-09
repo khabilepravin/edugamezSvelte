@@ -47,9 +47,9 @@
 <div class="container mx-auto p-4">
     <div class="flex justify-between items-center mb-8">
         <h2 class="h2">My Lists</h2>
-        <a href="/spelling/mylists/create" class="btn variant-filled-primary">
+        <!-- <a href="/spelling/mylists/create" class="btn variant-filled-primary">
             Create New List
-        </a>
+        </a> -->
     </div>
 
     {#if loading}
@@ -88,9 +88,9 @@
                         </div>
                     </div>
                     <footer class="card-footer flex justify-end gap-2">
-                        <a href="/spelling/mylists/{list.id}/edit" class="btn variant-soft">
+                        <!-- <a href="/spelling/mylists/{list.id}/edit" class="btn variant-soft">
                             Edit
-                        </a>
+                        </a> -->
                         <a href="/spelling/{list.id}" class="btn variant-filled">
                             Practice
                         </a>

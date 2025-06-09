@@ -11,18 +11,18 @@ export async function load({ params }: any) {
         return {
             spellingDataV2: spellingWordsV2,
             difficultyLevel: difficulty,
-            name: 'Random Words'            
+            name: 'Random Words',
+            total: spellingWordsV2.length            
         };
     }
     else {
         const listId = params.slug;
-        console.log("Fetching spelling words for listId:", listId);
         const spellingWordsV2 = await getSpellingWordsByListId(listId);
-        console.log("Spelling words for listId:", listId, spellingWordsV2);
         return {
             spellingDataV2: spellingWordsV2,
             difficultyLevel: '',
-            name: spellingWordsV2[0].name
+            name: spellingWordsV2[0].name,
+            total: spellingWordsV2.length
         };
     }
 }
