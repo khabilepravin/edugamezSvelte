@@ -98,16 +98,10 @@
             
             <div class="flex gap-2">
               <button
-                class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
                 on:click={() => navigateToTest(test.id)}
               >
                 Practice
-              </button>
-              <button
-                class="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                on:click={() => goto(`/mytests/edit/${test.id}`)}
-              >
-                Edit
               </button>
             </div>
           </div>

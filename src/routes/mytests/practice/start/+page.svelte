@@ -10,6 +10,7 @@
   let isLoading = true;
   let error = null;
   let testId = null;
+  let testMode = 'practice'; // 'practice' or 'exam'
   let currentQuestionIndex = 0;
   let userAnswers = {};
   let timeRemaining = null;
@@ -17,6 +18,9 @@
   let isSubmitting = false;
   let showExplanation = false;
   let testStartTime = null;
+
+  $: isPracticeMode = testMode === 'practice';
+  $: isExamMode = testMode === 'exam';
 
   $: currentQuestion = questions[currentQuestionIndex];
   $: totalQuestions = questions.length;
@@ -27,6 +31,7 @@
 
   onMount(async () => {
     testId = $page.url.searchParams.get('testId');
+    testMode = $page.url.searchParams.get('mode') || 'practice';
     
     if (!testId) {
       error = 'No test ID provided';
@@ -177,16 +182,45 @@
       const testEndTime = new Date();
       const testDuration = testStartTime ? Math.floor((testEndTime - testStartTime) / 1000 / 60) : 0;
       
+      // Calculate score based on correct answers
+      let correctAnswers = 0;
+      const questionResults = [];
+      
+      questions.forEach(question => {
+        const userAnswer = userAnswers[question.id];
+        const isCorrect = userAnswer === question.correctAnswer;
+        
+        if (isCorrect) {
+          correctAnswers++;
+        }
+        
+        questionResults.push({
+          questionId: question.id,
+          questionText: question.questionText,
+          userAnswer: userAnswer,
+          correctAnswer: question.correctAnswer,
+          isCorrect: isCorrect,
+          explanation: question.explanation
+        });
+      });
+      
+      const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+      
       // Prepare submission data
       const submissionData = {
         testId,
         answers: userAnswers,
         totalQuestions,
         answeredCount,
+        correctAnswers,
+        score,
+        questionResults,
         startTime: testStartTime,
         endTime: testEndTime,
         duration: testDuration
       };
+      
+      console.log('Test submission data:', submissionData);
       
       // Store results for the results page
       sessionStorage.setItem(`test_results_${testId}`, JSON.stringify(submissionData));
@@ -205,7 +239,11 @@
 
   function goBack() {
     if (timer) clearInterval(timer);
-    if (confirm('Are you sure you want to exit? Your progress will be lost.')) {
+    const confirmMessage = isExamMode ? 
+      'Are you sure you want to exit the exam? Your progress will be lost.' :
+      'Are you sure you want to exit? Your progress will be lost.';
+    
+    if (confirm(confirmMessage)) {
       goto(`/mytests/practice?testId=${testId}`);
     }
   }
@@ -216,7 +254,7 @@
 </script>
 
 <svelte:head>
-  <title>Taking Test - EduGamez</title>
+  <title>{isExamMode ? 'Exam Mode' : 'Practice Mode'} - EduGamez</title>
 </svelte:head>
 
 <div class="container mx-auto px-4 py-8">
@@ -249,9 +287,15 @@
       <!-- Test Header -->
       <div class="bg-white rounded-lg shadow-md p-4 mb-6">
         <div class="flex justify-between items-center mb-4">
-          <h1 class="text-xl font-bold text-gray-800">
-            {testData.title || `Test ${testId}`}
-          </h1>
+          <div class="flex items-center">
+            <h1 class="text-xl font-bold text-gray-800">
+              {testData.title || `Test ${testId}`}
+            </h1>
+            <span class="ml-4 px-3 py-1 rounded-full text-sm font-medium
+              {isExamMode ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'}">
+              {isExamMode ? 'Exam Mode' : 'Practice Mode'}
+            </span>
+          </div>
           {#if timeRemaining !== null}
             <div class="flex items-center text-lg font-mono {timeRemaining < 300 ? 'text-red-600' : 'text-gray-700'}">
               <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -324,7 +368,7 @@
             {/if}
             
             <!-- Explanation -->
-            {#if currentQuestion.explanation && showExplanation}
+            {#if isPracticeMode && currentQuestion.explanation && showExplanation}
               <div class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                 <h4 class="font-semibold text-yellow-800 mb-2">Explanation:</h4>
                 <p class="text-yellow-700">{currentQuestion.explanation}</p>
@@ -332,7 +376,7 @@
             {/if}
             
             <!-- Helper Links -->
-            {#if currentQuestion.helperLinks && currentQuestion.helperLinks.length > 0}
+            {#if isPracticeMode && currentQuestion.helperLinks && currentQuestion.helperLinks.length > 0}
               <div class="mt-4">
                 <h4 class="font-semibold text-gray-800 mb-2">Helpful Resources:</h4>
                 <div class="space-y-2">
@@ -366,19 +410,21 @@
             >
               Exit Test
             </button>
-            <button
-              class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-colors"
-              on:click={saveProgress}
-            >
-              Save Progress
-            </button>
-            {#if currentQuestion && currentQuestion.explanation}
+            {#if isPracticeMode}
               <button
-                class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-colors"
-                on:click={toggleExplanation}
+                class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-colors"
+                on:click={saveProgress}
               >
-                {showExplanation ? 'Hide' : 'Show'} Explanation
+                Save Progress
               </button>
+              {#if currentQuestion && currentQuestion.explanation}
+                <button
+                  class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-colors"
+                  on:click={toggleExplanation}
+                >
+                  {showExplanation ? 'Hide' : 'Show'} Explanation
+                </button>
+              {/if}
             {/if}
           </div>
           

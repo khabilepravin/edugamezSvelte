@@ -11,14 +11,19 @@
     testId = $page.url.searchParams.get('testId');
     
     if (!testId) {
+      console.log('No testId found, redirecting to /mytests');
+      isLoading = false;
       goto('/mytests');
       return;
     }
+
+    console.log('Loading test results for testId:', testId);
 
     // Try to get results from session storage
     const savedResults = sessionStorage.getItem(`test_results_${testId}`);
     if (savedResults) {
       try {
+        console.log('Found saved results:', savedResults);
         testResults = JSON.parse(savedResults);
         // Calculate score based on answers
         calculateScore();
@@ -28,14 +33,17 @@
         generateMockResults();
       }
     } else {
+      console.log('No saved results found, generating mock results');
       // Generate mock results if no saved data
       generateMockResults();
     }
     
     isLoading = false;
+    console.log('Results loaded:', testResults);
   });
 
   function generateMockResults() {
+    console.log('Generating mock results for testId:', testId);
     testResults = {
       testId,
       answers: {},
@@ -44,19 +52,27 @@
       startTime: new Date(Date.now() - 25 * 60 * 1000), // 25 minutes ago
       endTime: new Date(),
       duration: 25,
-      score: Math.floor(Math.random() * 100),
-      correctAnswers: Math.floor(Math.random() * 10)
+      score: Math.floor(Math.random() * 40) + 60, // 60-100% range
+      correctAnswers: Math.floor(Math.random() * 5) + 6 // 6-10 correct answers
     };
+    console.log('Mock results generated:', testResults);
   }
 
   function calculateScore() {
     if (!testResults) return;
     
-    // This would normally be done by comparing user answers with correct answers
-    // For now, we'll use a simple calculation based on answered questions
+    // If we already have calculated results from the test submission, use them
+    if (testResults.score !== undefined && testResults.correctAnswers !== undefined) {
+      console.log('Using pre-calculated score:', testResults.score);
+      return;
+    }
+    
+    // Fallback calculation if score is not pre-calculated
     const answeredRatio = testResults.answeredCount / testResults.totalQuestions;
     testResults.score = Math.floor(answeredRatio * 85 + Math.random() * 15); // 85-100% range
     testResults.correctAnswers = Math.floor(testResults.score * testResults.totalQuestions / 100);
+    
+    console.log('Calculated fallback score:', testResults.score);
   }
 
   function retakeTest() {
@@ -96,9 +112,18 @@
 
 <div class="container mx-auto px-4 py-8">
   <div class="max-w-2xl mx-auto">
+    <!-- Debug info (remove this later) -->
+    <div class="mb-4 p-4 bg-gray-100 rounded text-sm">
+      <p>Debug Info:</p>
+      <p>isLoading: {isLoading}</p>
+      <p>testResults: {testResults ? 'exists' : 'null'}</p>
+      <p>testId: {testId}</p>
+    </div>
+
     {#if isLoading}
       <div class="flex justify-center items-center py-12">
         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <p class="ml-3 text-gray-600">Loading results...</p>
       </div>
     {:else if testResults}
       <div class="bg-white rounded-lg shadow-lg p-8">
@@ -159,7 +184,7 @@
               <h3 class="font-semibold text-gray-800">Finished</h3>
             </div>
             <p class="text-lg text-gray-700">
-              {testResults.endTime.toLocaleTimeString()}
+              {testResults.endTime ? new Date(testResults.endTime).toLocaleTimeString() : 'N/A'}
             </p>
           </div>
         </div>
@@ -231,6 +256,48 @@
             {/if}
           </ul>
         </div>
+
+        <!-- Question by Question Results -->
+        {#if testResults.questionResults && testResults.questionResults.length > 0}
+          <div class="mb-8">
+            <h3 class="font-semibold text-gray-800 mb-4">Question by Question Results</h3>
+            <div class="space-y-4 max-h-96 overflow-y-auto">
+              {#each testResults.questionResults as result, index}
+                <div class="border rounded-lg p-4 {result.isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}">
+                  <div class="flex items-start justify-between mb-2">
+                    <h4 class="font-medium text-gray-800 flex-1">
+                      Question {index + 1}: {result.questionText}
+                    </h4>
+                    <span class="ml-4 px-2 py-1 rounded-full text-xs font-medium
+                      {result.isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                      {result.isCorrect ? 'Correct' : 'Incorrect'}
+                    </span>
+                  </div>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span class="font-medium text-gray-600">Your Answer:</span>
+                      <span class="ml-2 {result.isCorrect ? 'text-green-700' : 'text-red-700'}">
+                        {result.userAnswer || 'Not answered'}
+                      </span>
+                    </div>
+                    <div>
+                      <span class="font-medium text-gray-600">Correct Answer:</span>
+                      <span class="ml-2 text-green-700">{result.correctAnswer}</span>
+                    </div>
+                  </div>
+                  
+                  {#if result.explanation && !result.isCorrect}
+                    <div class="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded">
+                      <h5 class="font-medium text-yellow-800 mb-1">Explanation:</h5>
+                      <p class="text-yellow-700 text-sm">{result.explanation}</p>
+                    </div>
+                  {/if}
+                </div>
+              {/each}
+            </div>
+          </div>
+        {/if}
 
         <!-- Actions -->
         <div class="flex gap-4 justify-center">

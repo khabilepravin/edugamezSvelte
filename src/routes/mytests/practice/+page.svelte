@@ -36,7 +36,12 @@
 
   function startPractice() {
     // Navigate to the actual practice/test taking interface
-    goto(`/mytests/practice/start?testId=${testId}`);
+    goto(`/mytests/practice/start?testId=${testId}&mode=practice`);
+  }
+
+  function startExam() {
+    // Navigate to the exam mode
+    goto(`/mytests/practice/start?testId=${testId}&mode=exam`);
   }
 
   function goBack() {
@@ -149,17 +154,64 @@
         <!-- Action Buttons -->
         <div class="flex gap-4 justify-center">
           <button
-            class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors"
+            class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors flex items-center"
             on:click={startPractice}
           >
-            Start Practice Test
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            Practice Mode
           </button>
+          
+          <button
+            class="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors flex items-center"
+            on:click={startExam}
+          >
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Exam Mode
+          </button>
+          
           <button
             class="bg-gray-500 hover:bg-gray-600 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors"
             on:click={goBack}
           >
             Back to Tests
           </button>
+        </div>
+        
+        <!-- Mode Descriptions -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <h3 class="font-semibold text-blue-800 mb-3 flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              Practice Mode
+            </h3>
+            <ul class="text-blue-700 space-y-2 text-sm">
+              <li>• View explanations during the test</li>
+              <li>• Access helpful resource links</li>
+              <li>• Save progress and resume later</li>
+              <li>• Learn while you practice</li>
+            </ul>
+          </div>
+          
+          <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+            <h3 class="font-semibold text-red-800 mb-3 flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Exam Mode
+            </h3>
+            <ul class="text-red-700 space-y-2 text-sm">
+              <li>• No explanations or help links</li>
+              <li>• No progress saving</li>
+              <li>• Simulate real exam conditions</li>
+              <li>• Test your knowledge without assistance</li>
+            </ul>
+          </div>
         </div>
       </div>
     {:else}
