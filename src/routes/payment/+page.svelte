@@ -12,6 +12,7 @@
     formatCurrency,
     createPaymentErrorMessage
   } from '$lib/api/payments';
+  import { createUserProfileByUserId } from '$lib/api/userProfiles';
 
   let user = null;
   let isLoading = true;
@@ -376,6 +377,9 @@
         
         if (status.status === 'succeeded') {
           console.log('🎉 Payment confirmed as succeeded on backend');
+          
+          // Update user profile to pro subscription level
+          await updateUserProfileToPro();
         } else {
           console.log('⚠️ Payment status is not succeeded:', status.status);
         }
@@ -386,6 +390,45 @@
     } catch (error) {
       console.log('⚠️ Payment status verification failed (non-critical):', error);
       // This is optional verification, so we don't throw the error
+    }
+  }
+
+  async function updateUserProfileToPro() {
+    try {
+      console.log('🔄 Updating user profile to pro subscription...');
+      
+      if (!user?.id) {
+        console.log('⚠️ No user ID available for profile update');
+        return;
+      }
+
+      // Get current session for auth token
+      const { data: { session } } = await supabase.auth.getSession();
+      const authToken = session?.access_token;
+
+      // Prepare user profile data
+      const profileData = {
+        userId: user.id,
+        userRole: user.user_metadata?.role || 'student', // Use existing role or default to student
+        displayName: user.user_metadata?.display_name || user.email?.split('@')[0] || 'User',
+        userSubscriptionLevel: 'pro' // Set to pro after successful payment
+      };
+
+      console.log('📝 Profile data to send:', profileData);
+
+      // Call the userProfiles API
+      const response = await createUserProfileByUserId(profileData, authToken);
+
+      if (response.success) {
+        console.log('✅ User profile updated to pro successfully:', response.data);
+      } else {
+        console.error('❌ Failed to update user profile:', response.error);
+        // Log error but don't fail the payment flow
+      }
+
+    } catch (error) {
+      console.error('❌ Error updating user profile to pro:', error);
+      // Log error but don't fail the payment flow since payment was successful
     }
   }
 

@@ -3,11 +3,20 @@
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   import { getPlanById, formatCurrency } from '$lib/api/payments';
+  import { createUserProfileByUserId } from '$lib/api/userProfiles';
+  import { createClient } from "@supabase/supabase-js";
 
   let planName = '';
   let planDetails = null;
+  let user = null;
 
-  onMount(() => {
+  const supabase = createClient(import.meta.env.VITE_ENV_supabaseUrl, import.meta.env.VITE_ENV_supabasekey);
+
+  onMount(async () => {
+    // Get current user
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
+    user = currentUser;
+
     const planId = $page.url.searchParams.get('plan');
     if (planId) {
       planDetails = getPlanById(planId);
@@ -19,7 +28,49 @@
     } else {
       planName = 'Your Plan';
     }
+
+    // Update user profile to pro subscription level on successful payment
+    if (user) {
+      await updateUserProfileToPro();
+    }
   });
+
+  async function updateUserProfileToPro() {
+    try {
+      console.log('🔄 Updating user profile to pro subscription...');
+      
+      if (!user?.id) {
+        console.log('⚠️ No user ID available for profile update');
+        return;
+      }
+
+      // Get current session for auth token
+      const { data: { session } } = await supabase.auth.getSession();
+      const authToken = session?.access_token;
+
+      // Prepare user profile data
+      const profileData = {
+        userId: user.id,
+        userRole: user.user_metadata?.role || 'student', // Use existing role or default to student
+        displayName: user.user_metadata?.display_name || user.email?.split('@')[0] || 'User',
+        userSubscriptionLevel: 'pro' // Set to pro after successful payment
+      };
+
+      console.log('📝 Profile data to send:', profileData);
+
+      // Call the userProfiles API
+      const response = await createUserProfileByUserId(profileData, authToken);
+
+      if (response.success) {
+        console.log('✅ User profile updated to pro successfully:', response.data);
+      } else {
+        console.error('❌ Failed to update user profile:', response.error);
+      }
+
+    } catch (error) {
+      console.error('❌ Error updating user profile to pro:', error);
+    }
+  }
 
   function goToDashboard() {
     goto('/dashboard');
