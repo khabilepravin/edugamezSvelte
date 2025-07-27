@@ -5,6 +5,7 @@
   import { getPlanById, formatCurrency } from '$lib/api/payments';
   import { createUserProfileByUserId } from '$lib/api/userProfiles';
   import { createClient } from "@supabase/supabase-js";
+  import { sessionActions } from '$lib/store/userSession.js';
 
   let planName = '';
   let planDetails = null;
@@ -63,6 +64,9 @@
 
       if (response.success) {
         console.log('✅ User profile updated to pro successfully:', response.data);
+        
+        // Update session store with new subscription level
+        sessionActions.setSubscriptionLevel('pro');
       } else {
         console.error('❌ Failed to update user profile:', response.error);
       }

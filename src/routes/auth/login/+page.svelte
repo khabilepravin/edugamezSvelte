@@ -3,6 +3,8 @@
 	import { page } from '$app/stores';
 	import { createClient } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
+	import { sessionActions } from '$lib/store/userSession.js';
+	import { getUserProfileByUserId } from '$lib/api/userProfiles';
 
 	let data = $props();
 	const supabase = createClient(
@@ -28,12 +30,39 @@
 		}
 	}
 
+	async function loadUserProfile(user) {
+		try {
+			const { data: { session } } = await supabase.auth.getSession();
+			const authToken = session?.access_token;
+			
+			const profileResponse = await getUserProfileByUserId(user.id, authToken);
+			if (profileResponse.success) {
+				sessionActions.setProfile({
+					userSubscriptionLevel: profileResponse.data.userSubscriptionLevel,
+					userRole: profileResponse.data.userRole,
+					displayName: profileResponse.data.displayName
+				});
+				console.log('✅ User profile loaded after login:', profileResponse.data);
+			} else {
+				console.log('⚠️ Could not load user profile after login:', profileResponse.error);
+			}
+		} catch (error) {
+			console.error('❌ Error loading user profile after login:', error);
+		}
+	}
+
 	onMount(async () => {
 		const {
 			data: { user }
 		} = await supabase.auth.getUser();
 
 		if (user) {
+			// Initialize session store
+			sessionActions.setUser(user);
+			
+			// Load user profile
+			await loadUserProfile(user);
+			
 			goto(redirectTo);
 		} else {
 			showLogin = true;

@@ -13,9 +13,20 @@ export interface UserProfileRequest {
 
 export interface UserProfileResponse {
   success: boolean;
-  data?: any;
+  data?: UserProfile | any;
   message?: string;
   error?: string;
+}
+
+// User profile data structure returned from API
+export interface UserProfile {
+  userId: string;
+  userRole: string;
+  displayName: string;
+  userSubscriptionLevel: string;
+  // Add other profile fields as needed
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 /**
@@ -78,6 +89,67 @@ export async function createUserProfileByUserId(
 
   } catch (error) {
     console.error('Error creating user profile:', error);
+    
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error occurred'
+    };
+  }
+}
+
+/**
+ * Get user profile by user ID
+ * @param userId - User ID to retrieve profile for
+ * @param authToken - Optional authentication token
+ * @returns Promise containing the user profile response
+ */
+export async function getUserProfileByUserId(
+  userId: string,
+  authToken?: string
+): Promise<UserProfileResponse> {
+  try {
+    // Use environment variable for API base URL or fallback to localhost
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://localhost:7146';
+    
+    const headers: Record<string, string> = {
+      'Accept': 'application/json'
+    };
+
+    // Add authorization header if token is provided
+    if (authToken) {
+      headers['Authorization'] = `Bearer ${authToken}`;
+    }
+
+    const response = await fetch(`${apiBaseUrl}/api/v1/UserProfiles/byuserid/${encodeURIComponent(userId)}`, {
+      method: 'GET',
+      headers
+    });
+
+    if (!response.ok) {
+      let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+      
+      try {
+        const errorData = await response.text();
+        if (errorData) {
+          errorMessage = errorData;
+        }
+      } catch (parseError) {
+        // If we can't parse the error response, use the default message
+      }
+
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+    
+    return {
+      success: true,
+      data: data,
+      message: 'User profile retrieved successfully'
+    };
+
+  } catch (error) {
+    console.error('Error retrieving user profile:', error);
     
     return {
       success: false,

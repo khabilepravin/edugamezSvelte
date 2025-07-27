@@ -25,6 +25,7 @@
 	import { goto } from '$app/navigation';
 	import { storePopup } from '@skeletonlabs/skeleton';
 	import { onMount, setContext } from 'svelte';
+	import { userSession, sessionActions } from '$lib/store/userSession.js';
 	/** @type {{children?: import('svelte').Snippet}} */
 	let { children, data } = $props();
 	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
@@ -36,16 +37,32 @@
 	const drawerStore = getDrawerStore();
 
 	onMount(async () => {
-		console.log(data);
-		// const userData = await supabase.auth.getUser();
-		if (data) {
-			//	debugger;
-			const userFullName = data.data.user_metadata.full_name;
-			console.log(userFullName);
+		console.log('Layout data:', data);
+		
+		// Initialize session store with user data
+		if (data.data) {
+			sessionActions.setUser(data.data);
+			
+			// Set user profile data if available
+			if (data.userProfile) {
+				sessionActions.setProfile({
+					userSubscriptionLevel: data.userProfile.userSubscriptionLevel,
+					userRole: data.userProfile.userRole,
+					displayName: data.userProfile.displayName
+				});
+				console.log('✅ Session initialized with profile data:', data.userProfile);
+			}
+			
+			// Set display name for UI
+			const userFullName = data.data.user_metadata?.full_name;
 			if (userFullName) {
 				const nameArray = userFullName.trim().split(' ');
 				userName = nameArray[0];
+			} else if (data.userProfile?.displayName) {
+				userName = data.userProfile.displayName;
 			}
+		} else {
+			sessionActions.clearSession();
 		}
 	});
 
@@ -56,6 +73,9 @@
 		);
 
 		await supabase.auth.signOut();
+		
+		// Clear session store
+		sessionActions.clearSession();
 
 		window.location.href = '/';
 	}

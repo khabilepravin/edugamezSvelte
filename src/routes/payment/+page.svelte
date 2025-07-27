@@ -13,6 +13,7 @@
     createPaymentErrorMessage
   } from '$lib/api/payments';
   import { createUserProfileByUserId } from '$lib/api/userProfiles';
+  import { sessionActions } from '$lib/store/userSession.js';
 
   let user = null;
   let isLoading = true;
@@ -421,6 +422,9 @@
 
       if (response.success) {
         console.log('✅ User profile updated to pro successfully:', response.data);
+        
+        // Update session store with new subscription level
+        sessionActions.setSubscriptionLevel('pro');
       } else {
         console.error('❌ Failed to update user profile:', response.error);
         // Log error but don't fail the payment flow
