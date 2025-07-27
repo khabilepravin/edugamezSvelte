@@ -98,7 +98,6 @@
     selectedPlan = plan;
     paymentError = null;
     paymentSuccess = false;
-    showPaymentForm = true;
     
     // Reset previous payment elements
     if (paymentElement) {
@@ -111,8 +110,37 @@
     }
     clientSecret = null;
     
-    // Create new payment intent for the selected plan
-    await createPaymentIntentForPlan(plan);
+    // Handle free plan differently - no payment required
+    if (plan.price === 0) {
+      console.log('🆓 Free plan selected, updating subscription directly');
+      await handleFreePlanSelection(plan);
+    } else {
+      // For paid plans, show payment form and create payment intent
+      showPaymentForm = true;
+      await createPaymentIntentForPlan(plan);
+    }
+  }
+
+  async function handleFreePlanSelection(plan) {
+    try {
+      isProcessing = true;
+      console.log('🔄 Processing free plan selection:', plan.name);
+      
+      // Update user profile to free subscription level
+      await updateUserProfileToFree();
+      
+      // Redirect to home page to start using spelling tests
+      console.log('✅ Free plan activated, redirecting to home page');
+      goto('/');
+      
+    } catch (error) {
+      console.error('❌ Error activating free plan:', error);
+      paymentError = createPaymentErrorMessage(
+        error.message || 'Failed to activate free plan'
+      );
+    } finally {
+      isProcessing = false;
+    }
   }
 
   async function createPaymentIntentForPlan(plan) {
@@ -436,6 +464,48 @@
     }
   }
 
+  async function updateUserProfileToFree() {
+    try {
+      console.log('🔄 Updating user profile to free subscription...');
+      
+      if (!user?.id) {
+        console.log('⚠️ No user ID available for profile update');
+        return;
+      }
+
+      // Get current session for auth token
+      const { data: { session } } = await supabase.auth.getSession();
+      const authToken = session?.access_token;
+
+      // Prepare user profile data
+      const profileData = {
+        userId: user.id,
+        userRole: user.user_metadata?.role || 'student', // Use existing role or default to student
+        displayName: user.user_metadata?.display_name || user.email?.split('@')[0] || 'User',
+        userSubscriptionLevel: 'free' // Set to free for basic plan
+      };
+
+      console.log('📝 Profile data to send:', profileData);
+
+      // Call the userProfiles API
+      const response = await createUserProfileByUserId(profileData, authToken);
+
+      if (response.success) {
+        console.log('✅ User profile updated to free successfully:', response.data);
+        
+        // Update session store with new subscription level
+        sessionActions.setSubscriptionLevel('free');
+      } else {
+        console.error('❌ Failed to update user profile:', response.error);
+        throw new Error(response.error || 'Failed to update user profile');
+      }
+
+    } catch (error) {
+      console.error('❌ Error updating user profile to free:', error);
+      throw error; // Re-throw for error handling in calling function
+    }
+  }
+
   function resetPaymentForm() {
     console.log('🧹 Resetting payment form');
     
@@ -625,8 +695,12 @@
               <div class="text-center mb-6">
                 <h3 class="text-xl font-bold text-gray-800 mb-2">{plan.name}</h3>
                 <div class="text-3xl font-bold text-gray-900 mb-2">
-                  {formatCurrency(plan.price)}
-                  <span class="text-sm text-gray-600 font-normal">one-time</span>
+                  {#if plan.price === 0}
+                    <span class="text-green-600">Free</span>
+                  {:else}
+                    {formatCurrency(plan.price)}
+                    <span class="text-sm text-gray-600 font-normal">one-time</span>
+                  {/if}
                 </div>
                 <p class="text-gray-600 text-sm">{plan.description}</p>
               </div>
@@ -645,12 +719,16 @@
               <button
                 class="w-full py-3 px-4 rounded-lg font-medium transition-colors mt-auto
                   {selectedPlan?.id === plan.id 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-blue-600 hover:bg-blue-700 text-white'}"
+                    ? (plan.price === 0 ? 'bg-green-600 text-white' : 'bg-blue-600 text-white')
+                    : (plan.price === 0 ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white')}"
                 on:click={() => selectPlan(plan)}
                 disabled={isProcessing}
               >
-                {selectedPlan?.id === plan.id ? 'Selected' : 'Choose Plan'}
+                {#if selectedPlan?.id === plan.id}
+                  {plan.price === 0 ? 'Activated' : 'Selected'}
+                {:else}
+                  {plan.price === 0 ? 'Get Started Free' : 'Choose Plan'}
+                {/if}
               </button>
             </div>
           </div>

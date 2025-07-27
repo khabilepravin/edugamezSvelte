@@ -1,5 +1,20 @@
 <script>
     import Icon from '@iconify/svelte';
+    import { userSession } from '$lib/store/userSession.js';
+    
+    // Reactive subscription data
+    $: session = $userSession;
+    $: subscriptionLevel = session.userSubscriptionLevel || 'free';
+    $: isLoading = session.isLoading;
+    
+    // Debug logging
+    $: {
+        console.log('🔍 Home page debug:');
+        console.log('  - session:', session);
+        console.log('  - subscriptionLevel:', subscriptionLevel);
+        console.log('  - isLoading:', isLoading);
+        console.log('  - Should show premium section:', !isLoading && subscriptionLevel === 'free');
+    }
 </script>
 <!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
 <svelte:head>
@@ -51,17 +66,19 @@
             </div>
         </div>
 
-        <!-- Payment Section -->
-        <div class="space-y-4">
-            <h3 class="h3 text-warning-500">Premium Plans</h3>
-            <p class="text-surface-600-300-token">Unlock advanced features with our premium plans</p>
-            
-            <div class="flex justify-center w-full max-w-4xl">
-                <a class="card p-4 flex flex-col items-center justify-center h-32 w-64 shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 bg-surface-100-800-token" href="/payment">
-                    <Icon icon="mdi:credit-card-outline" class="text-4xl mb-3 text-warning-500" />
-                    <span class="font-bold">Upgrade Now</span>
-                </a>
+        <!-- Payment Section - Only show for free users -->
+        {#if !isLoading && subscriptionLevel === 'free'}
+            <div class="space-y-4">
+                <h3 class="h3 text-warning-500">Premium Plans</h3>
+                <p class="text-surface-600-300-token">Unlock advanced features with our premium plans</p>
+                
+                <div class="flex justify-center w-full max-w-4xl">
+                    <a class="card p-4 flex flex-col items-center justify-center h-32 w-64 shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 bg-surface-100-800-token" href="/payment">
+                        <Icon icon="mdi:credit-card-outline" class="text-4xl mb-3 text-warning-500" />
+                        <span class="font-bold">Upgrade Now</span>
+                    </a>
+                </div>
             </div>
-        </div>
+        {/if}
     </div>
 </div>

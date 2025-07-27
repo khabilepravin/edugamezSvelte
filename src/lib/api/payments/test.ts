@@ -26,24 +26,24 @@ export async function testPaymentIntegration(authToken: string, userEmail: strin
   try {
     // Test 1: Create Payment Intent
     console.log('📝 Test 1: Creating Payment Intent...');
-    const basicPlan = getPlanById('basic');
+    const freePlan = getPlanById('free');
     
-    if (!basicPlan) {
-      throw new Error('Basic plan not found');
+    if (!freePlan) {
+      throw new Error('Free plan not found');
     }
 
     const paymentIntentResult = await createPaymentIntent(
       {
-        planId: basicPlan.id,
-        amount: basicPlan.price,
+        planId: freePlan.id,
+        amount: freePlan.price,
         currency: 'usd',
-        description: `Test payment for ${basicPlan.name}`,
+        description: `Test payment for ${freePlan.name}`,
         customerEmail: userEmail,
         metadata: {
           userId: userId,
           userEmail: userEmail,
-          planName: basicPlan.name,
-          planId: basicPlan.id,
+          planName: freePlan.name,
+          planId: freePlan.id,
           test: 'true'
         }
       },
@@ -73,14 +73,14 @@ export async function testPaymentIntegration(authToken: string, userEmail: strin
     console.log('💳 Test 3: Testing Update Subscription...');
     const updateResult = await updateUserSubscription(
       {
-        planId: basicPlan.id,
-        amount: basicPlan.price,
+        planId: freePlan.id,
+        amount: freePlan.price,
         paymentIntentId: 'test_payment_intent_id',
         metadata: {
           userId: userId,
           userEmail: userEmail,
-          planName: basicPlan.name,
-          planId: basicPlan.id,
+          planName: freePlan.name,
+          planId: freePlan.id,
           test: 'true'
         }
       },

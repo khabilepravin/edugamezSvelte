@@ -1,20 +1,31 @@
 <script>
     import Icon from '@iconify/svelte';
     import { page } from '$app/stores';
-    import UserSubscriptionStatus from '$lib/components/UserSubscriptionStatus.svelte';
     import { userSession } from '$lib/store/userSession.js';
     import { getSubscriptionDisplayInfo } from '$lib/store/subscriptionUtils.js';
-    
-    let userProfile = {
-        fullName: $page.data.user_metadata?.full_name || 'User Name',
-        email: $page.data.user?.email || 'email@example.com',
-        joinDate: new Date($page.data.user?.created_at).toLocaleDateString() || 'N/A'
-    };
 
     // Reactive subscription data
     $: session = $userSession;
     $: subscriptionLevel = session.userSubscriptionLevel || 'free';
     $: subscriptionInfo = getSubscriptionDisplayInfo(subscriptionLevel);
+    $: isLoading = session.isLoading;
+
+    // Get user profile data with proper fallbacks
+    $: displayName = $page.data?.user_metadata?.full_name || 
+                     $page.data?.user_metadata?.display_name || 
+                     session.displayName || 
+                     $page.data?.user?.email?.split('@')[0] || 
+                     'User';
+    
+    $: userEmail = $page.data?.user?.email || 'email@example.com';
+
+    // Editable profile data
+    let editableFullName = '';
+    
+    // Initialize editable name when display name changes
+    $: if (displayName && !editableFullName) {
+        editableFullName = displayName;
+    }
 </script>
 <div class="max-w-3xl mx-auto px-4 py-8">
     <!-- Header Section -->
@@ -24,13 +35,12 @@
         </div>
         <div class="flex-1">
             <div class="flex items-center gap-3 mb-2">
-                <h1 class="text-2xl font-bold">{userProfile.fullName}</h1>
+                <h1 class="text-2xl font-bold">{editableFullName || displayName}</h1>
                 <!-- Subscription Level Tag -->
                 <span class="subscription-tag subscription-{subscriptionInfo.color}">
                     {subscriptionInfo.badge}
                 </span>
             </div>
-            <p class="text-gray-600">Member since {userProfile.joinDate}</p>
             {#if session.userRole}
                 <p class="text-sm text-gray-500 capitalize">Role: {session.userRole}</p>
             {/if}
@@ -44,11 +54,16 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-600">Full Name</label>
-                    <p class="mt-1 p-2 bg-gray-50 rounded-md w-full">{userProfile.fullName}</p>
+                    <input 
+                        type="text" 
+                        bind:value={editableFullName}
+                        class="mt-1 p-2 bg-gray-50 rounded-md w-full border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                        placeholder="Enter your full name"
+                    />
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600">Email</label>
-                    <p class="mt-1 p-2 bg-gray-50 rounded-md w-full">{userProfile.email}</p>
+                    <p class="mt-1 p-2 bg-gray-50 rounded-md w-full">{userEmail}</p>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600">User Role</label>
@@ -56,12 +71,7 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600">Subscription Level</label>
-                    <div class="mt-1 p-2 bg-gray-50 rounded-md w-full flex items-center justify-between">
-                        <span class="capitalize">{subscriptionInfo.name}</span>
-                        <span class="subscription-tag subscription-{subscriptionInfo.color}">
-                            {subscriptionInfo.badge}
-                        </span>
-                    </div>
+                    <p class="mt-1 p-2 bg-gray-50 rounded-md w-full capitalize">{subscriptionInfo.name}</p>
                 </div>
             </div>
         </section>
@@ -87,48 +97,51 @@
                         {#if subscriptionLevel === 'free'}
                             <div class="flex items-center text-sm text-gray-600">
                                 <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                Basic spelling tests
+                                1 practice test only
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
+                                Basic spelling exercises
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
                                 Limited word lists
                             </div>
-                        {:else if subscriptionLevel === 'basic'}
-                            <div class="flex items-center text-sm text-gray-600">
-                                <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                All free features
-                            </div>
-                            <div class="flex items-center text-sm text-gray-600">
-                                <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                Advanced spelling tests
-                            </div>
                         {:else if subscriptionLevel === 'pro'}
                             <div class="flex items-center text-sm text-gray-600">
                                 <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                All features included
+                                Unlimited practice tests
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                Custom word lists
+                                Create custom spelling practice lists
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                Detailed analytics
+                                Advanced spelling exercises
                             </div>
                             <div class="flex items-center text-sm text-gray-600">
                                 <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                Unlimited tests
+                                Detailed progress analytics
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
+                                Priority support
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
+                                Export test results
                             </div>
                         {:else}
                             <div class="flex items-center text-sm text-gray-600">
                                 <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                Premium features
+                                All features included
                             </div>
                         {/if}
                     </div>
                 </div>
                 
-                {#if subscriptionLevel === 'free'}
+                {#if !isLoading && subscriptionLevel === 'free'}
                     <div class="mt-4 pt-4 border-t border-gray-200">
                         <a href="/payment" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
                             Upgrade to Pro
@@ -137,9 +150,6 @@
                     </div>
                 {/if}
             </div>
-            
-            <!-- Keep the existing UserSubscriptionStatus component -->
-            <UserSubscriptionStatus />
         </section>
 
         <!-- Statistics -->

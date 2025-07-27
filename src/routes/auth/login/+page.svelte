@@ -4,7 +4,7 @@
 	import { createClient } from '@supabase/supabase-js';
 	import { onMount } from 'svelte';
 	import { sessionActions } from '$lib/store/userSession.js';
-	import { getUserProfileByUserId } from '$lib/api/userProfiles';
+	import { getUserProfileByUserId, createUserProfileByUserId, createUserProfileData } from '$lib/api/userProfiles';
 
 	let data = $props();
 	const supabase = createClient(
@@ -44,10 +44,45 @@
 				});
 				console.log('✅ User profile loaded after login:', profileResponse.data);
 			} else {
-				console.log('⚠️ Could not load user profile after login:', profileResponse.error);
+				console.log('⚠️ Could not load user profile after login, creating new profile:', profileResponse.error);
+				// Create user profile with free subscription level for first-time users
+				await createUserProfileForNewUser(user, authToken);
 			}
 		} catch (error) {
 			console.error('❌ Error loading user profile after login:', error);
+		}
+	}
+
+	async function createUserProfileForNewUser(user, authToken) {
+		try {
+			console.log('🆕 Creating new user profile for first-time user...');
+			
+			// Create user profile data with free subscription level
+			const profileData = createUserProfileData(user.id, {
+				userRole: user.user_metadata?.role || 'student',
+				displayName: user.user_metadata?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'User',
+				userSubscriptionLevel: 'free' // Set to free for new users
+			});
+
+			console.log('📝 Creating profile with data:', profileData);
+
+			// Call the API to create the user profile
+			const createResponse = await createUserProfileByUserId(profileData, authToken);
+			
+			if (createResponse.success) {
+				console.log('✅ User profile created successfully:', createResponse.data);
+				
+				// Update session store with the new profile data
+				sessionActions.setProfile({
+					userSubscriptionLevel: profileData.userSubscriptionLevel,
+					userRole: profileData.userRole,
+					displayName: profileData.displayName
+				});
+			} else {
+				console.error('❌ Failed to create user profile:', createResponse.error);
+			}
+		} catch (error) {
+			console.error('❌ Error creating user profile for new user:', error);
 		}
 	}
 

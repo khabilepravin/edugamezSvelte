@@ -7,30 +7,29 @@ import type { PaymentPlan } from './stripe';
 
 export const PAYMENT_PLANS: PaymentPlan[] = [
   {
-    id: 'basic',
-    name: 'Basic Plan',
-    price: 9.99,
-    description: 'Access to basic spelling tests and practice modes',
+    id: 'free',
+    name: 'Basic (Free)',
+    price: 0,
+    description: 'Get started with limited spelling practice',
     features: [
-      '50 spelling tests',
-      'Basic practice mode',
-      'Progress tracking',
-      'Email support'
+      '1 practice test only',
+      'Basic spelling exercises',
+      'Limited word lists',
+      'Basic progress tracking'
     ]
   },
   {
-    id: 'premium',
-    name: 'Premium Plan',
+    id: 'pro',
+    name: 'Pro',
     price: 19.99,
-    description: 'Full access to all features and unlimited tests',
+    description: 'Unlimited access to all spelling features',
     features: [
-      'Unlimited spelling tests',
-      'Practice & Exam modes',
-      'Advanced analytics',
+      'Unlimited practice tests',
+      'Create custom spelling practice lists',
+      'Advanced spelling exercises',
+      'Detailed progress analytics',
       'Priority support',
-      'Custom test creation',
-      'API access',
-      'Advanced reporting'
+      'Export test results'
     ],
     popular: true
   }
