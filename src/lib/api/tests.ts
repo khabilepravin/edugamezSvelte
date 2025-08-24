@@ -74,3 +74,36 @@ export async function getQuestionsByTest(testId: string): Promise<any[]> {
     throw error;
   }
 }
+
+/**
+ * Check if a free text answer is correct using the AI answer checking API
+ * @param userAnswer - The user's provided answer
+ * @param actualAnswer - The expected/correct answer
+ * @returns Promise containing boolean indicating if the answer is correct
+ */
+export async function checkFreeTextAnswer(userAnswer: string, actualAnswer: string): Promise<boolean> {
+  try {
+    const apiBaseUrl = import.meta.env.VITE_ENV_apiBaseUrl;
+    const response = await fetch(`${apiBaseUrl}/AnswerCheck/check`, {
+      method: 'POST',
+      headers: {
+        'accept': 'text/plain',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userAnswer: userAnswer.trim(),
+        actualAnswer: actualAnswer
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Answer check API failed: ${response.status} ${response.statusText}`);
+    }
+
+    const result = await response.text();
+    return result.toLowerCase() === 'true';
+  } catch (error) {
+    console.error('Error calling answer check API:', error);
+    throw error;
+  }
+}

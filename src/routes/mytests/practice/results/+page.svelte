@@ -112,14 +112,6 @@
 
 <div class="container mx-auto px-4 py-8">
   <div class="max-w-2xl mx-auto">
-    <!-- Debug info (remove this later) -->
-    <div class="mb-4 p-4 bg-gray-100 rounded text-sm">
-      <p>Debug Info:</p>
-      <p>isLoading: {isLoading}</p>
-      <p>testResults: {testResults ? 'exists' : 'null'}</p>
-      <p>testId: {testId}</p>
-    </div>
-
     {#if isLoading}
       <div class="flex justify-center items-center py-12">
         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
@@ -278,12 +270,29 @@
                     <div>
                       <span class="font-medium text-gray-600">Your Answer:</span>
                       <span class="ml-2 {result.isCorrect ? 'text-green-700' : 'text-red-700'}">
-                        {result.userAnswer || 'Not answered'}
+                        {#if Array.isArray(result.userAnswer)}
+                          {result.userAnswer.join(', ') || 'Not answered'}
+                        {:else}
+                          {result.userAnswer || 'Not answered'}
+                        {/if}
                       </span>
                     </div>
                     <div>
                       <span class="font-medium text-gray-600">Correct Answer:</span>
-                      <span class="ml-2 text-green-700">{result.correctAnswer}</span>
+                      <span class="ml-2 text-green-700">
+                        {#if result.expectedAnswers && result.expectedAnswers.length > 0}
+                          {result.expectedAnswers.join(', ')}
+                        {:else}
+                          {(() => {
+                            try {
+                              const parsed = typeof result.correctAnswer === 'string' ? JSON.parse(result.correctAnswer) : result.correctAnswer;
+                              return parsed.correctAnswers ? parsed.correctAnswers.join(', ') : result.correctAnswer;
+                            } catch {
+                              return result.correctAnswer;
+                            }
+                          })()}
+                        {/if}
+                      </span>
                     </div>
                   </div>
                   

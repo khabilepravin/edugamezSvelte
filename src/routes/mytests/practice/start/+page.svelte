@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
-  import { getTestById, getQuestionsByTest } from '$lib/api/tests';
+  import { getTestById, getQuestionsByTest, checkFreeTextAnswer } from '$lib/api/tests';
   import Loading from '$lib/components/loading.svelte';
 
   let testData = null;
@@ -28,6 +28,14 @@
   $: answeredCount = Object.keys(userAnswers).length;
   $: isLastQuestion = currentQuestionIndex === totalQuestions - 1;
   $: isFirstQuestion = currentQuestionIndex === 0;
+  
+  // Create a reactive property for the current question's answer
+  $: currentAnswerValue = currentQuestion ? (userAnswers[currentQuestion.id] || '') : '';
+  // Use a single variable for radio group binding
+  let radioGroupValue = '';
+  $: if (currentQuestion) {
+    radioGroupValue = userAnswers[currentQuestion.id] || '';
+  }
 
   onMount(async () => {
     testId = $page.url.searchParams.get('testId');
@@ -100,7 +108,13 @@
   function handleAnswerSelect(questionId, selectedAnswer) {
     userAnswers[questionId] = selectedAnswer;
     userAnswers = { ...userAnswers }; // Trigger reactivity
-    showExplanation = false;
+  }
+
+  function handleTextAnswerChange(event) {
+    if (currentQuestion) {
+      userAnswers[currentQuestion.id] = event.target.value;
+      userAnswers = { ...userAnswers }; // Trigger reactivity
+    }
   }
 
   function navigateToQuestion(index) {
@@ -186,9 +200,50 @@
       let correctAnswers = 0;
       const questionResults = [];
       
-      questions.forEach(question => {
+      // Process questions with async handling for free text
+      for (const question of questions) {
         const userAnswer = userAnswers[question.id];
-        const isCorrect = userAnswer === question.correctAnswer;
+        let correctAnswerData;
+        let expectedAnswers;
+        
+        // Parse correctAnswer - it might be a JSON string or object
+        try {
+          if (typeof question.correctAnswer === 'string') {
+            correctAnswerData = JSON.parse(question.correctAnswer);
+          } else {
+            correctAnswerData = question.correctAnswer;
+          }
+          expectedAnswers = correctAnswerData.correctAnswers || [];
+        } catch {
+          // Fallback for old format
+          expectedAnswers = [question.correctAnswer];
+        }
+        
+        // Check if answer is correct based on question type
+        let isCorrect = false;
+        if (question.questionType === 'multiple_choice_single_answer') {
+          isCorrect = expectedAnswers.includes(userAnswer);
+        } else if (question.questionType === 'multiple_choice_multi_answer') {
+          // For multi-answer, check if user selected exactly the correct answers
+          const userAnswersArray = Array.isArray(userAnswer) ? userAnswer : [];
+          isCorrect = expectedAnswers.length === userAnswersArray.length && 
+                     expectedAnswers.every(ans => userAnswersArray.includes(ans)) &&
+                     userAnswersArray.every(ans => expectedAnswers.includes(ans));
+        } else if (question.questionType === 'free_text') {
+          // For free text, call the API to check the answer
+          if (userAnswer && userAnswer.trim() && expectedAnswers.length > 0) {
+            try {
+              isCorrect = await checkFreeTextAnswer(userAnswer.toString(), expectedAnswers[0]);
+            } catch (error) {
+              console.error('Error calling answer check API:', error);
+              // Fallback to simple text comparison
+              const userText = userAnswer.toString().trim().toLowerCase();
+              isCorrect = expectedAnswers.some(ans => ans.toString().trim().toLowerCase() === userText);
+            }
+          } else {
+            isCorrect = false;
+          }
+        }
         
         if (isCorrect) {
           correctAnswers++;
@@ -199,10 +254,11 @@
           questionText: question.questionText,
           userAnswer: userAnswer,
           correctAnswer: question.correctAnswer,
+          expectedAnswers: expectedAnswers,
           isCorrect: isCorrect,
           explanation: question.explanation
         });
-      });
+      }
       
       const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
       
@@ -327,15 +383,10 @@
               <h2 class="text-2xl font-semibold text-gray-800 flex-1">
                 {currentQuestion.questionText}
               </h2>
-              {#if currentQuestion.questionType}
-                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm ml-4">
-                  {currentQuestion.questionType}
-                </span>
-              {/if}
             </div>
             
             <!-- Options -->
-            {#if currentQuestion.options && currentQuestion.options.length > 0}
+            {#if currentQuestion.questionType === 'multiple_choice_single_answer' && currentQuestion.options && currentQuestion.options.length > 0}
               <div class="space-y-3">
                 {#each currentQuestion.options as option}
                   <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors
@@ -344,8 +395,11 @@
                       type="radio" 
                       name="question-{currentQuestion.id}"
                       value={option.optionKey}
-                      checked={userAnswers[currentQuestion.id] === option.optionKey}
-                      on:change={() => handleAnswerSelect(currentQuestion.id, option.optionKey)}
+                      bind:group={radioGroupValue}
+                      on:change={() => {
+                        userAnswers[currentQuestion.id] = option.optionKey;
+                        userAnswers = { ...userAnswers };
+                      }}
                       class="mr-3"
                     />
                     <div class="flex-1">
@@ -354,15 +408,42 @@
                   </label>
                 {/each}
               </div>
-            {:else}
-              <!-- Text input for non-multiple choice questions -->
+            {:else if currentQuestion.questionType === 'multiple_choice_multi_answer' && currentQuestion.options && currentQuestion.options.length > 0}
+              <div class="space-y-3">
+                {#each currentQuestion.options as option}
+                  <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors
+                    {Array.isArray(userAnswers[currentQuestion.id]) && userAnswers[currentQuestion.id].includes(option.optionKey) ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}">
+                    <input 
+                      type="checkbox" 
+                      name="question-{currentQuestion.id}"
+                      value={option.optionKey}
+                      checked={Array.isArray(userAnswers[currentQuestion.id]) && userAnswers[currentQuestion.id].includes(option.optionKey)}
+                      on:change={() => {
+                        let arr = Array.isArray(userAnswers[currentQuestion.id]) ? [...userAnswers[currentQuestion.id]] : [];
+                        if (arr.includes(option.optionKey)) {
+                          arr = arr.filter(k => k !== option.optionKey);
+                        } else {
+                          arr.push(option.optionKey);
+                        }
+                        userAnswers[currentQuestion.id] = arr;
+                        userAnswers = { ...userAnswers };
+                      }}
+                      class="mr-3"
+                    />
+                    <div class="flex-1">
+                      <div class="font-medium text-gray-800">{option.optionKey}. {option.optionText}</div>
+                    </div>
+                  </label>
+                {/each}
+              </div>
+            {:else if currentQuestion.questionType === 'free_text'}
               <div class="mt-4">
                 <textarea 
                   class="w-full p-4 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
                   placeholder="Enter your answer here..."
                   rows="4"
-                  bind:value={userAnswers[currentQuestion.id]}
-                  on:input={(e) => handleAnswerSelect(currentQuestion.id, e.target.value)}
+                  value={currentAnswerValue}
+                  on:input={handleTextAnswerChange}
                 ></textarea>
               </div>
             {/if}
