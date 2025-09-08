@@ -68,8 +68,8 @@
     {:else}
       <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {#each tests as test}
-          <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
-            <div class="mb-4">
+          <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 flex flex-col">
+            <div class="flex-1 mb-4">
               <h3 class="text-lg font-semibold text-gray-800 mb-2">
                 {test.title || `Test ${test.id}`}
               </h3>
@@ -85,24 +85,26 @@
                     {test.questionCount} questions
                   </span>
                 {/if}
-                {#if test.createdAt}
-                  <span class="flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    {new Date(test.createdAt).toLocaleDateString()}
-                  </span>
-                {/if}
               </div>
             </div>
             
-            <div class="flex gap-2">
-              <button
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
-                on:click={() => navigateToTest(test.id)}
-              >
-                Practice
-              </button>
+            <div class="mt-auto">
+              {#if test.createdAt}
+                <div class="flex items-center text-sm text-gray-500 mb-3">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Created: {new Date(test.createdAt).toLocaleDateString()}
+                </div>
+              {/if}
+              <div class="flex gap-2">
+                <button
+                  class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors"
+                  on:click={() => navigateToTest(test.id)}
+                >
+                  Practice
+                </button>
+              </div>
             </div>
           </div>
         {/each}
