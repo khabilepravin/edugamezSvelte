@@ -36,6 +36,11 @@
 	//let data = $props();
 	const drawerStore = getDrawerStore();
 
+	// Check if current route is in immersive mode (practice/exam)
+	const isImmersiveMode = $derived($page.url.pathname.includes('/mytests/practice/start') || 
+	                                 $page.url.pathname.includes('/mytests/exam/start')||
+									$page.url.pathname.includes('/mytests/practice/results'));
+
 	onMount(async () => {
 		console.log('Layout data:', data);
 		
@@ -91,75 +96,86 @@
 </script>
 
 <Drawer><Navigation /></Drawer>
-<!-- App Shell -->
-<AppShell slotSidebarLeft="bg-surface-500/5 w-0 lg:w-64">
-	{#snippet header()}
-		<!-- App Bar -->
-		<AppBar>
-			{#snippet lead()}
-				<div class="flex items-center">
-					<button class="lg:hidden btn btn-sm" onclick={drawerOpen}>
-						<span>
-							<svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
-								<rect width="100" height="20" />
-								<rect y="30" width="100" height="20" />
-								<rect y="60" width="100" height="20" />
-							</svg>
-						</span>
-					</button>
-					<button class="btn btn-sm p-0 m-0" onclick={goHome}>
-						<img src="/images/logo.png" alt="MaxSpelling Logo" /><strong class="text-xl ml-2"
-							>MaxSpelling</strong
-						>
-					</button>
-				</div>
-			{/snippet}
-			{#snippet trail()}
-				<div class="relative">
-					<button
-						class="btn-base"
-						use:popup={{
-							event: 'click',
-							target: 'userMenu',
-							placement: 'bottom'
-						}}
-					>
-						<h5 class="h5">{userName}</h5>
-					</button>
 
-					<div class="card p-4 w-48 shadow-xl" data-popup="userMenu">
-						<nav class="list-nav">
-							<ul class="space-y-2">
-								<li>
-									<a href="/profile" class="block hover:text-primary-500 transition-colors">
-										Profile
-									</a>
-								</li>
-								<li>
-									<a href="/dashboard" class="block hover:text-primary-500 transition-colors">
-										Dashboard
-									</a>
-								</li>
-							</ul>
-						</nav>
+{#if isImmersiveMode}
+	<!-- Immersive mode - no navigation -->
+	<div class="min-h-screen bg-surface-50-900-token overflow-auto">
+		{#if $navigating}
+			<Loading />
+		{/if}
+		{@render children?.()}
+	</div>
+{:else}
+	<!-- Normal mode with navigation -->
+	<AppShell slotSidebarLeft="bg-surface-500/5 w-0 lg:w-64">
+		{#snippet header()}
+			<!-- App Bar -->
+			<AppBar>
+				{#snippet lead()}
+					<div class="flex items-center">
+						<button class="lg:hidden btn btn-sm" onclick={drawerOpen}>
+							<span>
+								<svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
+									<rect width="100" height="20" />
+									<rect y="30" width="100" height="20" />
+									<rect y="60" width="100" height="20" />
+								</svg>
+							</span>
+						</button>
+						<button class="btn btn-sm p-0 m-0" onclick={goHome}>
+							<img src="/images/logo.png" alt="MaxSpelling Logo" /><strong class="text-xl ml-2"
+								>MaxSpelling</strong
+							>
+						</button>
 					</div>
-				</div>
-			{/snippet}
-		</AppBar>
-	{/snippet}
-	
-	<!-- Left sidebar slot -->
-	{#snippet sidebarLeft()}
-		<Navigation />
-	{/snippet}
+				{/snippet}
+				{#snippet trail()}
+					<div class="relative">
+						<button
+							class="btn-base"
+							use:popup={{
+								event: 'click',
+								target: 'userMenu',
+								placement: 'bottom'
+							}}
+						>
+							<h5 class="h5">{userName}</h5>
+						</button>
 
-	{#snippet footer()}
-		<!-- <svelte:fragment  /> -->
-	{/snippet}
+						<div class="card p-4 w-48 shadow-xl" data-popup="userMenu">
+							<nav class="list-nav">
+								<ul class="space-y-2">
+									<li>
+										<a href="/profile" class="block hover:text-primary-500 transition-colors">
+											Profile
+										</a>
+									</li>
+									<li>
+										<a href="/dashboard" class="block hover:text-primary-500 transition-colors">
+											Dashboard
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				{/snippet}
+			</AppBar>
+		{/snippet}
+		
+		<!-- Left sidebar slot -->
+		{#snippet sidebarLeft()}
+			<Navigation />
+		{/snippet}
 
-	{#if $navigating}
-		<Loading />
-	{/if}
+		{#snippet footer()}
+			<!-- <svelte:fragment  /> -->
+		{/snippet}
 
-	{@render children?.()}
-</AppShell>
+		{#if $navigating}
+			<Loading />
+		{/if}
+
+		{@render children?.()}
+	</AppShell>
+{/if}

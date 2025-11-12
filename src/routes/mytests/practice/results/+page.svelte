@@ -253,7 +253,7 @@
         {#if testResults.questionResults && testResults.questionResults.length > 0}
           <div class="mb-8">
             <h3 class="font-semibold text-gray-800 mb-4">Question by Question Results</h3>
-            <div class="space-y-4 max-h-96 overflow-y-auto">
+            <div class="space-y-4 max-h-[70vh] overflow-y-auto border border-gray-200 rounded-lg p-4">
               {#each testResults.questionResults as result, index}
                 <div class="border rounded-lg p-4 {result.isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}">
                   <div class="flex items-start justify-between mb-2">
@@ -317,10 +317,10 @@
             Practice Again
           </button>
           <button
-            class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg transition-colors"
+            class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors"
             on:click={goToTests}
           >
-            Back to Tests
+            Back to My Tests
           </button>
         </div>
       </div>

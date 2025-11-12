@@ -27,8 +27,8 @@
         
         <!-- Spelling Section -->
         <div class="space-y-4">
-            <h3 class="h3 text-primary-500">Spelling</h3>
-            <p class="text-surface-600-300-token">Select your level to practice spelling</p>
+            <!-- <h3 class="h3 text-primary-500">Spelling</h3> -->
+            <!-- <p class="text-surface-600-300-token">Select your level to practice spelling</p> -->
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-4xl">
                 <a class="card p-4 flex flex-col items-center justify-center h-32 shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 bg-surface-100-800-token" href="/spelling/low">
@@ -53,21 +53,8 @@
             </div>
         </div>
         
-        <!-- Practice Tests Section -->
-        <div class="space-y-4">
-            <h3 class="h3 text-success-500">Practice Tests</h3>
-            <p class="text-surface-600-300-token">Take custom tests</p>
-            
-            <div class="flex justify-center w-full max-w-4xl">
-                <a class="card p-4 flex flex-col items-center justify-center h-32 w-64 shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 bg-surface-100-800-token" href="/mytests">
-                    <Icon icon="mdi:clipboard-check-outline" class="text-4xl mb-3 text-success-500" />
-                    <span class="font-bold">My Tests</span>
-                </a>
-            </div>
-        </div>
-
         <!-- Payment Section - Only show for free users -->
-        {#if !isLoading && subscriptionLevel === 'free'}
+        <!-- {#if !isLoading && subscriptionLevel === 'free'}
             <div class="space-y-4">
                 <h3 class="h3 text-warning-500">Premium Plans</h3>
                 <p class="text-surface-600-300-token">Unlock advanced features with our premium plans</p>
@@ -79,6 +66,6 @@
                     </a>
                 </div>
             </div>
-        {/if}
+        {/if} -->
     </div>
 </div>
