@@ -11,7 +11,6 @@
 	<ul>
 		<li><a href="/" onclick={drawerClose}>Home</a></li>
 		<li><a href="/spelling/mylists" onclick={drawerClose}>My Lists</a></li>
-		<li><a href="/profile" onclick={drawerClose}>Profile</a></li>
 		<li><a href="/about" onclick={drawerClose}>About</a></li>		
 		<li><a href="/feedback" onclick={drawerClose}>Feedback</a></li>
 	</ul>

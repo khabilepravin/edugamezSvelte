@@ -7,7 +7,6 @@
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 	import { createClient } from '@supabase/supabase-js';
-	import { popup } from '@skeletonlabs/skeleton';
 	import { page } from '$app/stores';
 	//import { page } from '$app/stores';
 
@@ -131,33 +130,7 @@
 				{/snippet}
 				{#snippet trail()}
 					<div class="relative">
-						<button
-							class="btn-base"
-							use:popup={{
-								event: 'click',
-								target: 'userMenu',
-								placement: 'bottom'
-							}}
-						>
-							<h5 class="h5">{userName}</h5>
-						</button>
-
-						<div class="card p-4 w-48 shadow-xl" data-popup="userMenu">
-							<nav class="list-nav">
-								<ul class="space-y-2">
-									<li>
-										<a href="/profile" class="block hover:text-primary-500 transition-colors">
-											Profile
-										</a>
-									</li>
-									<li>
-										<a href="/dashboard" class="block hover:text-primary-500 transition-colors">
-											Dashboard
-										</a>
-									</li>
-								</ul>
-							</nav>
-						</div>
+						<h5 class="h5">Welcome {userName}</h5>
 					</div>
 				{/snippet}
 			</AppBar>

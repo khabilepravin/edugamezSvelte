@@ -94,11 +94,7 @@
                 <div class="mt-4">
                     <h4 class="font-medium text-gray-900 mb-2">Available Features:</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        {#if subscriptionLevel === 'free'}
-                            <div class="flex items-center text-sm text-gray-600">
-                                <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                1 practice test only
-                            </div>
+                        {#if subscriptionLevel === 'free'}                          
                             <div class="flex items-center text-sm text-gray-600">
                                 <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
                                 Basic spelling exercises
@@ -119,19 +115,7 @@
                             <div class="flex items-center text-sm text-gray-600">
                                 <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
                                 Advanced spelling exercises
-                            </div>
-                            <div class="flex items-center text-sm text-gray-600">
-                                <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                Detailed progress analytics
-                            </div>
-                            <div class="flex items-center text-sm text-gray-600">
-                                <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                Priority support
-                            </div>
-                            <div class="flex items-center text-sm text-gray-600">
-                                <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
-                                Export test results
-                            </div>
+                            </div>                     
                         {:else}
                             <div class="flex items-center text-sm text-gray-600">
                                 <Icon icon="mdi:check-circle" class="text-green-500 mr-2" />
