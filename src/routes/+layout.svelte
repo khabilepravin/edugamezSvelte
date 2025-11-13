@@ -130,7 +130,7 @@
 				{/snippet}
 				{#snippet trail()}
 					<div class="relative">
-						<h5 class="h5">Welcome {userName}</h5>
+						<h5 class="h5">{userName}</h5>
 					</div>
 				{/snippet}
 			</AppBar>
